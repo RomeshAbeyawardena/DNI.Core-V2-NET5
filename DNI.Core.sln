@@ -1,15 +1,22 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio 15
-VisualStudioVersion = 15.0.26124.0
+# Visual Studio Version 16
+VisualStudioVersion = 16.0.30709.132
 MinimumVisualStudioVersion = 15.0.26124.0
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DNI.Core.Web", "DNI.Core.Web\DNI.Core.Web.csproj", "{42582882-D655-45E5-BADC-7DFFD3A35925}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DNI.Core.Web", "DNI.Core.Web\DNI.Core.Web.csproj", "{42582882-D655-45E5-BADC-7DFFD3A35925}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DNI.Core.Shared", "DNI.Core.Shared\DNI.Core.Shared.csproj", "{5CEFAA63-EDBB-409B-BD9D-7384F845C353}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DNI.Core.Shared", "DNI.Core.Shared\DNI.Core.Shared.csproj", "{5CEFAA63-EDBB-409B-BD9D-7384F845C353}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DNI.Core.Data", "DNI.Core.Data\DNI.Core.Data.csproj", "{5C956AB7-1A99-4176-93A7-8E5E77F3F58C}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DNI.Core.Data", "DNI.Core.Data\DNI.Core.Data.csproj", "{5C956AB7-1A99-4176-93A7-8E5E77F3F58C}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DNI.Core.Abstractions", "DNI.Core.Abstractions\DNI.Core.Abstractions.csproj", "{68DADA2B-0AAA-4206-A2AF-0E8F9E56471B}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DNI.Core.Abstractions", "DNI.Core.Abstractions\DNI.Core.Abstractions.csproj", "{68DADA2B-0AAA-4206-A2AF-0E8F9E56471B}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{F8F69E4F-847E-471D-A796-80211EE4A998}"
+	ProjectSection(SolutionItems) = preProject
+		Directory.Build.props = Directory.Build.props
+		.github\workflows\dotnet-ci.yml = .github\workflows\dotnet-ci.yml
+		Update-Version.ps1 = Update-Version.ps1
+	EndProjectSection
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -19,9 +26,6 @@ Global
 		Release|Any CPU = Release|Any CPU
 		Release|x64 = Release|x64
 		Release|x86 = Release|x86
-	EndGlobalSection
-	GlobalSection(SolutionProperties) = preSolution
-		HideSolutionNode = FALSE
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
 		{42582882-D655-45E5-BADC-7DFFD3A35925}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
@@ -72,5 +76,11 @@ Global
 		{68DADA2B-0AAA-4206-A2AF-0E8F9E56471B}.Release|x64.Build.0 = Release|Any CPU
 		{68DADA2B-0AAA-4206-A2AF-0E8F9E56471B}.Release|x86.ActiveCfg = Release|Any CPU
 		{68DADA2B-0AAA-4206-A2AF-0E8F9E56471B}.Release|x86.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {090F5641-01CB-4A79-BBBF-DE1CA2CBC96D}
 	EndGlobalSection
 EndGlobal
