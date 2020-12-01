@@ -9,6 +9,12 @@ trigger:
 pool:
   vmImage: 'ubuntu-latest'
 
+variables:
+  solution: '**/*.sln'
+  projects: '**/DNI.Core.*.csproj'
+  buildPlatform: 'Any CPU'
+  buildConfiguration: 'Release'
+
 steps:
   - task: PowerShell@2
     displayName: Update assembly version
@@ -19,18 +25,18 @@ steps:
     displayName: Restore project
     inputs:
       command: 'restore'
-      projects: '**/.csproj'
+      projects: $(projects)
   - task: DotNetCoreCLI@2
     displayName: Build project
     inputs:
       command: 'build'
-      projects: '**/.csproj'
+      projects: $(projects)
       arguments: '--no-restore --nologo --configuration Release'
   - task: DotNetCoreCLI@2
     displayName: Pack project for NuGet
     inputs:
       command: 'pack'
-      packagesToPack: '**/*.csproj'
+      packagesToPack: $(projects)
       nobuild: true
       includesource: true
       versioningScheme: 'byEnvVar'
