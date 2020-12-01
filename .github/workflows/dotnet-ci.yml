@@ -26,7 +26,7 @@ jobs:
       - name: Set build number
         env: 
             VERSION: ${{ secrets.VERSION }}
-        run: $(GITHUB_RUN_ID) = $(VERSION).$(GITHUB_RUN_NUMBER)"
+        run: $(GITHUB_RUN_ID) = "$(VERSION).$(GITHUB_RUN_NUMBER)"
         shell: powershell
 
       # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
