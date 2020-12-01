@@ -2,6 +2,13 @@
 
   <PropertyGroup>
     <TargetFramework>net5.0</TargetFramework>
+    <Description>
+      Consists of a set of useful abstract classes and factories to aid faster development of common Windows and Web Applications.
+      Currently implemented factories:
+      - CacheServiceFactory
+      - SerializerFactory (Memory Serialization)
+      - ValidatorFactory (FluentValidation)
+    </Description>
   </PropertyGroup>
 
   <ItemGroup>

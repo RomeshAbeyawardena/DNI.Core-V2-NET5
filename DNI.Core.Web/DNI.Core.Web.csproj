@@ -2,6 +2,10 @@
 
   <PropertyGroup>
     <TargetFramework>net5.0</TargetFramework>
+    <Description>
+      Consists of a set of useful classes to aid faster development of Web Applications.
+      (Not yet implemented)
+    </Description>
   </PropertyGroup>
 
 </Project>

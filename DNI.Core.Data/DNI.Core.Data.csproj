@@ -2,6 +2,9 @@
 
   <PropertyGroup>
     <TargetFramework>net5.0</TargetFramework>
+    <Description>
+      Consists of a set of useful classes to aid faster development for the data layer for common Windows and Web Applications.
+    </Description>
   </PropertyGroup>
 
   <ItemGroup>
