@@ -20,7 +20,17 @@ steps:
       command: 'restore'
       projects: '**/.csproj'
   - task: DotNetCoreCLI@2
+    displayName: Build project
     inputs:
       command: 'build'
       projects: '**/.csproj'
       arguments: '--no-restore --nologo --configuration Release'
+  - task: DotNetCoreCLI@2
+    displayName: Pack project for NuGet
+    inputs:
+      command: 'pack'
+      packagesToPack: '**/*.csproj'
+      nobuild: true
+      includesource: true
+      versioningScheme: 'byEnvVar'
+      versionEnvVar: 'Build.BuildNumber'
