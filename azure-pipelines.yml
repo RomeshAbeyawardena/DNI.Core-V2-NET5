@@ -21,6 +21,10 @@ steps:
     inputs:
      filePath: ./Update-Version.ps1 
      arguments: -fileName "./Directory.Build.props" -version ${Build.BuildNumber}
+  - task: UseDotNet@2
+    inputs:
+      packageType: sdk
+      version: 5.0.100
   - task: DotNetCoreCLI@2
     displayName: Restore project
     inputs:
