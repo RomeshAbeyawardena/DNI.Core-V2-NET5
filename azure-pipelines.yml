@@ -1,0 +1,22 @@
+# Starter pipeline
+# Start with a minimal pipeline that you can customize to build and deploy your code.
+# Add steps that build, run tests, deploy, and more:
+# https://aka.ms/yaml
+
+trigger:
+- main
+
+pool:
+  vmImage: 'ubuntu-latest'
+
+steps:
+  - task: PowerShell@2
+    displayName: Update assembly version
+    inputs:
+     script: Invoke-Command "$Agent.BuildDirectory\\Update-Version.ps1 -fileName $Agent.BuildDirectory\\Directory.Build.props -version ";
+  - task: DotNetCoreCLI@2
+    displayName: Restore project
+    inputs:
+      command: 'restore'
+      projects: '**/.csproj'
+  
