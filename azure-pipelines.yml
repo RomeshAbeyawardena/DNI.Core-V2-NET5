@@ -13,7 +13,8 @@ steps:
   - task: PowerShell@2
     displayName: Update assembly version
     inputs:
-     script: Invoke-Command "${Agent.DefaultWorkingDirectory}/Update-Version.ps1 -fileName ${System.DefaultWorkingDirectory}/Directory.Build.props -version ${Build.BuildNumber}";
+     filePath: Update-Version.ps1 
+     arguments: -fileName "${System.DefaultWorkingDirectory}/Directory.Build.props" -version ${Build.BuildNumber}
   - task: DotNetCoreCLI@2
     displayName: Restore project
     inputs:
