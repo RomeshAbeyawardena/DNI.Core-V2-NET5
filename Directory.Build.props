@@ -5,7 +5,7 @@
     <Product>DNI.Core</Product>
     <Copyright>Dot Net Insights 2020</Copyright>
     <RepositoryUrl>https://github.com/RomeshAbeyawardena/DNI.Core-V2</RepositoryUrl>
-    <PackageLicenseExpression>https://licenses.nuget.org/MIT</PackageLicenseExpression>
+    <PackageLicenseExpression>MIT</PackageLicenseExpression>
     <Version>1.0.0.0</Version>
     <AssemblyVersion>1.0.0.0</AssemblyVersion>
     <FileVersion>1.0.0.0</FileVersion>
