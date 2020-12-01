@@ -43,7 +43,6 @@ steps:
       command: 'pack'
       packagesToPack: $(projects)
       nobuild: true
-      includesource: true
       versioningScheme: 'byEnvVar'
       versionEnvVar: 'Build.BuildNumber'
 
