@@ -27,18 +27,18 @@ jobs:
         env: 
             VERSION: ${{ secrets.VERSION }}
         run: 
-             $GITHUB_RUN_ID = "$VERSION.$GITHUB_RUN_NUMBER" |
-             Write-Output $GITHUB_RUN_ID
+             $GITHUB_RUN_ID = "$VERSION.$GITHUB_RUN_NUMBER";
+             Write-Output "$GITHUB_RUN_ID";
         shell: powershell
 
       # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
       - uses: actions/checkout@v2
 
       - name: Update assembly version
-        run:
-            Write-Output $GITHUB_WORKSPACE |
-            Write-Output $GITHUB_RUN_NUMBER |
-            ./Update-Version -fileName "$GITHUB_WORKSPACE/Directory.Build.props" -version "$GITHUB_RUN_NUMBER"
+        run: 
+            Write-Output "$GITHUB_WORKSPACE";
+            Write-Output "$GITHUB_RUN_NUMBER";
+            ./Update-Version -fileName "$GITHUB_WORKSPACE/Directory.Build.props" -version "$GITHUB_RUN_NUMBER";
         shell: powershell
 
       # Runs a single command using the runners shell
