@@ -18,21 +18,22 @@ jobs:
   # This workflow contains a single job called "build"
   build:
     # The type of runner that the job will run on
-    runs-on: ubuntu-latest
+    runs-on: windows-latest
 
     # Steps represent a sequence of tasks that will be executed as part of the job
     steps:
        
       - name: Set build number
         env: 
-            version: ${{ secrets.VERSION }}
-        run: echo "::set-output name=id::$(version).$(GITHUB_RUN_NUMBER)"
+            VERSION: ${{ secrets.VERSION }}
+        run: $(GITHUB_RUN_ID) = $(VERSION).$(GITHUB_RUN_NUMBER)"
+        shell: powershell
 
       # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
       - uses: actions/checkout@v2
 
       - name: Update assembly version
-        run: ./Update-Version -fileName "Directory.Build.props" -version 
+        run: ./Update-Version -fileName "Directory.Build.props" -version "$(GITHUB_RUN_NUMBER)"
         shell: powershell
 
       # Runs a single command using the runners shell
