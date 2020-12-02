@@ -11,21 +11,6 @@ using System.Threading.Tasks;
 
 namespace DNI.Core.Abstractions
 {
-    public static class ServiceRegistration 
-    {
-        public static IServiceCollection RegisterServices<TServiceRegistration>(IServiceCollection services, bool registerInternalServices = true)
-            where TServiceRegistration : IServiceRegistration
-        {
-            var serviceRegistration = Activator.CreateInstance<TServiceRegistration>();
-            if(registerInternalServices)
-            { 
-                new DefaultServiceRegistration().RegisterServices(services);
-            }
-            serviceRegistration.RegisterServices(services);
-            return services;
-        }
-    }
-
     public abstract class ServiceRegistrationBase : IServiceRegistration
     {
         public abstract IServiceCollection RegisterServices(IServiceCollection services);
@@ -38,7 +23,7 @@ namespace DNI.Core.Abstractions
         }
     }
 
-    class DefaultServiceRegistration : ServiceRegistrationBase
+    internal class DefaultServiceRegistration : ServiceRegistrationBase
     {
         public override IServiceCollection RegisterServices(IServiceCollection services)
         {
