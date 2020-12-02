@@ -10,11 +10,13 @@ namespace DNI.Core.Abstractions
 {
     public abstract class ActionRequestBase<TResponse> : IActionRequest<TResponse>
     {
-        protected ActionRequestBase(RequestAction requestAction)
+        protected ActionRequestBase(RequestAction requestAction, RequestQueryType requestQueryType = RequestQueryType.None)
         {
             Action = requestAction;
+            QueryType = requestQueryType;
         }
 
-        public RequestAction Action { get; set; }
+        public RequestQueryType QueryType { get; }
+        public RequestAction Action { get; }
     }
 }
