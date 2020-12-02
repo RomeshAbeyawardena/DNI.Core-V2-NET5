@@ -13,10 +13,10 @@ using DNI.Core.Shared;
 
 namespace DNI.Core.Abstractions
 {
-    public abstract class ActionRequestHandler<TRequest, TResponse> : IRequestHandler<TRequest, TResponse>
+    public abstract class ActionRequestHandlerBase<TRequest, TResponse> : IRequestHandler<TRequest, TResponse>
         where TRequest : IActionRequest<TResponse>
     {
-        protected ActionRequestHandler(
+        protected ActionRequestHandlerBase(
             ICacheServiceFactory cacheServiceFactory,
             IValidatorFactory validatorFactory)
             : this(cacheServiceFactory, validatorFactory, null, null)
@@ -24,7 +24,7 @@ namespace DNI.Core.Abstractions
             
         }
 
-        protected ActionRequestHandler(
+        protected ActionRequestHandlerBase(
             ICacheServiceFactory cacheServiceFactory,
             IValidatorFactory validatorFactory,
             Action<ISwitch<RequestAction, Func<TRequest, CancellationToken, Task<TResponse>>>> action = default, 
