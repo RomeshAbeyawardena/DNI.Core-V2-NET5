@@ -42,7 +42,9 @@ namespace DNI.Core.Abstractions
     {
         public override IServiceCollection RegisterServices(IServiceCollection services)
         {
-            return services.Scan(scanner => scanner
+            return services
+                .AddSingleton(Newtonsoft.Json.JsonSerializer.CreateDefault())
+                .Scan(scanner => scanner
                     .FromAssemblies(assemblyDefinitions)
                     .AddClasses(classes => classes.Where(DefineScannerFilters(def => def.AddRange(ScanTypes))))
                     .AsImplementedInterfaces());
