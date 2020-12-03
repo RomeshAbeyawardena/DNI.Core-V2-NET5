@@ -41,6 +41,7 @@ namespace DNI.Core.Shared
         }
     }
 
+    /// <inheritdoc cref="IDefinition{T}" />
     class Definition<T> : IDefinition<T>
     {
         public IEnumerable<T> Items => itemBag.ToArray();

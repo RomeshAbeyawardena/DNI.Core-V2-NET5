@@ -7,6 +7,9 @@ using DNI.Core.Shared.Contracts;
 
 namespace DNI.Core.Shared
 {
+    /// <summary>
+    /// <inheritdoc cref="ISwitch{TKey, TValue}" />
+    /// </summary>
     public static class Switch
     {
         public static ISwitch<TKey, TValue> Create<TKey, TValue>()
@@ -14,12 +17,20 @@ namespace DNI.Core.Shared
             return new DefaultSwitch<TKey, TValue>();
         }
 
+        /// <summary>
+        /// Creates an instance of <see cref="ISwitch{TKey, TValue}"/>
+        /// </summary>
+        /// <typeparam name="TKey"></typeparam>
+        /// <typeparam name="TValue"></typeparam>
+        /// <param name="createSwitchDelegate"></param>
+        /// <returns></returns>
         public static ISwitch<TKey, TValue> Create<TKey, TValue>(Action<ISwitch<TKey, TValue>> createSwitchDelegate)
         {
             return new DefaultSwitch<TKey, TValue>(createSwitchDelegate);
         }
     }
 
+    /// <inheritdoc cref="ISwitch{TKey, TValue}"/>
     internal class DefaultSwitch<TKey, TValue> : ISwitch<TKey, TValue>
     {
         public DefaultSwitch()
@@ -31,6 +42,16 @@ namespace DNI.Core.Shared
             : this()
         {
             createSwitchDelegate?.Invoke(this);
+        }
+
+        public IAttempt<TValue> Case(TKey key)
+        {
+            if(dictionary.TryGetValue(key, out var value))
+            {
+                return Attempt.Success(value);
+            }
+
+            return Attempt.Failed<TValue>(new KeyNotFoundException());
         }
 
         TValue IDictionary<TKey, TValue>.this[TKey key] { 

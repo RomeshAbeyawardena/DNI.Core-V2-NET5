@@ -1,4 +1,6 @@
-﻿namespace DNI.Core.Shared.Contracts
+﻿using System.Collections.Generic;
+
+namespace DNI.Core.Shared.Contracts
 {
     public interface IAttemptedResponse
     {
@@ -8,5 +10,6 @@
     public interface IAttemptedResponse<T> : IAttemptedResponse
     {
         new IAttempt<T> Attempt { get; }
+        IAttempt<IEnumerable<T>> AttemptMany { get; }
     }
 }
