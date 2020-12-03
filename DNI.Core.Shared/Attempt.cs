@@ -70,6 +70,7 @@ namespace DNI.Core.Shared
         }
     }
 
+    /// <inheritdoc cref="IAttempt{T}"/>
     class Attempt<T> : Attempt, IAttempt<T>
     {
         public Attempt(IAttempt attempt, T result = default)
