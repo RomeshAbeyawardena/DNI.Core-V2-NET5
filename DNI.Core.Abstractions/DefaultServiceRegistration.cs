@@ -1,4 +1,5 @@
-﻿using DNI.Core.Shared;
+﻿using DNI.Core.Abstractions.Extensions;
+using DNI.Core.Shared;
 using DNI.Core.Shared.Contracts;
 using DNI.Core.Shared.Extensions;
 using Microsoft.Extensions.DependencyInjection;
@@ -17,22 +18,11 @@ namespace DNI.Core.Abstractions
             return services
                 .AddSingleton(SystemClock.CreateDefault())
                 .AddSingleton(Newtonsoft.Json.JsonSerializer.CreateDefault())
-                .Scan(scanner => scanner
-                    .FromAssemblies(assemblyDefinitions)
-                    .AddClasses(classes => classes.Where(DefineScannerFilters(def => def.AddRange(ScanTypes))), false)
-                    .AsImplementedInterfaces());
+                .ScanForTypes(typeDefinition => typeDefinition.AddRange(ScanTypes), 
+                    AssemblyDefinitions.ToArray());
         }
 
-        private static Func<Type, bool> DefineScannerFilters(Action<IDefinition<string>> definitionTypesAction)
-        {
-            var scannerDefinitionTypes = Definition.Create<string>();
-
-            definitionTypesAction(scannerDefinitionTypes);
-            var scannerDefinitionTypeArray = scannerDefinitionTypes.ToArray();
-            return type => scannerDefinitionTypeArray.Any(def => type.Name.EndsWith(def));
-        }
-
-        private static IDefinition<Assembly> assemblyDefinitions => 
+        private static IDefinition<Assembly> AssemblyDefinitions => 
             GetAssemblies(assembly => assembly.GetAssembly<DefaultServiceRegistration>());
 
         private static IEnumerable<string> ScanTypes => new []{ "Factory", "Serializer", "Service" };

@@ -3,6 +3,7 @@ using Microsoft.Extensions.DependencyInjection;
 using System;
 using DNI.Core.Shared.Enumerations;
 using DNI.Core.Shared.Contracts;
+using System.Reflection;
 
 namespace DNI.Core.Shared.Extensions
 {
@@ -64,7 +65,6 @@ namespace DNI.Core.Shared.Extensions
                 default:
                     throw new InvalidOperationException("Invalid DbContextMethod specified");
             }
-
         } 
     }
 }
