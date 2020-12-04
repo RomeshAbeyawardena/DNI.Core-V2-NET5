@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace DNI.Core.Shared
 {
-    public class SystemClock : ISystemClock
+    internal class SystemClock : ISystemClock
     {
         public static ISystemClock CreateDefault()
         {

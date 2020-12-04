@@ -10,7 +10,7 @@ using MessagePack;
 
 namespace DNI.Core.Abstractions.Serializers
 {
-    public class MemoryPackSerializer : SerializerBase
+    internal class MemoryPackSerializer : SerializerBase
     {
         public override T Deserialize<T>(IEnumerable<byte> data)
         {

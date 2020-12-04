@@ -9,6 +9,7 @@ using System.Reflection;
 
 namespace DNI.Core.Abstractions
 {
+
     internal class DefaultServiceRegistration : ServiceRegistrationBase
     {
         public override IServiceCollection RegisterServices(IServiceCollection services)
@@ -18,7 +19,7 @@ namespace DNI.Core.Abstractions
                 .AddSingleton(Newtonsoft.Json.JsonSerializer.CreateDefault())
                 .Scan(scanner => scanner
                     .FromAssemblies(assemblyDefinitions)
-                    .AddClasses(classes => classes.Where(DefineScannerFilters(def => def.AddRange(ScanTypes))))
+                    .AddClasses(classes => classes.Where(DefineScannerFilters(def => def.AddRange(ScanTypes))), false)
                     .AsImplementedInterfaces());
         }
 

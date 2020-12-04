@@ -11,7 +11,7 @@ using DNI.Core.Shared.Enumerations;
 
 namespace DNI.Core.Abstractions.Serializers
 {
-    public class JsonSerializer : SerializerBase
+    internal class JsonSerializer : SerializerBase
     {
         public override T Deserialize<T>(IEnumerable<byte> data)
         {

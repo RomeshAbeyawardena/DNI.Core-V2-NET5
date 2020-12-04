@@ -15,7 +15,7 @@ using DNI.Core.Shared.Enumerations;
 
 namespace DNI.Core.Abstractions.Services
 {
-    public class DistributedCacheService : CacheServiceBase
+    internal class DistributedCacheService : CacheServiceBase
     {
         public override IAttempt<T> TryGet<T>(string cacheKeyName, SerializerType serializerType)
         {

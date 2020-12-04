@@ -5,7 +5,7 @@ using DNI.Core.Shared.Enumerations;
 
 namespace DNI.Core.Abstractions.Factories
 {
-    public class SerializerFactory : ImplementationFactoryBase<ISerializer, SerializerType>, ISerializerFactory
+    internal class SerializerFactory : ImplementationFactoryBase<ISerializer, SerializerType>, ISerializerFactory
     {
         public ISerializer GetSerializer(SerializerType serializerType)
         {

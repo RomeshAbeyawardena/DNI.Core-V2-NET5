@@ -3,7 +3,7 @@ using System;
 
 namespace DNI.Core.Abstractions.Factories
 {
-    public class ValidatorFactory : ValidatorFactoryBase
+    internal class ValidatorFactory : ValidatorFactoryBase
     {
         public ValidatorFactory(IServiceProvider serviceProvider)
         {

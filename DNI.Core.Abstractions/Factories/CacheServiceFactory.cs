@@ -5,7 +5,7 @@ using DNI.Core.Shared.Enumerations;
 
 namespace DNI.Core.Abstractions.Factories
 {
-    public class CacheServiceFactory : ImplementationFactoryBase<ICacheService, CacheServiceType>, ICacheServiceFactory
+    internal class CacheServiceFactory : ImplementationFactoryBase<ICacheService, CacheServiceType>, ICacheServiceFactory
     {
         public ICacheService GetCacheService(CacheServiceType cacheServiceType)
         {
