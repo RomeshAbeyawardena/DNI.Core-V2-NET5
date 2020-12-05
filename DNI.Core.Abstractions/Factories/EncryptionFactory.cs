@@ -11,7 +11,7 @@ using System.Threading.Tasks;
 
 namespace DNI.Core.Abstractions.Factories
 {
-    public class EncryptionFactory : IEncryptionFactory
+    internal class EncryptionFactory : IEncryptionFactory
     {
         public EncryptionFactory(IOptions<EncryptionOptions> options)
         {
