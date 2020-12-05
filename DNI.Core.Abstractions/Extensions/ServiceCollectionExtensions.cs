@@ -24,7 +24,9 @@ namespace DNI.Core.Abstractions.Extensions
             return services;
         }
 
-        public static IServiceCollection ScanForTypes(this IServiceCollection services, Action<IDefinition<string>> scanTypeDefinitionAction, params Assembly[] assemblies)
+        public static IServiceCollection ScanForTypes(this IServiceCollection services, 
+            Action<IDefinition<string>> scanTypeDefinitionAction, 
+            params Assembly[] assemblies)
         {
             return services.Scan(scan => scan
             .FromAssemblies(assemblies)
