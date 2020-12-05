@@ -27,6 +27,13 @@ namespace DNI.Core.Abstractions.Services
                     .ComputeHash(encoding.GetBytes(value)));
         }
 
+        public override string HashString(string value, string salt, int iterations, int totalNumberOfBytes, Encoding encoding)
+        {
+            var passwordDeriveBytes = new PasswordDeriveBytes(value, encoding.GetBytes(salt), AlgorithmName, iterations);
+
+            return Convert.ToBase64String(passwordDeriveBytes.GetBytes(totalNumberOfBytes));
+        }
+
         private HashAlgorithm HashAlgorithm => HashAlgorithm.Create(AlgorithmName);
     }
 }

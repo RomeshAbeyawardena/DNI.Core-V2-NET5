@@ -2,6 +2,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Security.Cryptography;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -10,5 +11,6 @@ namespace DNI.Core.Shared.Contracts.Factories
     public interface IHashServiceFactory
     {
         IHashService GetHashService(string algorithmName);
+        IHashService GetHashService(HashAlgorithmName hashAlgorithmName);
     }
 }

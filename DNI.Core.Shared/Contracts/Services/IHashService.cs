@@ -9,6 +9,7 @@ namespace DNI.Core.Shared.Contracts.Services
     public interface IHashService
     {
         string HashString(string value, Encoding encoding);
+        string HashString(string value, string salt, int iterations, int totalNumberOfBytes, Encoding encoding);
         string AlgorithmName { get; }
     }
 }

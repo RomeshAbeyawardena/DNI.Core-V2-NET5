@@ -30,6 +30,18 @@ namespace DNI.Core.Tests
             Assert.AreEqual(comparedHashString, hashedString);
         }
 
+        [TestCase("12345!MySecureString!", "Salt45435435654", 16)]
+        [TestCase("MySecure!String123456", "My_4543535_Salt", 32)]
+        [TestCase("MySecureStringA56754", "878678678_Salt", 64)]
+        [TestCase("$MySecure_String54358!", "!tergret5nght", 128)]
+        public void HashTest(string expectedValue, string salt, int totalNumberOfBytes)
+        {
+            var hashedString = hashService.HashString(expectedValue, salt, 10000, totalNumberOfBytes, Encoding.ASCII);
+            var comparedHashString = hashService.HashString(expectedValue, salt, 10000, totalNumberOfBytes, Encoding.ASCII);
+
+            Assert.AreEqual(comparedHashString, hashedString);
+        }
+
         private IHashService hashService;
     }
 }
