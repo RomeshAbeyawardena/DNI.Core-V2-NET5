@@ -1,7 +1,9 @@
 using DNI.Core.Abstractions;
 using DNI.Core.Abstractions.Services;
+using DNI.Core.Shared.Contracts.Factories;
 using DNI.Core.Shared.Contracts.Services;
 using DNI.Core.Shared.Options;
+using Moq;
 using NUnit.Framework;
 using System.Text;
 
@@ -12,12 +14,11 @@ namespace DNI.Core.Tests
         [SetUp]
         public void Setup()
         {
-            defaultEncryptionService = new DefaultEncryptionService("AES", new EncryptionOptions { 
+            hashServiceFactoryMock = new Mock<IHashServiceFactory>();
+            defaultEncryptionService = new DefaultEncryptionService(hashServiceFactoryMock.Object, "AES", new EncryptionOptions { 
                 Encoding = Encoding.ASCII,
-                Key = EncryptionServiceBase.GenerateKey("a7932d0c68994618841006807ea1a6ba", //3a36a67a468c4b51
-                     EncryptionOptions.Default),
-                InitialVector = EncryptionServiceBase.GenerateKey("3a36a67a468c4b51", 
-                     EncryptionOptions.Default)
+                Key = "a7932d0c68994618841006807ea1a6ba",
+                Salt = "3a36a67a468c4b51"
             });
         }
         
@@ -35,6 +36,7 @@ namespace DNI.Core.Tests
             Assert.AreEqual(expectedResult, decryptedData);
         }
 
+        private IMock<IHashServiceFactory> hashServiceFactoryMock;
         private IEncryptionService defaultEncryptionService;
     }
 }

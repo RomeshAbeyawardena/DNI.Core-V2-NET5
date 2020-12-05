@@ -13,8 +13,10 @@ namespace DNI.Core.Abstractions.Factories
 {
     internal class EncryptionFactory : IEncryptionFactory
     {
-        public EncryptionFactory(IOptions<EncryptionOptions> options)
+        public EncryptionFactory(IHashServiceFactory hashServiceFactory,
+            IOptions<EncryptionOptions> options)
         {
+            this.hashServiceFactory = hashServiceFactory;
             encryptionOptions = options?.Value;
         }
 
@@ -22,12 +24,13 @@ namespace DNI.Core.Abstractions.Factories
         {
             if(encryptionOptions == null)
             {
-                return new DefaultEncryptionService(algorithName);
+                return new DefaultEncryptionService(hashServiceFactory, algorithName);
             }
 
-            return new DefaultEncryptionService(algorithName, encryptionOptions);
+            return new DefaultEncryptionService(hashServiceFactory, algorithName, encryptionOptions);
         }
 
+        private readonly IHashServiceFactory hashServiceFactory;
         private readonly EncryptionOptions encryptionOptions;
     }
 }

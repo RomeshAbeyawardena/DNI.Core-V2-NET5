@@ -7,22 +7,29 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Security.Cryptography;
 using System.IO;
+using DNI.Core.Shared.Contracts.Factories;
+using DNI.Core.Shared.Contracts.Services;
+using DNI.Core.Shared;
 
 namespace DNI.Core.Abstractions.Services
 {
     internal class DefaultEncryptionService : EncryptionServiceBase
     {
+        public DefaultEncryptionService(IHashServiceFactory hashServiceFactory, string encryptionMethod) 
+            : base(encryptionMethod)
+        {
+            this.hashServiceFactory = hashServiceFactory;
+        }
 
-        public DefaultEncryptionService(string encryptionMethod) : base(encryptionMethod)
+        public DefaultEncryptionService(IHashServiceFactory hashServiceFactory, string encryptionMethod, EncryptionOptions encryptionOptions) 
+            : this(hashServiceFactory, encryptionMethod)
         {
         }
 
-        public DefaultEncryptionService(string encryptionMethod, EncryptionOptions encryptionOptions) : base(encryptionMethod, encryptionOptions)
+        public DefaultEncryptionService(IHashServiceFactory hashServiceFactory, string encryptionMethod, IOptions<EncryptionOptions> options) 
+            : this(hashServiceFactory, encryptionMethod, options.Value)
         {
-        }
 
-        public DefaultEncryptionService(string encryptionMethod, IOptions<EncryptionOptions> options) : base(encryptionMethod, options)
-        {
         }
 
         public override string Decrypt(string value, EncryptionOptions encryptionOptions)
@@ -34,7 +41,9 @@ namespace DNI.Core.Abstractions.Services
 
             var encryptedBytes = Convert.FromBase64String(value);// encryptionOptions.Encoding.GetBytes(value);
 
-            return Decrypt(encryptedBytes, encryptionOptions.Key, encryptionOptions.InitialVector);
+            var encryptionConfiguration = GetEncryptionConfiguration(encryptionOptions);
+
+            return Decrypt(encryptedBytes, encryptionConfiguration.Key, encryptionConfiguration.InitialVector);
         }
 
         public override string Encrypt(string value, EncryptionOptions encryptionOptions)
@@ -44,8 +53,10 @@ namespace DNI.Core.Abstractions.Services
                 encryptionOptions = EncryptionOptions;
             }
 
+            var encryptionConfiguration = GetEncryptionConfiguration(encryptionOptions);
+
             return ConvertToBase64String(
-                Encrypt(value, encryptionOptions.Key, encryptionOptions.InitialVector));
+                Encrypt(value, encryptionConfiguration.Key, encryptionConfiguration.InitialVector));
         }
 
         private IEnumerable<byte> Encrypt(string value, IEnumerable<byte> key, IEnumerable<byte> initialVector)
@@ -71,6 +82,22 @@ namespace DNI.Core.Abstractions.Services
 
         }
 
+        private EncryptionConfiguration GetEncryptionConfiguration(EncryptionOptions encryptionOptions)
+        {
+            var hashService = GetHashService(encryptionOptions.HashAlgorithName);
+
+            return new EncryptionConfiguration {
+                Key = hashService.Hash(encryptionOptions.Key, encryptionOptions.Salt, 10000, encryptionOptions.KeySize, encryptionOptions.Encoding),
+                InitialVector = hashService.Hash(encryptionOptions.Key, encryptionOptions.Salt, 10000, encryptionOptions.KeySize, encryptionOptions.Encoding),
+            };
+        }
+
+        private IHashService GetHashService(HashAlgorithmName hashAlgorithmName)
+        {
+            return hashServiceFactory.GetHashService(hashAlgorithmName);
+        }
+
+        private readonly IHashServiceFactory hashServiceFactory;
         private SymmetricAlgorithm SymmetricAlgorithm => SymmetricAlgorithm.Create(EncryptionMethod);
     }
 }
