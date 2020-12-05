@@ -97,7 +97,7 @@ namespace DNI.Core.Abstractions.Services
         {
             return hashServiceFactory.GetHashService(hashAlgorithmName);
         }
-
+        
         private readonly IHashServiceFactory hashServiceFactory;
         private SymmetricAlgorithm SymmetricAlgorithm => SymmetricAlgorithm.Create(EncryptionMethod);
     }

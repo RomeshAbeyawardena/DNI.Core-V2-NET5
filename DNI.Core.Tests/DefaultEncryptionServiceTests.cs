@@ -1,5 +1,6 @@
 using DNI.Core.Abstractions;
 using DNI.Core.Abstractions.Services;
+using DNI.Core.Shared;
 using DNI.Core.Shared.Contracts.Factories;
 using DNI.Core.Shared.Contracts.Services;
 using DNI.Core.Shared.Options;
@@ -30,14 +31,15 @@ namespace DNI.Core.Tests
             hashServiceFactoryMock
                 .Setup(serviceFactory => serviceFactory.GetHashService(HashAlgorithmName.SHA512))
                 .Returns(hashServiceMock.Object);
-            defaultEncryptionService = new DefaultEncryptionService(hashServiceFactoryMock.Object, "AES", new EncryptionOptions { 
-                KeySize = 32,
-                IVSize = 16,
-                HashAlgorithName = HashAlgorithmName.SHA512,
-                Encoding = Encoding.ASCII,
-                Key = "a7932d0c68994618841006807ea1a6ba",
-                Salt = "3a36a67a468c4b51"
-            });
+            defaultEncryptionService = new DefaultEncryptionService(hashServiceFactoryMock.Object, SymmetricAlgorithmName.Rijndael, 
+                new EncryptionOptions { 
+                    KeySize = 32,
+                    IVSize = 16,
+                    HashAlgorithName = HashAlgorithmName.SHA512,
+                    Encoding = Encoding.ASCII,
+                    Key = "a7932d0c68994618841006807ea1a6ba",
+                    Salt = "3a36a67a468c4b51"
+                });
         }
         
         [TestCase("My-Secret-Test-String")]
