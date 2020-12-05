@@ -5,6 +5,7 @@ using DNI.Core.Shared.Contracts.Services;
 using DNI.Core.Shared.Options;
 using Moq;
 using NUnit.Framework;
+using System.Security.Cryptography;
 using System.Text;
 
 namespace DNI.Core.Tests
@@ -14,8 +15,25 @@ namespace DNI.Core.Tests
         [SetUp]
         public void Setup()
         {
+            hashServiceMock = new Mock<IHashService>();
             hashServiceFactoryMock = new Mock<IHashServiceFactory>();
+
+            hashServiceMock
+                .Setup(hashService => hashService.Hash("a7932d0c68994618841006807ea1a6ba", "3a36a67a468c4b51", 10000, 32, Encoding.ASCII))
+                .Returns(Encoding.ASCII.GetBytes("a7932d0c68994618841006807ea1a6ba"));
+
+            hashServiceMock
+                .Setup(hashService => hashService.Hash("a7932d0c68994618841006807ea1a6ba", "3a36a67a468c4b51", 10000, 16, Encoding.ASCII))
+                .Returns(Encoding.ASCII.GetBytes("3a36a67a468c4b51"));
+
+
+            hashServiceFactoryMock
+                .Setup(serviceFactory => serviceFactory.GetHashService(HashAlgorithmName.SHA512))
+                .Returns(hashServiceMock.Object);
             defaultEncryptionService = new DefaultEncryptionService(hashServiceFactoryMock.Object, "AES", new EncryptionOptions { 
+                KeySize = 32,
+                IVSize = 16,
+                HashAlgorithName = HashAlgorithmName.SHA512,
                 Encoding = Encoding.ASCII,
                 Key = "a7932d0c68994618841006807ea1a6ba",
                 Salt = "3a36a67a468c4b51"
@@ -36,7 +54,8 @@ namespace DNI.Core.Tests
             Assert.AreEqual(expectedResult, decryptedData);
         }
 
-        private IMock<IHashServiceFactory> hashServiceFactoryMock;
+        private Mock<IHashService> hashServiceMock;
+        private Mock<IHashServiceFactory> hashServiceFactoryMock;
         private IEncryptionService defaultEncryptionService;
     }
 }

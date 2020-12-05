@@ -16,14 +16,15 @@ namespace DNI.Core.Abstractions.Services
     internal class DefaultEncryptionService : EncryptionServiceBase
     {
         public DefaultEncryptionService(IHashServiceFactory hashServiceFactory, string encryptionMethod) 
-            : base(encryptionMethod)
+            : this(hashServiceFactory, encryptionMethod, EncryptionOptions.Default)
         {
-            this.hashServiceFactory = hashServiceFactory;
+            
         }
 
         public DefaultEncryptionService(IHashServiceFactory hashServiceFactory, string encryptionMethod, EncryptionOptions encryptionOptions) 
-            : this(hashServiceFactory, encryptionMethod)
+            : base(encryptionMethod, encryptionOptions)
         {
+            this.hashServiceFactory = hashServiceFactory;
         }
 
         public DefaultEncryptionService(IHashServiceFactory hashServiceFactory, string encryptionMethod, IOptions<EncryptionOptions> options) 
@@ -88,7 +89,7 @@ namespace DNI.Core.Abstractions.Services
 
             return new EncryptionConfiguration {
                 Key = hashService.Hash(encryptionOptions.Key, encryptionOptions.Salt, 10000, encryptionOptions.KeySize, encryptionOptions.Encoding),
-                InitialVector = hashService.Hash(encryptionOptions.Key, encryptionOptions.Salt, 10000, encryptionOptions.KeySize, encryptionOptions.Encoding),
+                InitialVector = hashService.Hash(encryptionOptions.Key, encryptionOptions.Salt, 10000, encryptionOptions.IVSize, encryptionOptions.Encoding),
             };
         }
 
