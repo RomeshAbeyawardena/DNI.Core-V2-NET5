@@ -1,6 +1,7 @@
 ﻿using DNI.Core.Shared;
 using DNI.Core.Shared.Contracts;
 using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.DependencyInjection.Extensions;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -12,6 +13,18 @@ namespace DNI.Core.Abstractions.Extensions
 {
     public static class ServiceCollectionExtensions
     {
+        public static IServiceCollection RegisterModelForFluentEncryption<T>(this IServiceCollection services, Action<IFluentEncryptionConfiguration<T>> action)
+        {
+            services
+                .TryAddSingleton<IFluentEncryptionConfiguration<T>>((s) => {
+                    var configuration = new FluentEncryptionConfiguration<T>();
+                    action(configuration);
+                    return configuration;
+                });
+
+            return services;
+        }
+
         public static IServiceCollection RegisterServices<TServiceRegistration>(this IServiceCollection services, bool registerInternalServices = true)
             where TServiceRegistration : IServiceRegistration
         {
