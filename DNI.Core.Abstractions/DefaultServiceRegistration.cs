@@ -2,6 +2,7 @@
 using DNI.Core.Shared;
 using DNI.Core.Shared.Contracts;
 using DNI.Core.Shared.Extensions;
+using DNI.Core.Shared.Options;
 using Microsoft.Extensions.DependencyInjection;
 using System;
 using System.Collections.Generic;
@@ -15,8 +16,11 @@ namespace DNI.Core.Abstractions
     {
         public override IServiceCollection RegisterServices(IServiceCollection services)
         {
-            return services
+            services
                 .AddSingleton(SystemClock.CreateDefault())
+                .AddOptions<EncryptionOptions>()
+                .Configure(configureEncrpyionOptions);
+            return services
                 .AddSingleton(Newtonsoft.Json.JsonSerializer.CreateDefault())
                 .ScanForTypes(typeDefinition => typeDefinition.AddRange(ScanTypes), 
                     AssemblyDefinitions.ToArray());

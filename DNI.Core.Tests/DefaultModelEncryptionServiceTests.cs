@@ -9,6 +9,8 @@ using System.Text;
 using System.Threading.Tasks;
 using DNI.Core.Abstractions.Services;
 using DNI.Core.Shared.Contracts.Services;
+using DNI.Core.Shared.Contracts.Factories;
+using DNI.Core.Abstractions.Factories;
 
 namespace DNI.Core.Tests
 {
@@ -20,6 +22,8 @@ namespace DNI.Core.Tests
             services = new ServiceCollection();
             services
                 .AddSingleton(typeof(IModelEncryptionService<>), typeof(DefaultModelEncryptionService<>))
+                .AddSingleton<IEncryptionFactory, EncryptionFactory>()
+                .AddSingleton<IHashServiceFactory, HashServiceFactory>()
                 .RegisterModelForFluentEncryption<Person>(ct => ct
                     .Configure(person => person.FirstName)
                     .Configure(person => person.MiddleName)
@@ -32,7 +36,12 @@ namespace DNI.Core.Tests
             var modelEncryptionService = ServiceProvider
                 .GetRequiredService<IModelEncryptionService<Person>>();
 
-            var person = new Person{ FirstName = "John", MiddleName = "Harrison", LastName = "Doe" };
+            var person = new Person { 
+                FirstName = "John", 
+                MiddleName = "Harrison", 
+                LastName = "Doe" 
+            };
+
             modelEncryptionService.Encrypt(person);
 
             Assert.AreNotEqual("John", person.FirstName);

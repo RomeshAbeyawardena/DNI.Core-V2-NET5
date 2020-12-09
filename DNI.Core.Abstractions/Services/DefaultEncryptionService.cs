@@ -92,15 +92,15 @@ namespace DNI.Core.Abstractions.Services
                             : encryptionOptions.Iterations;
 
             return new EncryptionConfiguration {
-                Key = hashService.Hash(
+                Key = hashService.Hash (
                         encryptionOptions.Key, 
                         encryptionOptions.Salt, 
                         iterations, 
                         encryptionOptions.KeySize, 
                         encryptionOptions.Encoding),
-                InitialVector = hashService.Hash(
-                        encryptionOptions.Key, 
-                        encryptionOptions.Salt, 
+                InitialVector = hashService.Hash (
+                        encryptionOptions.IVKey, 
+                        encryptionOptions.IVSalt, 
                         iterations, 
                         encryptionOptions.IVSize, 
                         encryptionOptions.Encoding),

@@ -1,4 +1,5 @@
 ﻿using DNI.Core.Shared.Contracts;
+using DNI.Core.Shared.Contracts.Factories;
 using DNI.Core.Shared.Contracts.Services;
 using System;
 using System.Collections.Generic;
@@ -11,8 +12,10 @@ namespace DNI.Core.Abstractions.Services
 {
     public class DefaultModelEncryptionService<T> : IModelEncryptionService<T>
     {
-        public DefaultModelEncryptionService(IFluentEncryptionConfiguration<T> fluentEncryptionConfiguration)
+        public DefaultModelEncryptionService(IFluentEncryptionConfiguration<T> fluentEncryptionConfiguration,
+            IEncryptionFactory encryptionFactory)
         {
+            this.encryptionFactory = encryptionFactory;
             this.fluentEncryptionConfiguration = fluentEncryptionConfiguration;
             modelExpressionVisitor = new ModelExpressionVisitor();
         }
@@ -52,6 +55,7 @@ namespace DNI.Core.Abstractions.Services
             private string memberName;
         }
 
+        private readonly IEncryptionFactory encryptionFactory;
         private readonly ModelExpressionVisitor modelExpressionVisitor;
         private readonly IFluentEncryptionConfiguration<T> fluentEncryptionConfiguration;
     }

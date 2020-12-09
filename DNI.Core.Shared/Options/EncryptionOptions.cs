@@ -13,6 +13,8 @@ namespace DNI.Core.Shared.Options
         public Encoding Encoding { get; set; }
         public string Key { get; set; }
         public string Salt { get; set; }
+        public string IVKey { get; set; }
+        public string IVSalt { get; set; }
         public int KeySize { get; set; }
         public int IVSize { get; set; }
         public int Iterations { get; set; }
