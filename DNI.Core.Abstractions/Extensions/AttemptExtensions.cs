@@ -11,26 +11,35 @@ namespace DNI.Core.Abstractions.Extensions
 {
     public static class AttemptExtensions
     {
-        public static TResult AttemptedResponseResult<T, TResult>(this IAttempt<T> attempt,
+        public static TResult AttemptedResponseResult<T, TResult>(this IAttemptedResponse<T> attempt,
             Func<object, TResult> successResultDelegate,
-            Func<IAttempt<T>, TResult> failedResultDelegate)
+            Func<IAttempt, TResult> failedResultDelegate)
         {
-            if (attempt is not AttemptedResponseBase<T> attemptedResponse)
+            if(attempt.Type == RequestQueryType.Multiple)
             {
-                return attempt.AttemptedResult(result => successResultDelegate(result), failedResultDelegate);
+                if(attempt.AttemptMany != null)
+                {
+                    if(attempt.AttemptMany.Successful)
+                    { 
+                        return successResultDelegate(attempt.AttemptMany.Result);
+                    }
+
+                    return failedResultDelegate(attempt.AttemptMany);
+                }
+                throw new NullReferenceException();
             }
 
-            if (attempt.Successful)
+            if(attempt.Attempt != null)
             {
-                if (attemptedResponse.Type == RequestQueryType.Multiple)
+                if (attempt.Attempt.Successful)
                 {
-                    return successResultDelegate(attemptedResponse.AttemptMany);
+                    return successResultDelegate(attempt.Attempt.Result);
                 }
 
-                return successResultDelegate(attempt.Result);
+                return failedResultDelegate(attempt.Attempt);
             }
 
-            return failedResultDelegate(attempt);
+            throw new NullReferenceException();
         }
     }
 }
