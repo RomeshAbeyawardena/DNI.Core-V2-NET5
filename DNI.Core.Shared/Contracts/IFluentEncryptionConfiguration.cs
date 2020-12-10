@@ -14,6 +14,7 @@ namespace DNI.Core.Shared.Contracts
     {
         IFluentEncryptionConfiguration<T> Configure(
             Expression<Func<T, object>> propertySelector, 
+            EncryptionClassification encryptionClassification,
             EncryptionPolicy encryptionPolicy = EncryptionPolicy.RequireEncryption, 
             Func<T, string> getPropertyString = default);
 

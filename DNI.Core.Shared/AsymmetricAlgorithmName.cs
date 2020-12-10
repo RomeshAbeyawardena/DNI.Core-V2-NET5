@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace DNI.Core.Shared
 {
-    public static class SymmetricAlgorithmName
+    public static class AsymmetricAlgorithmName
     {
         public const string AES = "AES";
         public const string RSA = "DES";

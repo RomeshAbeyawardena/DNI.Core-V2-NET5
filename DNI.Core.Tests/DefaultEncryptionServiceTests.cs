@@ -30,7 +30,7 @@ namespace DNI.Core.Tests
             hashServiceFactoryMock
                 .Setup(serviceFactory => serviceFactory.GetHashService(HashAlgorithmName.SHA512))
                 .Returns(hashServiceMock.Object);
-            defaultEncryptionService = new DefaultEncryptionService(hashServiceFactoryMock.Object, SymmetricAlgorithmName.Rijndael, 
+            defaultEncryptionService = new DefaultEncryptionService(hashServiceFactoryMock.Object, AsymmetricAlgorithmName.Rijndael, 
                 new EncryptionOptions { 
                     KeySize = 32,
                     IVSize = 16,
