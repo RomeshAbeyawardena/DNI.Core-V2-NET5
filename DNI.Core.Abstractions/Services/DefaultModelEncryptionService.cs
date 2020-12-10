@@ -13,10 +13,14 @@ namespace DNI.Core.Abstractions.Services
     public class DefaultModelEncryptionService<T> : IModelEncryptionService<T>
     {
         public DefaultModelEncryptionService(IFluentEncryptionConfiguration<T> fluentEncryptionConfiguration,
+            IEncryptionClassificationFactory encryptionClassificationFactory,
+            IHashServiceFactory hashServiceFactory,
             IEncryptionFactory encryptionFactory)
         {
             this.encryptionFactory = encryptionFactory;
             this.fluentEncryptionConfiguration = fluentEncryptionConfiguration;
+            this.encryptionClassificationFactory = encryptionClassificationFactory;
+            this.hashServiceFactory = hashServiceFactory;
             modelExpressionVisitor = new ModelExpressionVisitor();
         }
 
@@ -25,6 +29,10 @@ namespace DNI.Core.Abstractions.Services
             var modelType = typeof(T);
              foreach (var option in fluentEncryptionConfiguration.Options)
             {
+                var encryptionOptions = encryptionClassificationFactory.GetEncryptionOptions(option.Classification);
+
+                var encryptionService = encryptionFactory.GetEncryptionService(encryptionOptions.AlgorithmName);
+
                 var memberName = modelExpressionVisitor.GetLastVisitedMember(option.PropertyExpression.Body);
 
                 var property = modelType.GetProperty(memberName);
@@ -32,7 +40,7 @@ namespace DNI.Core.Abstractions.Services
                 var value = property.GetValue(model);
                 if(value != null)
                 { 
-                    property.SetValue(model, Convert.ToBase64String(Encoding.ASCII.GetBytes(value.ToString())));
+                    property.SetValue(model, encryptionService.Encrypt(value.ToString(), encryptionOptions));
                 }
             }
             
@@ -58,5 +66,7 @@ namespace DNI.Core.Abstractions.Services
         private readonly IEncryptionFactory encryptionFactory;
         private readonly ModelExpressionVisitor modelExpressionVisitor;
         private readonly IFluentEncryptionConfiguration<T> fluentEncryptionConfiguration;
+        private readonly IEncryptionClassificationFactory encryptionClassificationFactory;
+        private readonly IHashServiceFactory hashServiceFactory;
     }
 }

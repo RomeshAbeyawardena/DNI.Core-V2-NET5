@@ -1,4 +1,5 @@
 ﻿using DNI.Core.Shared.Contracts;
+using DNI.Core.Shared.Enumerations;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -16,5 +17,7 @@ namespace DNI.Core.Shared.Options
         public EncryptionPolicy Policy { get; set; }
 
         public Func<T, string> GetPropertyString { get; set; }
+
+        public EncryptionClassification Classification { get; set; }
     }
 }

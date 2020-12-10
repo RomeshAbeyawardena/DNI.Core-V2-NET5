@@ -11,6 +11,7 @@ using DNI.Core.Abstractions.Services;
 using DNI.Core.Shared.Contracts.Services;
 using DNI.Core.Shared.Contracts.Factories;
 using DNI.Core.Abstractions.Factories;
+using Moq;
 
 namespace DNI.Core.Tests
 {
@@ -19,13 +20,17 @@ namespace DNI.Core.Tests
         [SetUp]
         public void Setup()
         {
+            encryptionClassificationFactoryMock = new Mock<IEncryptionClassificationFactory>();
+            encryptionFactoryMock = new Mock<IEncryptionFactory>();
+            hashServiceMock =  new Mock<IHashServiceFactory>();
             services = new ServiceCollection();
             services
                 .AddSingleton(typeof(IModelEncryptionService<>), typeof(DefaultModelEncryptionService<>))
-                .AddSingleton<IEncryptionFactory, EncryptionFactory>()
-                .AddSingleton<IHashServiceFactory, HashServiceFactory>()
+                .AddSingleton(encryptionClassificationFactoryMock.Object)
+                .AddSingleton(encryptionFactoryMock.Object)
+                .AddSingleton(hashServiceMock.Object)
                 .RegisterModelForFluentEncryption<Person>(ct => ct
-                    .Configure(person => person.FirstName)
+                    .Configure(person => person.FirstName)  
                     .Configure(person => person.MiddleName)
                     .Configure(person => person.LastName));
         }
@@ -45,10 +50,13 @@ namespace DNI.Core.Tests
             modelEncryptionService.Encrypt(person);
 
             Assert.AreNotEqual("John", person.FirstName);
-            Assert.AreNotEqual("Harrison", person.FirstName);
-            Assert.AreNotEqual("Doe", person.FirstName);
+            Assert.AreNotEqual("Harrison", person.MiddleName);
+            Assert.AreNotEqual("Doe", person.LastName);
         }
 
+        private Mock<IEncryptionClassificationFactory> encryptionClassificationFactoryMock;
+        private Mock<IEncryptionFactory> encryptionFactoryMock; 
+        private Mock<IHashServiceFactory> hashServiceMock;
         private IServiceCollection services;
         private IServiceProvider ServiceProvider => services.BuildServiceProvider();
     }

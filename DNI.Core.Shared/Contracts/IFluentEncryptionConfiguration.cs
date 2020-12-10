@@ -1,4 +1,5 @@
-﻿using System;
+﻿using DNI.Core.Shared.Enumerations;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Linq.Expressions;
@@ -22,6 +23,7 @@ namespace DNI.Core.Shared.Contracts
     public interface IFluentEncryptionConfigurationOption<T>
     {
         Expression<Func<T, object>> PropertyExpression { get; }
+        EncryptionClassification Classification { get; }
         EncryptionPolicy Policy { get; }
         Func<T, string> GetPropertyString { get; }
     }

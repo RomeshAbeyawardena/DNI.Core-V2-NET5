@@ -18,8 +18,7 @@ namespace DNI.Core.Abstractions
         {
             services
                 .AddSingleton(SystemClock.CreateDefault())
-                .AddOptions<EncryptionOptions>()
-                .Configure(configureEncrpyionOptions);
+                .AddOptions<EncryptionOptions>();
             return services
                 .AddSingleton(Newtonsoft.Json.JsonSerializer.CreateDefault())
                 .ScanForTypes(typeDefinition => typeDefinition.AddRange(ScanTypes), 
