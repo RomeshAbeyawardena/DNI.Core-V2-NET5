@@ -40,7 +40,6 @@ namespace DNI.Core.Tests
             encryptionFactoryMock = new Mock<IEncryptionFactory>();
             encryptionServiceMock = new Mock<IEncryptionService>();
 
-            encryptionServiceMock.Setup(s => s.Encrypt(It.IsAny<string>(), It.IsAny<EncryptionOptions>())).Verifiable();
             encryptionFactoryMock.Setup(s => s.GetEncryptionService(AsymmetricAlgorithmName.Rijndael))
                 .Returns(encryptionServiceMock.Object).Verifiable();
 
@@ -60,10 +59,12 @@ namespace DNI.Core.Tests
         }
 
         [Test]
-        public void EncryptAndDecrypt()
+        public void Encrypt()
         {
             var modelEncryptionService = ServiceProvider
                 .GetRequiredService<IModelEncryptionService<Person>>();
+
+            encryptionServiceMock.Setup(s => s.Encrypt(It.IsAny<string>(), It.IsAny<EncryptionOptions>())).Verifiable();
 
             var person = new Person { 
                 EmailAddress = "john.doe@website.net",
@@ -76,6 +77,29 @@ namespace DNI.Core.Tests
 
             encryptionClassificationFactoryMock.Verify();
             encryptionFactoryMock.Verify();
+            encryptionServiceMock.Verify();
+        }
+
+        [Test]
+        public void Decrypt()
+        {
+            var modelEncryptionService = ServiceProvider
+                .GetRequiredService<IModelEncryptionService<Person>>();
+
+            encryptionServiceMock.Setup(s => s.Decrypt(It.IsAny<string>(), It.IsAny<EncryptionOptions>())).Verifiable();
+
+            var person = new Person { 
+                EmailAddress = "john.doe@website.net",
+                FirstName = "John", 
+                MiddleName = "Harrison", 
+                LastName = "Doe" 
+            };
+
+            modelEncryptionService.Decrypt(person);
+
+            encryptionClassificationFactoryMock.Verify();
+            encryptionFactoryMock.Verify();
+
             encryptionServiceMock.Verify();
         }
 
