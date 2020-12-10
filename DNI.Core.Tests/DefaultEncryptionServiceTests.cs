@@ -24,21 +24,22 @@ namespace DNI.Core.Tests
                 .Returns(Encoding.ASCII.GetBytes("a7932d0c68994618841006807ea1a6ba"));
 
             hashServiceMock
-                .Setup(hashService => hashService.Hash("a7932d0c68994618841006807ea1a6ba", "3a36a67a468c4b51", 10000, 16, Encoding.ASCII))
-                .Returns(Encoding.ASCII.GetBytes("3a36a67a468c4b51"));
-
+                .Setup(hashService => hashService.Hash("c440a7f9bd2f459cb091a3e6bdbdbb03", "8c45e461a6a90e99", 10000, 16, Encoding.ASCII))
+                .Returns(Encoding.ASCII.GetBytes("8c45e461a6a90e99"));
 
             hashServiceFactoryMock
                 .Setup(serviceFactory => serviceFactory.GetHashService(HashAlgorithmName.SHA512))
                 .Returns(hashServiceMock.Object);
-            defaultEncryptionService = new DefaultEncryptionService(hashServiceFactoryMock.Object, SymmetricAlgorithmName.Rijndael, 
+            defaultEncryptionService = new DefaultEncryptionService(hashServiceFactoryMock.Object, AsymmetricAlgorithmName.Rijndael, 
                 new EncryptionOptions { 
                     KeySize = 32,
                     IVSize = 16,
                     HashAlgorithName = HashAlgorithmName.SHA512,
                     Encoding = Encoding.ASCII,
                     Key = "a7932d0c68994618841006807ea1a6ba",
-                    Salt = "3a36a67a468c4b51"
+                    Salt = "3a36a67a468c4b51",
+                    IVKey = "c440a7f9bd2f459cb091a3e6bdbdbb03",
+                    IVSalt = "8c45e461a6a90e99"
                 });
         }
         

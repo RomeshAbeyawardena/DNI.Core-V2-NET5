@@ -87,9 +87,23 @@ namespace DNI.Core.Abstractions.Services
         {
             var hashService = GetHashService(encryptionOptions.HashAlgorithName);
 
+            var iterations = encryptionOptions.Iterations == default 
+                            ? Shared.Constants.Encryption.DefaultIterations
+                            : encryptionOptions.Iterations;
+
             return new EncryptionConfiguration {
-                Key = hashService.Hash(encryptionOptions.Key, encryptionOptions.Salt, 10000, encryptionOptions.KeySize, encryptionOptions.Encoding),
-                InitialVector = hashService.Hash(encryptionOptions.Key, encryptionOptions.Salt, 10000, encryptionOptions.IVSize, encryptionOptions.Encoding),
+                Key = hashService.Hash (
+                        encryptionOptions.Key, 
+                        encryptionOptions.Salt, 
+                        iterations, 
+                        encryptionOptions.KeySize, 
+                        encryptionOptions.Encoding),
+                InitialVector = hashService.Hash (
+                        encryptionOptions.IVKey, 
+                        encryptionOptions.IVSalt, 
+                        iterations, 
+                        encryptionOptions.IVSize, 
+                        encryptionOptions.Encoding),
             };
         }
 
