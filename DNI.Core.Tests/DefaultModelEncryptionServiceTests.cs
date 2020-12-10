@@ -16,6 +16,7 @@ using DNI.Core.Shared.Enumerations;
 using DNI.Core.Shared.Options;
 using System.Security.Cryptography;
 using DNI.Core.Shared;
+using System.Net.Security;
 
 namespace DNI.Core.Tests
 {
@@ -51,6 +52,7 @@ namespace DNI.Core.Tests
                 .AddSingleton(encryptionFactoryMock.Object)
                 .AddSingleton(hashServiceMock.Object)
                 .RegisterModelForFluentEncryption<Person>(ct => ct
+                    .Configure(person => person.Reference, EncryptionClassification.None, EncryptionPolicy.NoEncryption)
                     .Configure(person => person.EmailAddress, EncryptionClassification.PersonalData)
                     .Configure(person => person.FirstName, EncryptionClassification.CommonData)  
                     .Configure(person => person.MiddleName, EncryptionClassification.CommonData)
@@ -91,6 +93,7 @@ namespace DNI.Core.Tests
         public string FirstName { get; set; }
         public string MiddleName { get; set; }
         public string LastName { get; set; }
+        public string Reference { get; set; }
         public DateTime DateOfBirth { get; set; }
     }
 }

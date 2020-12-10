@@ -12,6 +12,10 @@ namespace DNI.Core.Shared.Enumerations
     public enum EncryptionClassification
     {
         /// <summary>
+        /// Level 0: No encryption
+        /// </summary>
+        None = 0,
+        /// <summary>
         /// Level 3: Requires encryption to protect unique data belonging to an entity, such as an e-mail address or national identity details
         /// </summary>
         PersonalData = 3,

@@ -1,10 +1,13 @@
 ﻿using DNI.Core.Shared.Contracts;
 using DNI.Core.Shared.Contracts.Factories;
 using DNI.Core.Shared.Contracts.Services;
+using DNI.Core.Shared.Options;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Linq.Expressions;
+using System.Net.Security;
+using System.Reflection;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -26,9 +29,27 @@ namespace DNI.Core.Abstractions.Services
 
         public void Encrypt(T model)
         {
+            ProcessOptions(fluentEncryptionConfiguration, model, (encryptionOptions, encryptionService, property, value) => {
+                if(value != null)
+                { 
+                    property.SetValue(model, encryptionService.Encrypt(value.ToString(), encryptionOptions));
+                }
+            });
+        }
+
+        private void ProcessOptions(
+            IFluentEncryptionConfiguration<T> configuration, 
+            T model,
+            Action<EncryptionOptions, IEncryptionService, PropertyInfo, object> processAction)
+        {
             var modelType = typeof(T);
-             foreach (var option in fluentEncryptionConfiguration.Options)
+             foreach (var option in configuration.Options)
             {
+                if(option.Policy == EncryptionPolicy.NoEncryption)
+                {
+                    continue;
+                }
+
                 var encryptionOptions = encryptionClassificationFactory.GetEncryptionOptions(option.Classification);
 
                 var encryptionService = encryptionFactory.GetEncryptionService(encryptionOptions.AlgorithmName);
@@ -38,12 +59,20 @@ namespace DNI.Core.Abstractions.Services
                 var property = modelType.GetProperty(memberName);
 
                 var value = property.GetValue(model);
-                if(value != null)
-                { 
-                    property.SetValue(model, encryptionService.Encrypt(value.ToString(), encryptionOptions));
-                }
+
+                processAction(encryptionOptions, encryptionService, property, value);
             }
             
+        }
+
+        public void Decrypt(T model)
+        {
+            ProcessOptions(fluentEncryptionConfiguration, model, (encryptionOptions, encryptionService, property, value) => {
+                if(value != null)
+                { 
+                    property.SetValue(model, encryptionService.Decrypt(value.ToString(), encryptionOptions));
+                }
+            });
         }
 
         internal class ModelExpressionVisitor : ExpressionVisitor
