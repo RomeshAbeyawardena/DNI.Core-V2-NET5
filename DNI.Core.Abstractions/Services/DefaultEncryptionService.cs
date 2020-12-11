@@ -10,9 +10,11 @@ using System.IO;
 using DNI.Core.Shared.Contracts.Factories;
 using DNI.Core.Shared.Contracts.Services;
 using DNI.Core.Shared;
+using DNI.Core.Shared.Attributes;
 
 namespace DNI.Core.Abstractions.Services
 {
+    [IgnoreScanning]
     internal class DefaultEncryptionService : EncryptionServiceBase
     {
         public DefaultEncryptionService(IHashServiceFactory hashServiceFactory, string encryptionMethod) 
