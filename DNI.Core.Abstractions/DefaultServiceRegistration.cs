@@ -1,6 +1,8 @@
 ﻿using DNI.Core.Abstractions.Extensions;
+using DNI.Core.Abstractions.Services;
 using DNI.Core.Shared;
 using DNI.Core.Shared.Contracts;
+using DNI.Core.Shared.Contracts.Services;
 using DNI.Core.Shared.Extensions;
 using DNI.Core.Shared.Options;
 using Microsoft.Extensions.DependencyInjection;
@@ -21,6 +23,7 @@ namespace DNI.Core.Abstractions
                 .AddOptions<EncryptionOptions>();
             return services
                 .AddSingleton(Newtonsoft.Json.JsonSerializer.CreateDefault())
+                .AddSingleton(typeof(IModelEncryptionService<>), typeof(DefaultModelEncryptionService<>))
                 .ScanForTypes(typeDefinition => typeDefinition.AddRange(ScanTypes), 
                     AssemblyDefinitions.ToArray());
         }
