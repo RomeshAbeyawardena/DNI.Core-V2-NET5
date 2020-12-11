@@ -29,6 +29,18 @@ namespace DNI.Core.Abstractions
 
         }
 
+        protected AttemptedResponseBase (T result, RequestQueryType type = RequestQueryType.Single)
+            : this(Shared.Attempt.Success(result), type)
+        {
+
+        }
+
+        protected AttemptedResponseBase (IEnumerable<T> result, RequestQueryType type = RequestQueryType.Single)
+            : this(null, Shared.Attempt.Success(result), type)
+        {
+
+        }
+
         public RequestQueryType Type { get; }
         public IAttempt<T> Attempt { get; }
         public IAttempt<IEnumerable<T>> AttemptMany { get; }
