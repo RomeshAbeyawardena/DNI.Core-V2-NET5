@@ -20,5 +20,22 @@ namespace DNI.Core.Shared.Options
         public int IVSize { get; set; }
         public int Iterations { get; set; }
         public HashAlgorithmName HashAlgorithName { get; set; }
+
+        public void Set(EncryptionOptions encryptionOptions)
+        {
+            if(encryptionOptions == null)
+                return;
+
+            AlgorithmName = encryptionOptions.AlgorithmName;
+            Encoding = encryptionOptions.Encoding;
+            Key = encryptionOptions.Key;
+            Salt = encryptionOptions.Salt;
+            IVKey = encryptionOptions.IVKey;
+            IVSalt = encryptionOptions.IVSalt;
+            KeySize = encryptionOptions.KeySize;
+            IVSize = encryptionOptions.IVSize;
+            Iterations = encryptionOptions.Iterations;
+            HashAlgorithName = encryptionOptions.HashAlgorithName;
+        }
     }
 }

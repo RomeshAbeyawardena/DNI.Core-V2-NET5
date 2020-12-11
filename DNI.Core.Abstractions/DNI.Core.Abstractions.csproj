@@ -12,6 +12,10 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <Compile Include="..\SharedAssemblyInfo.cs" Link="Properties\SharedAssemblyInfo.cs" />
+  </ItemGroup>
+
+  <ItemGroup>
     <PackageReference Include="FluentValidation" Version="9.3.0" />
     <PackageReference Include="MediatR" Version="9.0.0" />
     <PackageReference Include="MessagePack" Version="2.2.60" />
