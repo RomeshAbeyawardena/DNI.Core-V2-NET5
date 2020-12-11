@@ -1,4 +1,5 @@
 ﻿using DNI.Core.Shared;
+using DNI.Core.Shared.Attributes;
 using DNI.Core.Shared.Contracts;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.DependencyInjection.Extensions;
@@ -43,7 +44,9 @@ namespace DNI.Core.Abstractions.Extensions
         {
             return services.Scan(scan => scan
             .FromAssemblies(assemblies)
-            .AddClasses(classFilter => classFilter.Where(DefineScannerFilters(scanTypeDefinitionAction)))
+            .AddClasses(classFilter => classFilter
+            .WithoutAttribute<IgnoreScanningAttribute>()
+            .Where(DefineScannerFilters(scanTypeDefinitionAction)))
             .AsImplementedInterfaces());
         }
 

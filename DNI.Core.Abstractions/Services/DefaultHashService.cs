@@ -5,8 +5,11 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Security.Cryptography;
+using DNI.Core.Shared.Attributes;
+
 namespace DNI.Core.Abstractions.Services
 {
+    [IgnoreScanning]
     internal class DefaultHashService : HashServiceBase
     {
         public DefaultHashService(string algorithmName) 
