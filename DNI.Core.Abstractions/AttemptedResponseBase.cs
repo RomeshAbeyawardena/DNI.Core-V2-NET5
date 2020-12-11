@@ -1,5 +1,7 @@
 ﻿using DNI.Core.Shared.Contracts;
 using DNI.Core.Shared.Enumerations;
+using FluentValidation.Results;
+using System;
 using System.Collections.Generic;
 
 namespace DNI.Core.Abstractions
@@ -37,6 +39,12 @@ namespace DNI.Core.Abstractions
 
         protected AttemptedResponseBase (IEnumerable<T> result, RequestQueryType type = RequestQueryType.Single)
             : this(null, Shared.Attempt.Success(result), type)
+        {
+
+        }
+
+        protected AttemptedResponseBase (Exception exception, IEnumerable<ValidationFailure> validationFailures = default)
+            : this(Shared.Attempt.Failed<T>(exception, validationFailures), RequestQueryType.None)
         {
 
         }
