@@ -23,6 +23,7 @@ namespace DNI.Core.Tests
             {
                 Id = 1,
                 EmailAddress = "john.doe@website.net",
+                CustomerId = 12,
                 FirstName = "John",
                 MiddleName = "Middleton",
                 LastName = "Harrison",
@@ -33,6 +34,7 @@ namespace DNI.Core.Tests
             {
                 Id = -1,
                 EmailAddress = "john.doe@website.net",
+                CustomerId = null,
                 FirstName = "John",
                 MiddleName = "Middleton",
                 LastName = "Harrison",
@@ -45,6 +47,27 @@ namespace DNI.Core.Tests
             
             Assert.IsFalse(userChangeTracker.HasChanges(originalUser, destinationUser, out propertyChanges));
 
+            originalUser = new User
+            {
+                Id = 1,
+                EmailAddress = "john.doe@website.net",
+                FirstName = "John",
+                MiddleName = "Middleton",
+                LastName = "Harrison",
+                DateOfBirth = new DateTime(1980, 11, 5)
+            };
+
+            destinationUser = new User
+            {
+                Id = default,
+                EmailAddress = "john.doe@website.net",
+                FirstName = "John",
+                MiddleName = "Middleton",
+                LastName = "Harrison",
+                DateOfBirth = new DateTime(1980, 11, 5)
+            };
+
+            Assert.IsFalse(userChangeTracker.HasChanges(originalUser, destinationUser, out propertyChanges));
         }
 
         private DefaultChangeTracker<User> userChangeTracker;
@@ -52,6 +75,7 @@ namespace DNI.Core.Tests
         internal class User
         {
             public int Id { get; set; }
+            public int? CustomerId { get; set; }
             public string EmailAddress { get; set; }
             public string FirstName { get; set; }
             public string MiddleName { get; set; }
