@@ -2,6 +2,7 @@
 {
     public enum CacheServiceType
     {
-        Distributed
+        Distributed,
+        Session
     }
 }

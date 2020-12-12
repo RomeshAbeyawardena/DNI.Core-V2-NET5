@@ -8,4 +8,14 @@
     </Description>
   </PropertyGroup>
 
+  <ItemGroup>
+    <PackageReference Include="AutoMapper" Version="10.1.1" />
+    <PackageReference Include="MediatR" Version="9.0.0" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\DNI.Core.Abstractions\DNI.Core.Abstractions.csproj" />
+    <ProjectReference Include="..\DNI.Core.Shared\DNI.Core.Shared.csproj" />
+  </ItemGroup>
+
 </Project>

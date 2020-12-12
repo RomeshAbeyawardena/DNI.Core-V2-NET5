@@ -12,6 +12,7 @@ pool:
 variables:
   solution: '**/*.sln'
   projects: '**/DNI.Core.*.csproj'
+  testProjects: '**/DNI.Core.Tests.csproj'
   buildPlatform: 'Any CPU'
   buildConfiguration: 'Release'
 
@@ -31,12 +32,23 @@ steps:
     inputs:
       command: 'restore'
       projects: $(projects)
+
   - task: DotNetCoreCLI@2
     displayName: Build project
     inputs:
       command: 'build'
       projects: $(projects)
       arguments: '--no-restore --nologo --configuration Release'
+
+  - task: DotNetCoreCLI@2
+    displayName: 'Test Project'
+    inputs:
+      command: 'test'
+      projects: $(testProjects)
+      publishTestResults: true
+      nobuild: true
+      arguments: '--no-restore --nologo --configuration Release'
+
   - task: DotNetCoreCLI@2
     displayName: Pack project for NuGet
     inputs:
@@ -45,7 +57,6 @@ steps:
       nobuild: true
       versioningScheme: 'byEnvVar'
       versionEnvVar: 'Build.BuildNumber'
-
   - task: DotNetCoreCLI@2
     inputs:
       command: 'push'
