@@ -29,7 +29,7 @@ namespace DNI.Core.Abstractions.Services
 
         public void Encrypt(T model)
         {
-            ProcessOptions(fluentEncryptionConfiguration, model, (encryptionOptions, encryptionService, property, value) => {
+            ProcessOptions(fluentEncryptionConfiguration, model, true, (encryptionOptions, encryptionService, property, value) => {
                 if(value != null)
                 { 
                     property.SetValue(model, encryptionService.Encrypt(value.ToString(), encryptionOptions));
@@ -39,7 +39,7 @@ namespace DNI.Core.Abstractions.Services
 
         private void ProcessOptions(
             IFluentEncryptionConfiguration<T> configuration, 
-            T model,
+            T model, bool getPropertyString,
             Action<EncryptionOptions, IEncryptionService, PropertyInfo, object> processAction)
         {
             var modelType = typeof(T);
@@ -60,7 +60,9 @@ namespace DNI.Core.Abstractions.Services
 
                 var value = property.GetValue(model);
 
-                var val = option.GetPropertyString?.Invoke(model);
+                var val = getPropertyString 
+                    ? option.GetPropertyString?.Invoke(model) 
+                    : string.Empty;
 
                 processAction(encryptionOptions, encryptionService, property, string.IsNullOrEmpty(val) ? value : val);
             }
@@ -69,7 +71,7 @@ namespace DNI.Core.Abstractions.Services
 
         public void Decrypt(T model)
         {
-            ProcessOptions(fluentEncryptionConfiguration, model, (encryptionOptions, encryptionService, property, value) => {
+            ProcessOptions(fluentEncryptionConfiguration, model, false, (encryptionOptions, encryptionService, property, value) => {
                 if(value != null)
                 { 
                     property.SetValue(model, encryptionService.Decrypt(value.ToString(), encryptionOptions));
