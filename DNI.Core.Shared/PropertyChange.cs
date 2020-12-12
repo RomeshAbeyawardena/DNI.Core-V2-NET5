@@ -1,4 +1,5 @@
-﻿using System;
+﻿using DNI.Core.Shared.Extensions;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
@@ -15,11 +16,11 @@ namespace DNI.Core.Shared
         {
             Property = property;
             OldValue = oldValue;
-            NewValue = newValue ?? oldValue;
+            NewValue = newValue;
         }
 
         public object OldValue { get; }
         public object NewValue { get; }
-        public bool HasChanges => !OldValue.Equals(NewValue);
+        public bool HasChanges => !NewValue.IsDefault() && !OldValue.Equals(NewValue);
     }
 }
