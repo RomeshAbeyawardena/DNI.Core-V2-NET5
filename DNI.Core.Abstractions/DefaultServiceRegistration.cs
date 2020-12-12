@@ -24,6 +24,7 @@ namespace DNI.Core.Abstractions
             return services
                 .AddSingleton(Newtonsoft.Json.JsonSerializer.CreateDefault())
                 .AddSingleton(typeof(IModelEncryptionService<>), typeof(DefaultModelEncryptionService<>))
+                .AddSingleton(typeof(IChangeTracker<>), typeof(DefaultChangeTracker<>))
                 .ScanForTypes(typeDefinition => typeDefinition.AddRange(ScanTypes), 
                     AssemblyDefinitions.ToArray());
         }
