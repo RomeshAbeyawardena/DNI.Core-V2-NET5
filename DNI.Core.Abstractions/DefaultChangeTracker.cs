@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace DNI.Core.Abstractions
 {
-    /// <inheritdoc />
+    /// <inheritdoc cref="IChangeTracker{T}" />
     internal class DefaultChangeTracker<T> : IChangeTracker<T>
     {
         public bool HasChanges(T source, T value, out IEnumerable<PropertyChange> propertyChanges)
