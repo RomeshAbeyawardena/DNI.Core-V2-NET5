@@ -60,7 +60,9 @@ namespace DNI.Core.Abstractions.Services
 
                 var value = property.GetValue(model);
 
-                processAction(encryptionOptions, encryptionService, property, value);
+                var val = option.GetPropertyString?.Invoke(model);
+
+                processAction(encryptionOptions, encryptionService, property, string.IsNullOrEmpty(val) ? value : val);
             }
             
         }
