@@ -15,13 +15,14 @@ variables:
   testProjects: '**/DNI.Core.Tests.csproj'
   buildPlatform: 'Any CPU'
   buildConfiguration: 'Release'
+  version: $(Build.BuildNumber)
 
 steps:
   - task: PowerShell@2
     displayName: Update assembly version
     inputs:
      filePath: ./Update-Version.ps1 
-     arguments: -fileName "./Directory.Build.props" -version $(Build.BuildNumber)
+     arguments: -fileName "./Directory.Build.props" -version $(version)
   - task: UseDotNet@2
     displayName: Download NET Core 5 SDK
     inputs:
