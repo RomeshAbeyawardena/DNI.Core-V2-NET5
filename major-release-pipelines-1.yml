@@ -4,7 +4,7 @@
 # https://aka.ms/yaml
 name: "$(VERSION)$(Rev:.r)"
 trigger:
-- release/stage-*
+- release/major-*
 
 pool:
   vmImage: 'ubuntu-latest'

@@ -39,7 +39,7 @@ namespace DNI.Core.Abstractions.Services
         public override async Task<IAttempt<T>> TryGetAsync<T>(string cacheKeyName, SerializerType serializerType, CancellationToken cancellationToken)
         {
             var result = await distributedCache.GetAsync(cacheKeyName, cancellationToken);
-            if(result == null || result.Length < 1)
+            if(result == null || result.Length == 0)
             {
                 return Attempt.Failed<T>(new NullReferenceException($"Item with the key {cacheKeyName} not found"));
             }
