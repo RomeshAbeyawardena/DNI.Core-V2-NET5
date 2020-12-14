@@ -142,5 +142,10 @@ namespace DNI.Core.Data
             EnsureCancellationTokenIsNotNull(ref cancellationToken);
             return DbSet.FindAsync(keys, cancellationToken.Value).AsTask();
         }
+
+        public IQueryable<T> Include<TSelector>(IQueryable<T> query, Expression<Func<T, TSelector>> includeExpression)
+        {
+            return query.Include(includeExpression);
+        }
     }
 }
