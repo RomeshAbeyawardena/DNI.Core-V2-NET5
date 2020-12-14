@@ -7,7 +7,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace DNI.Core.Abstractions
+namespace DNI.Core.Shared
 {
     public class EntityResult<TEntity> : IEntityResult<TEntity>
     {
@@ -16,20 +16,20 @@ namespace DNI.Core.Abstractions
             Result = result;
         }
 
-        public EntityResult(int affectedRows, TEntity result)
+        public EntityResult(TEntity result, int affectedRows)
             : this(result)
         {
             AffectedRows = affectedRows;
         }
 
-        public EntityResult(int affectedRows, TEntity result, params KeyValuePair<string, string>[] keyValuePairs)
-            : this(affectedRows, result, s => keyValuePairs.ForEach(k => s.Add(k)))
+        public EntityResult(TEntity result, int affectedRows,  params KeyValuePair<string, string>[] keyValuePairs)
+            : this(result, affectedRows, s => keyValuePairs.ForEach(k => s.Add(k)))
         {
 
         }
 
-        public EntityResult(int affectedRows, TEntity result, Action<ISwitch<string, string>> propertiesAction)
-            : this(affectedRows, result)
+        public EntityResult(TEntity result, int affectedRows, Action<ISwitch<string, string>> propertiesAction)
+            : this(result, affectedRows)
         {
             var propertiesSwitch = Switch.Create<string, string>();
             propertiesAction(propertiesSwitch);
