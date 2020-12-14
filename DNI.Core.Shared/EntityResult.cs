@@ -9,26 +9,45 @@ using System.Threading.Tasks;
 
 namespace DNI.Core.Shared
 {
+    public static class EntityResult
+    {
+        public static IEntityResult<TEntity> Create<TEntity>(TEntity entity, int affectedRows, Action<ISwitch<string, string>> propertiesAction)
+        {
+            return new EntityResult<TEntity>(entity, affectedRows, propertiesAction);
+        }
+
+        public static IEntityResult<TEntity> Create<TEntity>(TEntity entity)
+        {
+            return new EntityResult<TEntity>(entity);
+        }
+
+        public static IEntityResult<TEntity> Create<TEntity>(TEntity entity, int affectedRows,  params KeyValuePair<string, string>[] keyValuePairs)
+        {
+            return new EntityResult<TEntity>(entity, affectedRows, keyValuePairs);
+        }
+    }
+
+
     public class EntityResult<TEntity> : IEntityResult<TEntity>
     {
-        public EntityResult(TEntity result)
+        internal EntityResult(TEntity result)
         {
             Result = result;
         }
 
-        public EntityResult(TEntity result, int affectedRows)
+        internal EntityResult(TEntity result, int affectedRows)
             : this(result)
         {
             AffectedRows = affectedRows;
         }
 
-        public EntityResult(TEntity result, int affectedRows,  params KeyValuePair<string, string>[] keyValuePairs)
+        internal EntityResult(TEntity result, int affectedRows,  params KeyValuePair<string, string>[] keyValuePairs)
             : this(result, affectedRows, s => keyValuePairs.ForEach(k => s.Add(k)))
         {
 
         }
 
-        public EntityResult(TEntity result, int affectedRows, Action<ISwitch<string, string>> propertiesAction)
+        internal EntityResult(TEntity result, int affectedRows, Action<ISwitch<string, string>> propertiesAction)
             : this(result, affectedRows)
         {
             var propertiesSwitch = Switch.Create<string, string>();
