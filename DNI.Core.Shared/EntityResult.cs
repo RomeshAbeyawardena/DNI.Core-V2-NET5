@@ -1,6 +1,7 @@
 ﻿using DNI.Core.Shared;
 using DNI.Core.Shared.Contracts;
 using DNI.Core.Shared.Extensions;
+using FluentValidation.Results;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -25,14 +26,25 @@ namespace DNI.Core.Shared
         {
             return new EntityResult<TEntity>(entity, affectedRows, keyValuePairs);
         }
+
+        public static IEntityResult<TEntity> Create<TEntity>(Exception exception, params ValidationFailure[] validationFailures)
+        {
+            return new EntityResult<TEntity>(exception, validationFailures);
+        }
     }
 
 
-    public class EntityResult<TEntity> : IEntityResult<TEntity>
+    internal class EntityResult<TEntity> : Attempt<TEntity>, IEntityResult<TEntity>
     {
         internal EntityResult(TEntity result)
+            : base(result)
         {
-            Result = result;
+        }
+
+        internal EntityResult(Exception exception, params ValidationFailure[] validationFailures)
+            : base(exception, validationFailures)
+        {
+
         }
 
         internal EntityResult(TEntity result, int affectedRows)
@@ -54,8 +66,6 @@ namespace DNI.Core.Shared
             propertiesAction(propertiesSwitch);
             Properties = propertiesSwitch;
         }
-
-        public TEntity Result { get;  }
 
         public int AffectedRows { get;  }
 
