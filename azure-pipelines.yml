@@ -15,6 +15,7 @@ variables:
   testProjects: '**/DNI.Core.Tests.csproj'
   buildPlatform: 'Any CPU'
   buildConfiguration: 'Release'
+  currentVersion: "$(Build.BuildNumber)-pre"
 
 steps:
   - task: PowerShell@2
@@ -56,7 +57,7 @@ steps:
       packagesToPack: $(projects)
       nobuild: true
       versioningScheme: 'byEnvVar'
-      versionEnvVar: 'Build.BuildNumber'
+      versionEnvVar: 'currentVersion'
   - task: DotNetCoreCLI@2
     inputs:
       command: 'push'
