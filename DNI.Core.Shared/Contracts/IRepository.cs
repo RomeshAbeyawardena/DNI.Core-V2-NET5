@@ -25,7 +25,13 @@ namespace DNI.Core.Shared.Contracts
         /// <param name="enableIdentityResolution">Sets whether identity resolution should be enabled</param>
         /// <returns></returns>
         IQueryable<T> EnableTracking(IQueryable<T> query, bool enableTracking = true, bool enableIdentityResolution = true);
-
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <typeparam name="TSelector"></typeparam>
+        /// <param name="includeExpression"></param>
+        /// <returns></returns>
+        IQueryable<T> Include<TSelector>(IQueryable<T> query, Expression<Func<T, TSelector>> includeExpression);
         /// <summary>
         /// Finds an entity in the data source with the specified unique keys 
         /// </summary>
