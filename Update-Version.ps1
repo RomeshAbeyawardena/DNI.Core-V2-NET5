@@ -23,7 +23,7 @@ Write-Output "Application version:" $applicationVersion
 
 Write-Output "Backing up $fileName"
 
-$xmlDocument.Save("$formattedDate.$currentVersion.props")
+Write-Output "Updating version to $version"
 
 $xmlDocument.Project.PropertyGroup.Version = $version
 $xmlDocument.Project.PropertyGroup.AssemblyVersion = $version
