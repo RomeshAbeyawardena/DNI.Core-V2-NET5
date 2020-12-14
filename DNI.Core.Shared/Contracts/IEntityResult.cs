@@ -6,9 +6,8 @@ using System.Threading.Tasks;
 
 namespace DNI.Core.Shared.Contracts
 {
-    public interface IEntityResult<TEntity>
+    public interface IEntityResult<TEntity> : IAttempt<TEntity>
     {
-        TEntity Result { get; }
         int AffectedRows { get; }
         IDictionary<string, string> Properties { get; }
     }
