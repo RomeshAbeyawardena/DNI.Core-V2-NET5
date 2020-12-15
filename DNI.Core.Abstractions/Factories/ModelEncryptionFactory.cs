@@ -44,6 +44,17 @@ namespace DNI.Core.Abstractions.Factories
             model.ForEach(m => Decrypt(m));
         }
 
+        public void Encrypt<T>(ICollection<T> model)
+        {
+            model.ForEach(m => Encrypt(m));
+        }
+
+        public void Decrypt<T>(ICollection<T> model)
+        {
+            model.ForEach(m => Decrypt(m));
+        }
+
+
         private readonly IServiceProvider serviceProvider;
     }
 }
