@@ -21,6 +21,18 @@ namespace DNI.Core.Abstractions.Factories
             return serviceProvider.GetRequiredService<IModelEncryptionService<T>>();
         }
 
+        public void Encrypt<T>(T model)
+        {
+            GetModelEncryptionService<T>()
+                .Encrypt(model);
+        }
+
+        public void Decrypt<T>(T model)
+        {
+            GetModelEncryptionService<T>()
+                .Decrypt(model);
+        }
+
         private readonly IServiceProvider serviceProvider;
     }
 }
