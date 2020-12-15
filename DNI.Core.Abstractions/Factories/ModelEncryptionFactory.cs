@@ -1,5 +1,6 @@
 ﻿using DNI.Core.Shared.Contracts.Factories;
 using DNI.Core.Shared.Contracts.Services;
+using DNI.Core.Shared.Extensions;
 using Microsoft.Extensions.DependencyInjection;
 using System;
 using System.Collections.Generic;
@@ -31,6 +32,16 @@ namespace DNI.Core.Abstractions.Factories
         {
             GetModelEncryptionService<T>()
                 .Decrypt(model);
+        }
+
+        public void Encrypt<T>(IEnumerable<T> model)
+        {
+            model.ForEach(m => Encrypt(m));
+        }
+
+        public void Decrypt<T>(IEnumerable<T> model)
+        {
+            model.ForEach(m => Decrypt(m));
         }
 
         private readonly IServiceProvider serviceProvider;

@@ -12,5 +12,7 @@ namespace DNI.Core.Shared.Contracts.Factories
         IModelEncryptionService<T> GetModelEncryptionService<T>();
         void Encrypt<T>(T model);
         void Decrypt<T>(T model);
+        void Encrypt<T>(IEnumerable<T> model);
+        void Decrypt<T>(IEnumerable<T> model);
     }
 }
