@@ -35,6 +35,14 @@ namespace DNI.Core.Web.Abstractions
                 (attempt) => BadRequest(attempt.Exception));
         }
 
+        protected IActionResult ValidateAttemptedResponse<T, TResult>(IAttemptedResponse<T> attempt)
+        {
+            return attempt.AttemptedResponseResult<T, IActionResult>(
+                result => Ok(Mapper.Map<TResult>(result)),
+                (attempt) => BadRequest(attempt.Exception));
+        }
+
+
         protected IMediator Mediator { get; }
         protected IMapper Mapper { get; }
     }
