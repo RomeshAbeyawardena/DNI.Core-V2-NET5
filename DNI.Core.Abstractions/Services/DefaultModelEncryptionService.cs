@@ -13,17 +13,15 @@ using System.Threading.Tasks;
 
 namespace DNI.Core.Abstractions.Services
 {
-    public class DefaultModelEncryptionService<T> : IModelEncryptionService<T>
+    internal class DefaultModelEncryptionService<T> : IModelEncryptionService<T>
     {
         public DefaultModelEncryptionService(IFluentEncryptionConfiguration<T> fluentEncryptionConfiguration,
             IEncryptionClassificationFactory encryptionClassificationFactory,
-            IHashServiceFactory hashServiceFactory,
             IEncryptionFactory encryptionFactory)
         {
             this.encryptionFactory = encryptionFactory;
             this.fluentEncryptionConfiguration = fluentEncryptionConfiguration;
             this.encryptionClassificationFactory = encryptionClassificationFactory;
-            this.hashServiceFactory = hashServiceFactory;
             modelExpressionVisitor = new ModelExpressionVisitor();
         }
 
@@ -100,6 +98,5 @@ namespace DNI.Core.Abstractions.Services
         private readonly ModelExpressionVisitor modelExpressionVisitor;
         private readonly IFluentEncryptionConfiguration<T> fluentEncryptionConfiguration;
         private readonly IEncryptionClassificationFactory encryptionClassificationFactory;
-        private readonly IHashServiceFactory hashServiceFactory;
     }
 }
