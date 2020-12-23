@@ -14,5 +14,12 @@ namespace DNI.Core.Shared.Contracts.Factories
         void Decrypt<T>(T model);
         void Encrypt<T>(IEnumerable<T> model);
         void Decrypt<T>(IEnumerable<T> model);
+
+        void Encrypt<T, TSelector>(T model, Func<T, TSelector> propertySelector);
+        void Encrypt<T, TSelector>(T model, Func<T, IEnumerable<TSelector>> propertySelector);
+        void Encrypt<T, TSelector>(T model, Func<T, ICollection<TSelector>> propertySelector);
+        void Decrypt<T, TSelector>(T model, Func<T, TSelector> propertySelector);
+        void Decrypt<T, TSelector>(T model, Func<T, IEnumerable<TSelector>> propertySelector);
+        void Decrypt<T, TSelector>(T model, Func<T, ICollection<TSelector>> propertySelector);
     }
 }
