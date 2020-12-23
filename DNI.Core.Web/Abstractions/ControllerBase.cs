@@ -1,6 +1,7 @@
 ﻿using AutoMapper;
 using DNI.Core.Abstractions.Extensions;
 using DNI.Core.Shared.Contracts;
+using DNI.Core.Shared.Enumerations;
 using DNI.Core.Shared.Extensions;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
@@ -31,14 +32,16 @@ namespace DNI.Core.Web.Abstractions
         protected IActionResult ValidateAttemptedResponse<T>(IAttemptedResponse<T> attempt)
         {
             return attempt.AttemptedResponseResult<T, IActionResult>(
-                result => Ok(result), 
+                (result, type) => Ok(result), 
                 (attempt) => BadRequest(attempt.Exception));
         }
 
         protected IActionResult ValidateAttemptedResponse<T, TResult>(IAttemptedResponse<T> attempt)
         {
             return attempt.AttemptedResponseResult<T, IActionResult>(
-                result => Ok(Mapper.Map<TResult>(result)),
+                (result, type) => Ok(type == RequestQueryType.Multiple 
+                    ? Mapper.Map<IEnumerable<TResult>>(result) 
+                    : Mapper.Map<TResult>(result)),
                 (attempt) => BadRequest(attempt.Exception));
         }
 
