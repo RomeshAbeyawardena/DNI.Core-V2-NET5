@@ -7,7 +7,7 @@ trigger:
 - release/stage-*
 
 pool:
-  vmImage: 'ubuntu-latest'
+  name: 'local'
 
 variables:
   solution: '**/*.sln'
