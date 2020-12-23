@@ -54,6 +54,42 @@ namespace DNI.Core.Abstractions.Factories
             model.ForEach(m => Decrypt(m));
         }
 
+        public void Encrypt<T, TSelector>(T model, Func<T, TSelector> propertySelector)
+        {
+            var propertyValue = propertySelector(model);
+            Encrypt(propertyValue);
+        }
+
+        public void Encrypt<T, TSelector>(T model, Func<T, IEnumerable<TSelector>> propertySelector)
+        {
+            var propertyValue = propertySelector(model);
+            Encrypt(propertyValue);
+        }
+
+        public void Encrypt<T, TSelector>(T model, Func<T, ICollection<TSelector>> propertySelector)
+        {
+            var propertyValue = propertySelector(model);
+            Encrypt(propertyValue);
+        }
+
+        
+        public void Decrypt<T, TSelector>(T model, Func<T, TSelector> propertySelector)
+        {
+            var propertyValue = propertySelector(model);
+            Decrypt(propertyValue);
+        }
+
+        public void Decrypt<T, TSelector>(T model, Func<T, IEnumerable<TSelector>> propertySelector)
+        {
+            var propertyValue = propertySelector(model);
+            Decrypt(propertyValue);
+        }
+
+        public void Decrypt<T, TSelector>(T model, Func<T, ICollection<TSelector>> propertySelector)
+        {
+            var propertyValue = propertySelector(model);
+            Decrypt(propertyValue);
+        }
 
         private readonly IServiceProvider serviceProvider;
     }
