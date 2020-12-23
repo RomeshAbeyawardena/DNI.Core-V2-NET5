@@ -12,7 +12,7 @@ namespace DNI.Core.Abstractions.Extensions
     public static class AttemptExtensions
     {
         public static TResult AttemptedResponseResult<T, TResult>(this IAttemptedResponse<T> attempt,
-            Func<object, TResult> successResultDelegate,
+            Func<object, RequestQueryType, TResult> successResultDelegate,
             Func<IAttempt, TResult> failedResultDelegate)
         {
             if(attempt.Type == RequestQueryType.Multiple)
@@ -21,11 +21,12 @@ namespace DNI.Core.Abstractions.Extensions
                 {
                     if(attempt.AttemptMany.Successful)
                     { 
-                        return successResultDelegate(attempt.AttemptMany.Result);
+                        return successResultDelegate(attempt.AttemptMany.Result, attempt.Type);
                     }
 
                     return failedResultDelegate(attempt.AttemptMany);
                 }
+
                 throw new NullReferenceException();
             }
 
@@ -33,7 +34,7 @@ namespace DNI.Core.Abstractions.Extensions
             {
                 if (attempt.Attempt.Successful)
                 {
-                    return successResultDelegate(attempt.Attempt.Result);
+                    return successResultDelegate(attempt.Attempt.Result, attempt.Type);
                 }
 
                 return failedResultDelegate(attempt.Attempt);
