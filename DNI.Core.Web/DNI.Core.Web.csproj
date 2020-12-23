@@ -20,16 +20,16 @@
 
   <ItemGroup>
     <Reference Include="Microsoft.AspNetCore.Http.Abstractions">
-      <HintPath>..\Lib\Microsoft.AspNetCore.Http.Abstractions.dll</HintPath>
+      <HintPath>..\Lib\net5.0\Microsoft.AspNetCore.Http.Abstractions.dll</HintPath>
     </Reference>
     <Reference Include="Microsoft.AspNetCore.Mvc.Abstractions">
-      <HintPath>..\lib\Microsoft.AspNetCore.Mvc.Abstractions.dll</HintPath>
+      <HintPath>..\Lib\net5.0\Microsoft.AspNetCore.Mvc.Abstractions.dll</HintPath>
     </Reference>
     <Reference Include="Microsoft.AspNetCore.Mvc">
-      <HintPath>..\lib\Microsoft.AspNetCore.Mvc.dll</HintPath>
+      <HintPath>..\Lib\net5.0\Microsoft.AspNetCore.Mvc.dll</HintPath>
     </Reference>
     <Reference Include="Microsoft.AspNetCore.Mvc.Core">
-      <HintPath>..\lib\Microsoft.AspNetCore.Mvc.Core.dll</HintPath>
+      <HintPath>..\Lib\net5.0\Microsoft.AspNetCore.Mvc.Core.dll</HintPath>
     </Reference>
   </ItemGroup>
 
