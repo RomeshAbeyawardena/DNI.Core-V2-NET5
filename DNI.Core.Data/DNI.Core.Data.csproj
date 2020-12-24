@@ -17,6 +17,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\DNI.Core.Abstractions\DNI.Core.Abstractions.csproj" />
     <ProjectReference Include="..\DNI.Core.Shared\DNI.Core.Shared.csproj" />
   </ItemGroup>
 

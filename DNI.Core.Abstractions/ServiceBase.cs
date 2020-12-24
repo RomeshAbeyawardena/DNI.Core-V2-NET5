@@ -20,6 +20,7 @@ namespace DNI.Core.Abstractions
             Action<T, T> preUpdateDelegate,
             T newEntity,
             CancellationToken cancellationToken)
+            where T : class
         {
             var foundEntity = await updateConditionExpression(newEntity, repository, query, cancellationToken);
             if(foundEntity == null)

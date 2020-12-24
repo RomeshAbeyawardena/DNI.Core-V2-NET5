@@ -14,6 +14,7 @@ namespace DNI.Core.Data.Extensions
         public static Task<int> AddOrUpdate<T, TSelector>(this IAsyncRepository<T> asyncRepository, 
             Func<T, TSelector> keySelector, 
             T item, CancellationToken cancellationToken)
+            where T : class
         {
             var key = keySelector(item);
 
