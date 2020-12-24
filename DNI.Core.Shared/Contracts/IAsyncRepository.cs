@@ -12,6 +12,7 @@ namespace DNI.Core.Shared.Contracts
     /// </summary>
     /// <typeparam name="T"></typeparam>
     public interface IAsyncRepository<T> : IRepository<T>
+        where T : class
     {
         
         /// <summary>
