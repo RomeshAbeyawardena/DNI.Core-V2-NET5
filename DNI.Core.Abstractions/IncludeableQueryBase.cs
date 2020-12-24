@@ -7,6 +7,8 @@ using System.Linq.Expressions;
 using System.Text;
 using System.Threading.Tasks;
 using Microsoft.EntityFrameworkCore;
+using System.Threading;
+
 namespace DNI.Core.Abstractions
 {
     public abstract class IncludeableQueryBase<T> : IIncludeableQuery<T>
@@ -37,6 +39,16 @@ namespace DNI.Core.Abstractions
         IEnumerator IEnumerable.GetEnumerator()
         {
             return query.GetEnumerator();
+        }
+
+        IAsyncEnumerator<T> IAsyncEnumerable<T>.GetAsyncEnumerator(CancellationToken cancellationToken)
+        {
+            if(query is IAsyncEnumerable<T> asyncEnumerable)
+            {
+                return asyncEnumerable.GetAsyncEnumerator(cancellationToken);
+            }
+
+             throw new NotSupportedException();
         }
 
         private IQueryable<T> query;

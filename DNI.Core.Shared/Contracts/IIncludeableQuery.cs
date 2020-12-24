@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace DNI.Core.Shared.Contracts
 {
-    public interface IIncludeableQuery<T> : IQueryable<T>
+    public interface IIncludeableQuery<T> : IQueryable<T>, IAsyncEnumerable<T>
         where T : class
     {
         IIncludeableQuery<T> Includes<TSource>(Expression<Func<T, TSource>> includeExpression);
