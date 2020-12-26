@@ -3,8 +3,6 @@ using DNI.Core.Shared.Contracts;
 using Microsoft.Extensions.DependencyInjection;
 using System;
 using System.Reflection;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace DNI.Core.Abstractions
 {

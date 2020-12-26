@@ -5,18 +5,13 @@ using DNI.Core.Abstractions.Setters;
 using DNI.Core.Data.Extensions;
 using DNI.Core.Shared.Contracts;
 using DNI.Core.Shared.Enumerations;
-using DNI.Core.Shared.Options;
 using MediatR;
-using Microsoft.AspNetCore.Builder;
-using Microsoft.AspNetCore.Hosting;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace DNI.Core.Data
 {
@@ -61,5 +56,20 @@ namespace DNI.Core.Data
             ServiceLifetime = serviceLifetime;
         }
 
+    }
+
+    public abstract class ServiceRegistration<TApplicationSettings, TDbContext> : ServiceRegistration<TDbContext>
+        where TDbContext : DbContext
+    {
+        protected ServiceRegistration(DbContextMethod dbContextMethod = DbContextMethod.DbContextPool, 
+            ServiceLifetime serviceLifetime = ServiceLifetime.Transient) 
+            : base(dbContextMethod, serviceLifetime)
+        {
+        }
+
+        protected IApplicationSettingsEncryptionClassificationSetter<TApplicationSettings> GetSettingsEncryptionClassificationSetter()
+        {
+            return GetSettingsEncryptionClassificationSetter<TApplicationSettings>();
+        }
     }
 }

@@ -1,11 +1,6 @@
 ﻿using DNI.Core.Shared.Contracts;
 using DNI.Core.Shared.Enumerations;
-using DNI.Core.Shared.Extensions;
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace DNI.Core.Abstractions.Extensions
 {

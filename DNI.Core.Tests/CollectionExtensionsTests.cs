@@ -1,11 +1,6 @@
-﻿using DNI.Core.Shared.Extensions;
-using NUnit.Framework;
-using System;
+﻿using NUnit.Framework;
 using System.Collections;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace DNI.Core.Tests
 {
