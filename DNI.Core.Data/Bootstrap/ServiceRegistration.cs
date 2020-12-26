@@ -57,4 +57,19 @@ namespace DNI.Core.Data
         }
 
     }
+
+    public abstract class ServiceRegistration<TApplicationSettings, TDbContext> : ServiceRegistration<TDbContext>
+        where TDbContext : DbContext
+    {
+        protected ServiceRegistration(DbContextMethod dbContextMethod = DbContextMethod.DbContextPool, 
+            ServiceLifetime serviceLifetime = ServiceLifetime.Transient) 
+            : base(dbContextMethod, serviceLifetime)
+        {
+        }
+
+        protected IApplicationSettingsEncryptionClassificationSetter<TApplicationSettings> GetSettingsEncryptionClassificationSetter()
+        {
+            return GetSettingsEncryptionClassificationSetter<TApplicationSettings>();
+        }
+    }
 }
