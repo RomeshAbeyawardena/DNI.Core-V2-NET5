@@ -1,12 +1,5 @@
 ﻿using Newtonsoft.Json;
-using System;
 using System.Collections.Generic;
-using System.IO;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using DNI.Core.Shared.Abstractions;
-using DNI.Core.Shared.Contracts;
 using DNI.Core.Shared.Enumerations;
 
 namespace DNI.Core.Abstractions.Serializers

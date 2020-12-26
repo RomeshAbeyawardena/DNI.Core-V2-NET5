@@ -2,8 +2,6 @@
 using Microsoft.Extensions.DependencyInjection;
 using System;
 using DNI.Core.Shared.Enumerations;
-using DNI.Core.Shared.Contracts;
-using System.Reflection;
 using DNI.Core.Shared.Options;
 
 namespace DNI.Core.Shared.Extensions

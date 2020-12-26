@@ -5,18 +5,13 @@ using DNI.Core.Abstractions.Setters;
 using DNI.Core.Data.Extensions;
 using DNI.Core.Shared.Contracts;
 using DNI.Core.Shared.Enumerations;
-using DNI.Core.Shared.Options;
 using MediatR;
-using Microsoft.AspNetCore.Builder;
-using Microsoft.AspNetCore.Hosting;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace DNI.Core.Data
 {
