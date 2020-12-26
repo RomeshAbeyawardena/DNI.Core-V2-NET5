@@ -11,11 +11,11 @@ using System.Threading.Tasks;
 
 namespace DNI.Core.Web.Abstractions.Handlers
 {
-    public abstract class ApiAuthorizationHandlerBase<TCredential, TOptions> : AuthenticationHandler<TOptions>
+    public abstract class ApiAuthenticationHandlerBase<TCredential, TOptions> : AuthenticationHandler<TOptions>
         where TOptions : AuthenticationSchemeOptions, new()
         where TCredential : ICredential<Guid>
     {
-        protected ApiAuthorizationHandlerBase(IOptionsMonitor<TOptions> options, ILoggerFactory logger, UrlEncoder encoder, Microsoft.AspNetCore.Authentication.ISystemClock clock) 
+        protected ApiAuthenticationHandlerBase(IOptionsMonitor<TOptions> options, ILoggerFactory logger, UrlEncoder encoder, Microsoft.AspNetCore.Authentication.ISystemClock clock) 
             : base(options, logger, encoder, clock)
         {
         }
