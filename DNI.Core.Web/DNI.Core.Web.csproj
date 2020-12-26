@@ -22,22 +22,22 @@
       <HintPath>$(SolutionDir)\Lib\net5.0\Microsoft.AspNetCore.Authentication.dll</HintPath>
     </Reference>
     <Reference Include="Microsoft.AspNetCore.Authentication.Abstractions">
-      <HintPath>..\Lib\net5.0\Microsoft.AspNetCore.Authentication.Abstractions.dll</HintPath>
+      <HintPath>$(SolutionDir)\Lib\net5.0\Microsoft.AspNetCore.Authentication.Abstractions.dll</HintPath>
     </Reference>
     <Reference Include="Microsoft.AspNetCore.Authorization">
-      <HintPath>..\Lib\net5.0\Microsoft.AspNetCore.Authorization.dll</HintPath>
+      <HintPath>$(SolutionDir)\Lib\net5.0\Microsoft.AspNetCore.Authorization.dll</HintPath>
     </Reference>
     <Reference Include="Microsoft.AspNetCore.Http">
-      <HintPath>..\Lib\net5.0\Microsoft.AspNetCore.Http.dll</HintPath>
+      <HintPath>$(SolutionDir)\Lib\net5.0\Microsoft.AspNetCore.Http.dll</HintPath>
     </Reference>
     <Reference Include="Microsoft.AspNetCore.Http.Abstractions">
       <HintPath>$(SolutionDir)\Lib\net5.0\Microsoft.AspNetCore.Http.Abstractions.dll</HintPath>
     </Reference>
     <Reference Include="Microsoft.AspNetCore.Http.Extensions">
-      <HintPath>..\Lib\net5.0\Microsoft.AspNetCore.Http.Extensions.dll</HintPath>
+      <HintPath>$(SolutionDir)\Lib\net5.0\Microsoft.AspNetCore.Http.Extensions.dll</HintPath>
     </Reference>
     <Reference Include="Microsoft.AspNetCore.Http.Features">
-      <HintPath>..\Lib\net5.0\Microsoft.AspNetCore.Http.Features.dll</HintPath>
+      <HintPath>$(SolutionDir)\Lib\net5.0\Microsoft.AspNetCore.Http.Features.dll</HintPath>
     </Reference>
     <Reference Include="Microsoft.AspNetCore.Mvc.Abstractions">
       <HintPath>$(SolutionDir)\Lib\net5.0\Microsoft.AspNetCore.Mvc.Abstractions.dll</HintPath>
