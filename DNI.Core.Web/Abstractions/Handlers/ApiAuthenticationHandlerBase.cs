@@ -22,12 +22,14 @@ namespace DNI.Core.Web.Abstractions.Handlers
 
         protected async override Task<AuthenticateResult> HandleAuthenticateAsync()
         {
+            using var cancellationTokenRegistration = new CancellationTokenRegistration();
+
             if(Request.Headers.TryGetValue("x-api-key", out var apiKey) 
                 && Guid.TryParse(apiKey, out var apiKeyGuid))
             {
-                var credential = await GetCredential(apiKeyGuid, CancellationToken.None);
+                var credential = await GetCredential(apiKeyGuid, cancellationTokenRegistration.Token);
                 
-                if(credential == null)
+                if(credential == null || (await IsCredentialValid(credential, cancellationTokenRegistration.Token)) == false)
                 {
                     return AuthenticateResult.Fail("Unable to authorise API key: Credential not found");
                 }
@@ -38,7 +40,7 @@ namespace DNI.Core.Web.Abstractions.Handlers
                     if(!credential.IsMaster)
                     { 
                         credential.LastAccessed = Clock.UtcNow;
-                        await SaveCredential(credential, CancellationToken.None);
+                        await SaveCredential(credential, cancellationTokenRegistration.Token);
                     }
 
                     var claimsIdentity = new ClaimsIdentity(Scheme.Name);
@@ -54,13 +56,17 @@ namespace DNI.Core.Web.Abstractions.Handlers
                         new AuthenticationTicket(new ClaimsPrincipal(claimsIdentity), Scheme.Name));
                 }
 
+                await OnAuthenticationFailure(credential, cancellationTokenRegistration.Token);
+
                 return AuthenticateResult.Fail("Unable to authorise API key: Authentication not valid");
             }
 
             return AuthenticateResult.Fail("Unable to find API key header");
         }
 
-        protected abstract Task<Dictionary<string, string>> GetCredentialClaims(TCredential credential);
+        protected abstract Task OnAuthenticationFailure(TCredential credential, CancellationToken cancellationToken);
+        protected abstract Task<bool> IsCredentialValid(TCredential credential, CancellationToken cancellationToken);
+        protected abstract Task<IDictionary<string, string>> GetCredentialClaims(TCredential credential);
         protected abstract Task SaveCredential(TCredential credential, CancellationToken cancellationToken);
         protected abstract Task<TCredential> GetCredential(Guid apiKey, CancellationToken cancellationToken);
     }
