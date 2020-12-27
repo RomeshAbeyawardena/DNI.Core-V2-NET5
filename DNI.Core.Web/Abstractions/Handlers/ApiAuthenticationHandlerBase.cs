@@ -53,9 +53,12 @@ namespace DNI.Core.Web.Abstractions.Handlers
                         claimsIdentity.AddClaim(new Claim(claim.Key, claim.Value));
                     }
 
+                    await OnAuthenticationSuccess(credential, cancellationTokenRegistration.Token);
+
                     return AuthenticateResult.Success(
                         new AuthenticationTicket(new ClaimsPrincipal(claimsIdentity), Scheme.Name));
                 }
+
                 await OnAuthenticationFailure(credential, cancellationTokenRegistration.Token);
 
                 return AuthenticateResult.Fail("Unable to authorise API key: Authentication not valid");
@@ -64,6 +67,7 @@ namespace DNI.Core.Web.Abstractions.Handlers
             return AuthenticateResult.Fail("Unable to find API key header");
         }
 
+        protected abstract Task OnAuthenticationSuccess(TCredential credential, CancellationToken cancellationToken);
         protected abstract Task OnAuthenticationFailure(TCredential credential, CancellationToken cancellationToken);
         protected abstract Task<bool> IsCredentialValid(TCredential credential, CancellationToken cancellationToken);
         protected abstract Task<IDictionary<string, string>> GetCredentialClaims(TCredential credential, CancellationToken cancellationToken);
