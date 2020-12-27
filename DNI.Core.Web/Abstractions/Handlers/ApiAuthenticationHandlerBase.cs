@@ -1,4 +1,5 @@
-﻿using DNI.Core.Shared.Contracts;
+﻿using DNI.Core.Shared;
+using DNI.Core.Shared.Contracts;
 using Microsoft.AspNetCore.Authentication;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
@@ -45,12 +46,14 @@ namespace DNI.Core.Web.Abstractions.Handlers
 
                     var claimsIdentity = new ClaimsIdentity(Scheme.Name);
 
-                    var claims = await GetCredentialClaims(credential);
+                    var claims = await GetCredentialClaims(credential, cancellationTokenRegistration.Token) ;
 
                     foreach (var claim in claims)
                     {
                         claimsIdentity.AddClaim(new Claim(claim.Key, claim.Value));
                     }
+
+                    await OnAuthenticationSuccess(credential, cancellationTokenRegistration.Token);
 
                     return AuthenticateResult.Success(
                         new AuthenticationTicket(new ClaimsPrincipal(claimsIdentity), Scheme.Name));
@@ -64,9 +67,10 @@ namespace DNI.Core.Web.Abstractions.Handlers
             return AuthenticateResult.Fail("Unable to find API key header");
         }
 
+        protected abstract Task OnAuthenticationSuccess(TCredential credential, CancellationToken cancellationToken);
         protected abstract Task OnAuthenticationFailure(TCredential credential, CancellationToken cancellationToken);
         protected abstract Task<bool> IsCredentialValid(TCredential credential, CancellationToken cancellationToken);
-        protected abstract Task<IDictionary<string, string>> GetCredentialClaims(TCredential credential);
+        protected abstract Task<IDictionary<string, string>> GetCredentialClaims(TCredential credential, CancellationToken cancellationToken);
         protected abstract Task SaveCredential(TCredential credential, CancellationToken cancellationToken);
         protected abstract Task<TCredential> GetCredential(Guid apiKey, CancellationToken cancellationToken);
     }
