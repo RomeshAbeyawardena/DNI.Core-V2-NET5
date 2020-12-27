@@ -39,7 +39,7 @@ steps:
     inputs:
       command: 'build'
       projects: $(projects)
-      arguments: '--no-restore --nologo --configuration Release --verbosity diag'
+      arguments: '--no-restore --nologo --configuration Release'
       
   - task: DotNetCoreCLI@2
     displayName: 'Test Project'
