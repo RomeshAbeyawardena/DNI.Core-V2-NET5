@@ -1,4 +1,5 @@
 ﻿using DNI.Core.Shared.Contracts;
+using DNI.Core.Shared.Extensions;
 using System;
 using System.Collections;
 using System.Collections.Concurrent;
@@ -20,6 +21,12 @@ namespace DNI.Core.Shared
         public IDictionaryBuilder<TKey, TValue> Add(TKey key, TValue value)
         {
             dictionary.TryAdd(key, value);
+            return this;
+        }
+
+        public IDictionaryBuilder<TKey, TValue> AddRange(IEnumerable<KeyValuePair<TKey, TValue>> keyValuePairs)
+        {
+            keyValuePairs.ForEach(keyValuePair => Add(keyValuePair));
             return this;
         }
 
