@@ -65,7 +65,14 @@ namespace DNI.Core.Shared
 
         bool ICollection<KeyValuePair<TKey, TValue>>.Remove(KeyValuePair<TKey, TValue> item)
         {
-            return dictionary.TryRemove(item.Key, out var item1);
+            var successful = dictionary.TryRemove(item.Key, out var item1);
+
+            if(successful)
+            { 
+                Removed?.Invoke(item);
+            }
+
+            return successful;
         }
 
         IEnumerator<KeyValuePair<TKey, TValue>> IEnumerable<KeyValuePair<TKey, TValue>>.GetEnumerator()
@@ -104,5 +111,6 @@ namespace DNI.Core.Shared
 
         private readonly ConcurrentDictionary<TKey, TValue> dictionary;
 
+        public event IDictionaryBuilder<TKey, TValue>.KeyValuePairChanged Removed;
     }
 }
