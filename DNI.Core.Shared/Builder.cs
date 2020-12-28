@@ -29,5 +29,10 @@ namespace DNI.Core.Shared
         {
             return new DictionaryBuilder<TKey, TValue>(buildAction);
         }
+
+        public ISwitch<TKey, TValue> Create<TKey, TValue>(Action<ISwitch<TKey, TValue>> buildAction)
+        {
+            return Switch.Create<TKey, TValue>();
+        }
     }
 }

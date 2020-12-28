@@ -52,9 +52,21 @@ namespace DNI.Core.Shared
         {
             return GetBuilder().Create(buildAction);
         }
+        
+        /// <summary>
+        /// Creates a switch with a declared build action
+        /// </summary>
+        /// <typeparam name="TKey"></typeparam>
+        /// <typeparam name="TValue"></typeparam>
+        /// <param name="buildAction"></param>
+        /// <returns></returns>
+        public static ISwitch<TKey, TValue> Switch<TKey, TValue>(Action<ISwitch<TKey, TValue>> buildAction)
+        {
+            return GetBuilder().Create(buildAction);
+        }
 
         /// <summary>
-        /// Gets or creates a builder to create lists or dictionary builders
+        /// Gets or creates a builder to create list, switch or dictionary builders
         /// </summary>
         /// <returns></returns>
         public static IBuilder GetBuilder()

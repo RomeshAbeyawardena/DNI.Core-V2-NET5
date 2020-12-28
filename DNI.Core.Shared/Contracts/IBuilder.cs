@@ -35,12 +35,21 @@ namespace DNI.Core.Shared.Contracts
         IListBuilder<T> Create<T>(Action<IListBuilder<T>> buildAction);
 
         /// <summary>
-        /// Creates a dictionary builder using a declared build action
+        /// Creates a <see cref="IDictionaryBuilder{TKey, TValue}"/> using a declared build action
         /// </summary>
         /// <typeparam name="TKey"></typeparam>
         /// <typeparam name="TValue"></typeparam>
         /// <param name="buildAction"></param>
         /// <returns></returns>
         IDictionaryBuilder<TKey, TValue> Create<TKey, TValue>(Action<IDictionaryBuilder<TKey, TValue>> buildAction);
+
+        /// <summary>
+        /// Creates a <see cref="ISwitch{TKey, TValue}"/> using a declared build action
+        /// </summary>
+        /// <typeparam name="TKey"></typeparam>
+        /// <typeparam name="TValue"></typeparam>
+        /// <param name="buildAction"></param>
+        /// <returns></returns>
+        ISwitch<TKey, TValue> Create<TKey, TValue>(Action<ISwitch<TKey, TValue>> buildAction);
     }
 }
