@@ -28,7 +28,7 @@
       <HintPath>$(SolutionDir)\Lib\net5.0\Microsoft.AspNetCore.Authorization.dll</HintPath>
     </Reference>
     <Reference Include="Microsoft.AspNetCore.Authorization.Policy">
-      <HintPath>..\Lib\net5.0\Microsoft.AspNetCore.Authorization.Policy.dll</HintPath>
+      <HintPath>$(SolutionDir)\Lib\net5.0\Microsoft.AspNetCore.Authorization.Policy.dll</HintPath>
     </Reference>
     <Reference Include="Microsoft.AspNetCore.Http">
       <HintPath>$(SolutionDir)\Lib\net5.0\Microsoft.AspNetCore.Http.dll</HintPath>
