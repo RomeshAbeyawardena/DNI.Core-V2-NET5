@@ -46,7 +46,6 @@ namespace DNI.Core.Tests
 
             var handler = testHandler.Try(() => {
                 test1 = true;
-                throw new NotSupportedException();
             }, 
                 @catch => @catch
                     .When<NotSupportedException>(ex => test2 = true)
@@ -55,10 +54,10 @@ namespace DNI.Core.Tests
             var attempt = handler.AsAttempt();
 
             Assert.IsTrue(test1);
-            Assert.IsTrue(test2);
+            Assert.IsFalse(test2);
             Assert.IsFalse(test3);
             Assert.IsTrue(isCleanedUp);
-            Assert.IsFalse(attempt.Successful);
+            Assert.IsTrue(attempt.Successful);
         }
 
         public void Cleanup()
