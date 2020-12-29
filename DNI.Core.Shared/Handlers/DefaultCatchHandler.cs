@@ -6,10 +6,9 @@ namespace DNI.Core.Shared.Handlers
 {
     internal class DefaultCatchHandler : ICatchHandler
     {
-        public DefaultCatchHandler(Exception exception)
+        internal static ICatchHandler Create(Exception exception)
         {
-            catchDictionary = new ConcurrentDictionary<Type, Action<Exception>>();
-            Exception = exception;
+            return new DefaultCatchHandler(exception);
         }
 
         public Exception Exception { get; }
@@ -36,6 +35,13 @@ namespace DNI.Core.Shared.Handlers
 
             return catchAllAction;
         } 
+
+        private DefaultCatchHandler(Exception exception)
+        {
+            catchDictionary = new ConcurrentDictionary<Type, Action<Exception>>();
+            Exception = exception;
+        }
+
 
         private Action<Exception> catchAllAction;
 

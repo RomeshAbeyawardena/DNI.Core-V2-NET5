@@ -2,7 +2,7 @@
 
 namespace DNI.Core.Shared.Contracts.Handlers
 {
-    public interface ITryHandler : IHandler
+    public interface ITryHandler : IHandler, IDisposable
     {
         IAttempt AsAttempt();
         Action Action { get; }

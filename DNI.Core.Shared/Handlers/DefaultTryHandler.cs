@@ -22,8 +22,7 @@ namespace DNI.Core.Shared.Handlers
             }
             catch (Exception ex)
             {
-                var defaultCatchHandler = new DefaultCatchHandler(ex);
-                InvokeCatchAction(defaultCatchHandler, ex);
+                InvokeCatchAction(ex);
                 return Attempt.Failed(ex);
             }
             finally
@@ -32,10 +31,25 @@ namespace DNI.Core.Shared.Handlers
             }
         }
 
-        protected void InvokeCatchAction(ICatchHandler catchHandler, Exception exception)
+        protected virtual void Dispose(bool disposing)
         {
-            CatchAction?.Invoke(catchHandler);
-            catchHandler.GetCatchAction()?.Invoke(exception);
+            if (disposing)
+            {
+                FinalAction(DefaultFinallyHandler.Create());
+            }
+        }
+
+        public void Dispose()
+        {
+            Dispose(true);
+            GC.SuppressFinalize(this);
+        }
+
+        protected void InvokeCatchAction(Exception exception)
+        {
+            var defaultCatchHandler = DefaultCatchHandler.Create(exception);
+            CatchAction?.Invoke(defaultCatchHandler);
+            defaultCatchHandler.GetCatchAction()?.Invoke(exception);
         }
 
         public Action Action { get; }
@@ -60,15 +74,14 @@ namespace DNI.Core.Shared.Handlers
                 var result = Action();
                 return Attempt.Success(result);
             }
-            catch (Exception ex)
+            catch (Exception exception)
             {
-                var defaultCatchHandler = new DefaultCatchHandler(ex);
-                InvokeCatchAction(defaultCatchHandler, ex);
-                return Attempt.Failed<TResult>(ex);
+                InvokeCatchAction(exception);
+                return Attempt.Failed<TResult>(exception);
             }
             finally
             {
-                FinalAction?.Invoke(new DefaultFinallyHandler());
+                FinalAction?.Invoke(DefaultFinallyHandler.Create());
             }
         }
     }
