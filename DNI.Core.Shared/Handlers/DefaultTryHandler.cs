@@ -6,12 +6,14 @@ namespace DNI.Core.Shared.Handlers
 {
     internal class DefaultTryHandler : DefaultHandler, ITryHandler
     {
-        public DefaultTryHandler(Action action, Action<ICatchHandler> catchAction, Action<IFinallyHandler> finalAction)
+        public static ITryHandler Create(Action action, Action<ICatchHandler> catchAction, Action<IFinallyHandler> finalAction)
         {
-            Action = action;
-            CatchAction = catchAction;
-            FinalAction = finalAction;
+            return new DefaultTryHandler(action, catchAction, finalAction);
         }
+
+        public Action Action { get; }
+        public Action<ICatchHandler> CatchAction { get; }
+        public Action<IFinallyHandler> FinalAction { get; }
 
         public IAttempt AsAttempt()
         {
@@ -27,15 +29,7 @@ namespace DNI.Core.Shared.Handlers
             }
             finally
             {
-                FinalAction?.Invoke(new DefaultFinallyHandler());
-            }
-        }
-
-        protected virtual void Dispose(bool disposing)
-        {
-            if (disposing)
-            {
-                FinalAction(DefaultFinallyHandler.Create());
+                InvokeFinalAction();
             }
         }
 
@@ -43,6 +37,14 @@ namespace DNI.Core.Shared.Handlers
         {
             Dispose(true);
             GC.SuppressFinalize(this);
+        }
+        
+        protected virtual void Dispose(bool disposing)
+        {
+            if (disposing)
+            {
+                InvokeFinalAction();
+            }
         }
 
         protected void InvokeCatchAction(Exception exception)
@@ -52,17 +54,24 @@ namespace DNI.Core.Shared.Handlers
             defaultCatchHandler.GetCatchAction()?.Invoke(exception);
         }
 
-        public Action Action { get; }
-        public Action<ICatchHandler> CatchAction { get; }
-        public Action<IFinallyHandler> FinalAction { get; }
+        protected void InvokeFinalAction()
+        {
+            FinalAction?.Invoke(DefaultFinallyHandler.Create());
+        }
+
+        protected DefaultTryHandler(Action action, Action<ICatchHandler> catchAction, Action<IFinallyHandler> finalAction)
+        {
+            Action = action;
+            CatchAction = catchAction;
+            FinalAction = finalAction;
+        }
     }
 
     internal class DefaultTryHandler<TResult> : DefaultTryHandler, ITryHandler<TResult>
     {
-        public DefaultTryHandler(Func<TResult> action, Action<ICatchHandler> catchAction, Action<IFinallyHandler> finalAction)
-            : base(() => action(), catchAction, finalAction)
+        public static ITryHandler<TResult> Create(Func<TResult> action, Action<ICatchHandler> catchAction, Action<IFinallyHandler> finalAction)
         {
-            Action = action;
+            return new DefaultTryHandler<TResult>(action, catchAction, finalAction);
         }
 
         public new Func<TResult> Action { get; }
@@ -81,8 +90,15 @@ namespace DNI.Core.Shared.Handlers
             }
             finally
             {
-                FinalAction?.Invoke(DefaultFinallyHandler.Create());
+                InvokeFinalAction();
             }
         }
+
+        protected DefaultTryHandler(Func<TResult> action, Action<ICatchHandler> catchAction, Action<IFinallyHandler> finalAction)
+            : base(() => action(), catchAction, finalAction)
+        {
+            Action = action;
+        }
+
     }
 }

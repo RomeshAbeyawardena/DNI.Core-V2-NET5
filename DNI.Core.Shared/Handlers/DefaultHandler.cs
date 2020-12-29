@@ -8,12 +8,12 @@ namespace DNI.Core.Shared.Handlers
     {
         public ITryHandler Try(Action action, Action<ICatchHandler> catchAction, Action<IFinallyHandler> finalAction)
         {
-            return new DefaultTryHandler(action, catchAction, finalAction);
+            return DefaultTryHandler.Create(action, catchAction, finalAction);
         }
 
         public ITryHandler<TResult> Try<TResult>(Func<TResult> resultAction, Action<ICatchHandler> catchAction, Action<IFinallyHandler> finalAction)
         {
-            return new DefaultTryHandler<TResult>(resultAction, catchAction, finalAction);
+            return DefaultTryHandler<TResult>.Create(resultAction, catchAction, finalAction);
         }
     }
 }
