@@ -3,6 +3,7 @@ using System;
 
 namespace DNI.Core.Shared.Handlers
 {
+    /// <inheritdoc cref="IHandler" />
     internal class DefaultHandler : IHandler
     {
         public ITryHandler Try(Action action, Action<ICatchHandler> catchAction, Action<IFinallyHandler> finalAction)
