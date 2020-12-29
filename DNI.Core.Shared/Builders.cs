@@ -74,6 +74,11 @@ namespace DNI.Core.Shared
             return builder ??= new Builder();
         }
 
+        /// <summary>
+        /// Gets the default builder
+        /// </summary>
+        public static IBuilder Default => GetBuilder();
+
         private static IBuilder builder;
     }
 }

@@ -14,7 +14,7 @@ namespace DNI.Core.Tests
         [SetUp]
         public void SetUp()
         {
-            testHandler = Handler.GetHandler();
+            testHandler = Handler.Default;
         }
 
         [Test]
