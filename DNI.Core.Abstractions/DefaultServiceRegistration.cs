@@ -4,6 +4,7 @@ using DNI.Core.Shared;
 using DNI.Core.Shared.Contracts;
 using DNI.Core.Shared.Contracts.Services;
 using DNI.Core.Shared.Extensions;
+using DNI.Core.Shared.Handlers;
 using DNI.Core.Shared.Options;
 using Microsoft.Extensions.DependencyInjection;
 using System.Collections.Generic;
@@ -19,6 +20,8 @@ namespace DNI.Core.Abstractions
         {
             services
                 .AddSingleton(SystemClock.CreateDefault())
+                .AddSingleton(Handler.Default)
+                .AddSingleton(Builders.Default)
                 .AddOptions<EncryptionOptions>();
             return services
                 .AddSingleton(Newtonsoft.Json.JsonSerializer.CreateDefault())
