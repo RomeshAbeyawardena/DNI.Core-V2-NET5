@@ -10,6 +10,7 @@ namespace DNI.Core.Tests
         [SetUp]
         public void SetUp()
         {
+            isCleanedUp = false;
             testHandler = Handler.Default;
         }
 
