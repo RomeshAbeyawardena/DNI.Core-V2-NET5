@@ -13,7 +13,7 @@ namespace DNI.Core.Abstractions
     public abstract class IncludeableQueryBase<T> : IIncludeableQuery<T>
         where T: class
     {
-        IIncludeableQuery<T> IIncludeableQuery<T>.Includes<TSource>(Expression<Func<T, TSource>> includeExpression)
+        public IIncludeableQuery<T> Includes<TSource>(Expression<Func<T, TSource>> includeExpression)
         {
             query = query.Include(includeExpression);
             return this;
@@ -53,7 +53,6 @@ namespace DNI.Core.Abstractions
             {
                 cancellationToken = CancellationToken.None;
             }
-
         }
 
         IEnumerator<T> IEnumerable<T>.GetEnumerator()

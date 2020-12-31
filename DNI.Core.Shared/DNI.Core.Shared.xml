@@ -70,6 +70,16 @@
             Gets the default builder
             </summary>
         </member>
+        <member name="T:DNI.Core.Shared.Constants.Encryption">
+            <summary>
+            Constants related to encryption
+            </summary>
+        </member>
+        <member name="F:DNI.Core.Shared.Constants.Encryption.DefaultIterations">
+            <summary>
+            Gets the default number of iterations to be used
+            </summary>
+        </member>
         <member name="T:DNI.Core.Shared.Contracts.Factories.ICacheServiceFactory">
             <summary>
             Represents a factory used for returning a specific <see cref="T:DNI.Core.Shared.Contracts.Services.ICacheService"/> from a dependency container
@@ -82,6 +92,143 @@
             <param name="cacheServiceType">The type of <see cref="T:DNI.Core.Shared.Contracts.Services.ICacheService"/> to be returned</param>
             <returns>An instance of <see cref="T:DNI.Core.Shared.Contracts.Services.ICacheService"/></returns>
         </member>
+        <member name="T:DNI.Core.Shared.Contracts.Factories.IEncryptionClassificationFactory">
+            <summary>
+            Represents a factory for getting encrpytion options for a specific encryption classification configured by the consumer
+            </summary>
+        </member>
+        <member name="M:DNI.Core.Shared.Contracts.Factories.IEncryptionClassificationFactory.GetEncryptionOptions(DNI.Core.Shared.Enumerations.EncryptionClassification)">
+            <summary>
+            Gets the encryption options for a specific encryption classification
+            </summary>
+            <param name="encryptionClassification"></param>
+            <returns></returns>
+        </member>
+        <member name="T:DNI.Core.Shared.Contracts.Factories.IEncryptionFactory">
+            <summary>
+            Represents an implementation factory for getting the encryption service based on algorithm
+            </summary>
+        </member>
+        <member name="M:DNI.Core.Shared.Contracts.Factories.IEncryptionFactory.GetEncryptionService(System.String)">
+            <summary>
+            Gets the encryption service to be used based on algorithm
+            </summary>
+            <param name="algorithName"></param>
+            <returns>An instance of <see cref="T:DNI.Core.Shared.Contracts.Services.IEncryptionService"/></returns>
+        </member>
+        <member name="T:DNI.Core.Shared.Contracts.Factories.IHashServiceFactory">
+            <summary>
+            Represents a hash service factory for getting an <see cref="T:DNI.Core.Shared.Contracts.Services.IHashService"/> based on algorithm
+            </summary>
+        </member>
+        <member name="M:DNI.Core.Shared.Contracts.Factories.IHashServiceFactory.GetHashService(System.String)">
+            <summary>
+            Gets a specific <see cref="T:DNI.Core.Shared.Contracts.Services.IHashService"/>
+            </summary>
+            <param name="algorithmName"></param>
+            <returns>An instance of <see cref="T:DNI.Core.Shared.Contracts.Services.IHashService"/></returns>
+        </member>
+        <member name="M:DNI.Core.Shared.Contracts.Factories.IHashServiceFactory.GetHashService(System.Security.Cryptography.HashAlgorithmName)">
+            <summary>
+            Gets a specific <see cref="T:DNI.Core.Shared.Contracts.Services.IHashService"/>
+            </summary>
+            <param name="hashAlgorithmName"></param>
+            <returns>An instance of <see cref="T:DNI.Core.Shared.Contracts.Services.IHashService"/></returns>
+        </member>
+        <member name="T:DNI.Core.Shared.Contracts.Factories.IModelEncryptionFactory">
+            <summary>
+            Represents a model encryption factory for getting a model encryption service used for encrypting and decrypting entire models at a time
+            </summary>
+        </member>
+        <member name="M:DNI.Core.Shared.Contracts.Factories.IModelEncryptionFactory.GetModelEncryptionService``1">
+            <summary>
+            Retrieves the model encryption service to use
+            </summary>
+            <typeparam name="T"></typeparam>
+            <returns></returns>
+        </member>
+        <member name="M:DNI.Core.Shared.Contracts.Factories.IModelEncryptionFactory.Encrypt``1(``0)">
+            <summary>
+            Encrypts a model
+            </summary>
+            <typeparam name="T"></typeparam>
+            <param name="model"></param>
+        </member>
+        <member name="M:DNI.Core.Shared.Contracts.Factories.IModelEncryptionFactory.Decrypt``1(``0)">
+            <summary>
+            Decrypts a model
+            </summary>
+            <typeparam name="T"></typeparam>
+            <param name="model"></param>
+        </member>
+        <member name="M:DNI.Core.Shared.Contracts.Factories.IModelEncryptionFactory.Encrypt``1(System.Collections.Generic.IEnumerable{``0})">
+            <summary>
+            Encrypts a list of models
+            </summary>
+            <typeparam name="T"></typeparam>
+            <param name="model"></param>
+        </member>
+        <member name="M:DNI.Core.Shared.Contracts.Factories.IModelEncryptionFactory.Decrypt``1(System.Collections.Generic.IEnumerable{``0})">
+            <summary>
+            Decrypts a list of models
+            </summary>
+            <typeparam name="T"></typeparam>
+            <param name="model"></param>
+        </member>
+        <member name="M:DNI.Core.Shared.Contracts.Factories.IModelEncryptionFactory.Encrypt``2(``0,System.Func{``0,``1})">
+            <summary>
+            Encrypts a model within a model
+            </summary>
+            <typeparam name="T"></typeparam>
+            <typeparam name="TSelector"></typeparam>
+            <param name="model"></param>
+            <param name="propertySelector"></param>
+        </member>
+        <member name="M:DNI.Core.Shared.Contracts.Factories.IModelEncryptionFactory.Decrypt``2(``0,System.Func{``0,``1})">
+            <summary>
+            Decrypts a model within a model
+            </summary>
+            <typeparam name="T"></typeparam>
+            <typeparam name="TSelector"></typeparam>
+            <param name="model"></param>
+            <param name="propertySelector"></param>
+        </member>
+        <member name="M:DNI.Core.Shared.Contracts.Factories.IModelEncryptionFactory.Encrypt``2(``0,System.Func{``0,System.Collections.Generic.IEnumerable{``1}})">
+            <summary>
+            Encrypts a list of models within a model
+            </summary>
+            <typeparam name="T"></typeparam>
+            <typeparam name="TSelector"></typeparam>
+            <param name="model"></param>
+            <param name="propertySelector"></param>
+        </member>
+        <member name="M:DNI.Core.Shared.Contracts.Factories.IModelEncryptionFactory.Encrypt``2(``0,System.Func{``0,System.Collections.Generic.ICollection{``1}})">
+            <summary>
+            Encrypts a collection of models within a model
+            </summary>
+            <typeparam name="T"></typeparam>
+            <typeparam name="TSelector"></typeparam>
+            <param name="model"></param>
+            <param name="propertySelector"></param>
+        </member>
+        <member name="M:DNI.Core.Shared.Contracts.Factories.IModelEncryptionFactory.Decrypt``2(``0,System.Func{``0,System.Collections.Generic.IEnumerable{``1}})">
+            <summary>
+            Decrpts a list of models within a model
+            </summary>
+            <typeparam name="T"></typeparam>
+            <typeparam name="TSelector"></typeparam>
+            <param name="model"></param>
+            <param name="propertySelector"></param>
+        </member>
+        <member name="M:DNI.Core.Shared.Contracts.Factories.IModelEncryptionFactory.Decrypt``2(``0,System.Func{``0,System.Collections.Generic.ICollection{``1}})">
+            <summary>
+            Decrpts a list of models within a model
+            </summary>
+            <typeparam name="T"></typeparam>
+            <typeparam name="TSelector"></typeparam>
+            <param name="model"></param>
+            <param name="propertySelector"></param>
+        </member>
         <member name="T:DNI.Core.Shared.Contracts.Factories.ISerializerFactory">
             <summary>
             Represents a factory used for returning a specific <see cref="T:DNI.Core.Shared.Contracts.ISerializer"/> from a dependency container
@@ -93,6 +240,11 @@
             </summary>
             <param name="serializerType">The type of <see cref="T:DNI.Core.Shared.Contracts.ISerializer"/> to be returned</param>
             <returns>An instance of <see cref="T:DNI.Core.Shared.Contracts.ISerializer"/></returns>
+        </member>
+        <member name="T:DNI.Core.Shared.Contracts.Factories.ITriggerFactory">
+            <summary>
+            Represents a trigger factory used to get a list of <see cref="T:DNI.Core.Shared.Contracts.ITriggerEventHandler`1"/>
+            </summary>
         </member>
         <member name="T:DNI.Core.Shared.Contracts.Handlers.ICatchHandler">
             <summary>
@@ -562,6 +714,87 @@
             <param name="serializer">The <see cref="T:DNI.Core.Shared.Enumerations.SerializerType"/> that should be used to convert the byte representation to <typeparamref name="T"/></param>
             <param name="cancellationToken">Notification to cancel asynchronous task</param>
             <returns>An awaitable instance of <see cref="T:DNI.Core.Shared.Contracts.IAttempt`1"/></returns>
+        </member>
+        <member name="P:DNI.Core.Shared.Contracts.Services.IEncryptionService.EncryptionMethod">
+            <summary>
+            The implemented encryption method to encrypt and decrypt values
+            </summary>
+        </member>
+        <member name="P:DNI.Core.Shared.Contracts.Services.IEncryptionService.EncryptionOptions">
+            <summary>
+            The encryption keys used to encrpyt and decrypt values
+            </summary>
+        </member>
+        <member name="M:DNI.Core.Shared.Contracts.Services.IEncryptionService.Encrypt(System.String,DNI.Core.Shared.Options.EncryptionOptions)">
+            <summary>
+            Encrypts a value using the default or specified <see cref="T:DNI.Core.Shared.Options.EncryptionOptions"/>
+            </summary>
+            <param name="value"></param>
+            <param name="encryptionOptions"></param>
+            <returns></returns>
+        </member>
+        <member name="M:DNI.Core.Shared.Contracts.Services.IEncryptionService.Decrypt(System.String,DNI.Core.Shared.Options.EncryptionOptions)">
+            <summary>
+            Decrypts a value using the default or specified <see cref="T:DNI.Core.Shared.Options.EncryptionOptions"/>
+            </summary>
+            <param name="value"></param>
+            <param name="encryptionOptions"></param>
+            <returns></returns>
+        </member>
+        <member name="M:DNI.Core.Shared.Contracts.Services.IHashService.Hash(System.String,System.String,System.Int32,System.Int32,System.Text.Encoding)">
+            <summary>
+            <para>Hashes a value using specified parameters</para>
+            <para>Use <see cref="M:DNI.Core.Shared.Contracts.Services.IHashService.HashString(System.String,System.Text.Encoding)" /> to use default values</para>
+            </summary>
+            <param name="value"></param>
+            <param name="salt"></param>
+            <param name="iterations"></param>
+            <param name="totalNumberOfBytes"></param>
+            <param name="encoding"></param>
+            <returns></returns>
+        </member>
+        <member name="M:DNI.Core.Shared.Contracts.Services.IHashService.HashString(System.String,System.Text.Encoding)">
+            <summary>
+            <para>Hashes a value using specified parameters</para>
+            </summary>
+            <param name="value"></param>
+            <param name="encoding"></param>
+            <returns></returns>
+        </member>
+        <member name="M:DNI.Core.Shared.Contracts.Services.IHashService.HashString(System.String,System.String,System.Int32,System.Int32,System.Text.Encoding)">
+            <summary>
+            <para>Hashes a value using specified parameters</para>
+            <para>Use <see cref="M:DNI.Core.Shared.Contracts.Services.IHashService.HashString(System.String,System.Text.Encoding)" /> to use default values</para>
+            </summary>
+            <param name="value"></param>
+            <param name="salt"></param>
+            <param name="iterations"></param>
+            <param name="totalNumberOfBytes"></param>
+            <param name="encoding"></param>
+            <returns></returns>
+        </member>
+        <member name="P:DNI.Core.Shared.Contracts.Services.IHashService.AlgorithmName">
+            <summary>
+            Gets the algorithm name used to hash values
+            </summary>
+        </member>
+        <member name="T:DNI.Core.Shared.Contracts.Services.IModelEncryptionService`1">
+            <summary>
+            Represents a model encryption service to encrypt and decrypt a model
+            </summary>
+            <typeparam name="T"></typeparam>
+        </member>
+        <member name="M:DNI.Core.Shared.Contracts.Services.IModelEncryptionService`1.Encrypt(`0)">
+            <summary>
+            Encrypts a model
+            </summary>
+            <param name="model"></param>
+        </member>
+        <member name="M:DNI.Core.Shared.Contracts.Services.IModelEncryptionService`1.Decrypt(`0)">
+            <summary>
+            Decrypts a model
+            </summary>
+            <param name="model"></param>
         </member>
         <member name="T:DNI.Core.Shared.Definition`1">
             <inheritdoc cref="T:DNI.Core.Shared.Contracts.IDefinition`1" />
