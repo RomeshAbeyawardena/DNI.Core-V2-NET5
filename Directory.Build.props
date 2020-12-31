@@ -11,5 +11,8 @@
     <ApplicationVersion>1.0.0.0</ApplicationVersion>
     <FileVersion>1.0.0.0</FileVersion>
     <NoWarn>1591</NoWarn>
+    <SignAssembly>true</SignAssembly>
+    <DelaySign>false</DelaySign>
+    <AssemblyOriginatorKeyFile>DNICore.pfx</AssemblyOriginatorKeyFile>
   </PropertyGroup>
 </Project>
