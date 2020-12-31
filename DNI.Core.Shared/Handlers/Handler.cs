@@ -18,6 +18,11 @@ namespace DNI.Core.Shared.Handlers
             return handler ??= new DefaultHandler();
         }
 
+        internal static IHandler GetHandler(ICatchHandler catchHandler, IFinallyHandler finallyHandler)
+        {
+            return new DefaultHandler(catchHandler, finallyHandler);
+        }
+
         private static IHandler handler;
     }
 }
