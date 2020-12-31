@@ -1,9 +1,5 @@
 ﻿using DNI.Core.Shared.Contracts;
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace DNI.Core.Shared
 {
@@ -73,6 +69,11 @@ namespace DNI.Core.Shared
         {
             return builder ??= new Builder();
         }
+
+        /// <summary>
+        /// Gets the default builder
+        /// </summary>
+        public static IBuilder Default => GetBuilder();
 
         private static IBuilder builder;
     }

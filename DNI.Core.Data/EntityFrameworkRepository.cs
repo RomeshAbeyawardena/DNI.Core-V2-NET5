@@ -28,18 +28,16 @@ namespace DNI.Core.Data
 
         public Task<bool> AnyAsync(IQueryable<T> query, Expression<Func<T, bool>> whereExpression, CancellationToken? cancellationToken)
         {
-            return EnsureParametersAreNotNullAndReturnResult(
+            return TransformQuery(query,
                 (query, whereExpression, ct) => query.AnyAsync(whereExpression, ct),
-                (query, ct) => query.AnyAsync(ct),
-                ref query, ref whereExpression, ref cancellationToken);
+                whereExpression, cancellationToken);
         }
 
         public Task<int> CountAsync(IQueryable<T> query, Expression<Func<T, bool>> whereExpression, CancellationToken? cancellationToken)
         {
-            return EnsureParametersAreNotNullAndReturnResult(
+            return TransformQuery(query,
                 (query, whereExpression, ct) => query.CountAsync(whereExpression, ct),
-                (query, ct) => query.CountAsync(ct),
-                ref query, ref whereExpression, ref cancellationToken);
+                whereExpression, cancellationToken);
         }
 
         public IQueryable<T> EnableTracking(IQueryable<T> query, bool enableTracking, bool enableIdentityResolution)
@@ -55,10 +53,9 @@ namespace DNI.Core.Data
         }
         public Task<T> FirstOrDefaultAsync(IQueryable<T> query, Expression<Func<T, bool>> whereExpression, CancellationToken? cancellationToken)
         {
-            return EnsureParametersAreNotNullAndReturnResult(
+            return TransformQuery(query,
                 (query, whereExpression, ct) => query.FirstOrDefaultAsync(whereExpression, ct),
-                (query, ct) => query.FirstOrDefaultAsync(ct),
-                ref query, ref whereExpression, ref cancellationToken);
+                whereExpression, cancellationToken);
         }
 
         public void Remove(T result)
@@ -79,18 +76,16 @@ namespace DNI.Core.Data
 
         public Task<T> SingleOrDefaultAsync(IQueryable<T> query, Expression<Func<T, bool>> whereExpression, CancellationToken? cancellationToken)
         {
-            return EnsureParametersAreNotNullAndReturnResult(
+            return TransformQuery(query,
                 (query, whereExpression, ct) => query.SingleOrDefaultAsync(whereExpression, ct),
-                (query, ct) => query.SingleOrDefaultAsync(ct),
-                ref query, ref whereExpression, ref cancellationToken);
+                    whereExpression, cancellationToken);
         }
 
         public async Task<IEnumerable<T>> ToArrayAsync(IQueryable<T> query, Expression<Func<T, bool>> whereExpression, CancellationToken? cancellationToken)
         {
-            return await EnsureParametersAreNotNullAndReturnResult(
+            return await TransformQuery(query,
                 (query, whereExpression, ct) => query.ToArrayAsync(ct),
-                (query, ct) => query.ToArrayAsync(ct),
-                ref query, ref whereExpression, ref cancellationToken);
+                    whereExpression, cancellationToken);
         }
 
         public void Update(T result)
@@ -101,36 +96,6 @@ namespace DNI.Core.Data
         protected TDbContext DbContext { get; }
         protected DbSet<T> DbSet { get; }
 
-        private static void EnsureCancellationTokenIsNotNull(ref CancellationToken? cancellationToken)
-        {
-            if (cancellationToken == null)
-            {
-                cancellationToken = CancellationToken.None;
-            }
-
-        }
-
-        private TResult EnsureParametersAreNotNullAndReturnResult<TResult>(
-            Func<IQueryable<T>, Expression<Func<T, bool>>, CancellationToken, TResult> queryableDelegate,
-            Func<IQueryable<T>, CancellationToken, TResult> queryableDefaultDelegate,
-            ref IQueryable<T> query,
-            ref Expression<Func<T, bool>> whereExpression,
-            ref CancellationToken? cancellationToken)
-        {
-            if (query == default)
-            {
-                query = Query;
-            }
-
-            EnsureCancellationTokenIsNotNull(ref cancellationToken);
-
-            if (whereExpression == default)
-            {
-                return queryableDefaultDelegate(query, cancellationToken.Value);
-            }
-
-            return queryableDelegate(query, whereExpression, cancellationToken.Value);
-        }
 
         public T Find(params object[] keys)
         {
@@ -145,7 +110,26 @@ namespace DNI.Core.Data
 
         public IIncludeableQuery<T> Include<TSelector>(IQueryable<T> query, Expression<Func<T, TSelector>> includeExpression)
         {
-            return new IncludeableQuery<T>(query).Includes(includeExpression);
+            return TransformQuery(query, 
+                (query, whereExpression, ct) => IncludeableQuery(query).Includes(includeExpression));
         }
+
+        private TResult TransformQuery<TResult>(IQueryable<T> query, 
+            Func<IIncludeableQuery<T>, Expression<Func<T,bool>>, CancellationToken?, TResult> action, 
+            Expression<Func<T,bool>> whereExpression = default,
+            CancellationToken? cancellationToken = default)
+        {
+            return action(IncludeableQuery(query ?? Query), whereExpression, cancellationToken);
+        }
+
+        private static void EnsureCancellationTokenIsNotNull(ref CancellationToken? cancellationToken)
+        {
+            if (cancellationToken == null)
+            {
+                cancellationToken = CancellationToken.None;
+            }
+        }
+
+        private static IIncludeableQuery<T> IncludeableQuery(IQueryable<T> query) => IncludeableQuery<T>.Create(query);
     }
 }

@@ -13,6 +13,7 @@ namespace DNI.Core.Shared.Contracts
         /// </summary>
         /// <param name="source"></param>
         /// <param name="value"></param>
+        /// <param name="propertyChanges"></param>
         /// <returns></returns>
         bool HasChanges(T source, T value, out IEnumerable<PropertyChange> propertyChanges);
 

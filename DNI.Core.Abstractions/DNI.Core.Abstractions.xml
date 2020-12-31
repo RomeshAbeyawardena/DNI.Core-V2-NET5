@@ -1,0 +1,15 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>DNI.Core.Abstractions</name>
+    </assembly>
+    <members>
+        <member name="T:DNI.Core.Abstractions.DefaultChangeTracker`1">
+            <inheritdoc cref="T:DNI.Core.Shared.Contracts.IChangeTracker`1" />
+        </member>
+        <member name="T:DNI.Core.Abstractions.TriggerEventHandlerBase`2">
+            <see cref="T:DNI.Core.Shared.Contracts.ITriggerEventHandler`2" />
+            <see cref="T:DNI.Core.Shared.Contracts.ITriggerEventHandler`1" />
+        </member>
+    </members>
+</doc>

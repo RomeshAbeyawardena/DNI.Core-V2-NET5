@@ -18,7 +18,7 @@ namespace DNI.Core.Shared.Contracts
         IAttempt<TValue> Case(TKey key);
 
         /// <summary>
-        /// Attempts to add the specified key and value to this i <see cref=""/>
+        /// Attempts to add the specified key and value to this i <see cref="ISwitch{TKey, TValue}"/>
         /// </summary>
         /// <param name="item">A <see cref="KeyValuePair{TKey, TValue}" /> to add to the Switch"</param>
         /// <returns>This instance of <see cref="ISwitch{TKey, TValue}"/></returns>

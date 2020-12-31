@@ -15,6 +15,7 @@ namespace DNI.Core.Shared.Contracts
         /// Returns a <see cref="IQueryable{T}"/> object to query the data source
         /// </summary>
         IQueryable<T> Query { get; }
+
         /// <summary>
         /// Enables or disables change tracking on the <paramref name="query"/> 
         /// </summary>
@@ -23,10 +24,12 @@ namespace DNI.Core.Shared.Contracts
         /// <param name="enableIdentityResolution">Sets whether identity resolution should be enabled</param>
         /// <returns></returns>
         IQueryable<T> EnableTracking(IQueryable<T> query, bool enableTracking = true, bool enableIdentityResolution = true);
+
         /// <summary>
-        /// 
+        /// An include expression to join data from other tables or data objects
         /// </summary>
         /// <typeparam name="TSelector"></typeparam>
+        /// <param name="query"></param>
         /// <param name="includeExpression"></param>
         /// <returns></returns>
         IIncludeableQuery<T> Include<TSelector>(IQueryable<T> query, Expression<Func<T, TSelector>> includeExpression);
