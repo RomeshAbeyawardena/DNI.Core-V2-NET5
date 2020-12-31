@@ -1,0 +1,33 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>DNI.Core.Web</name>
+    </assembly>
+    <members>
+        <member name="T:DNI.Core.Web.Abstractions.MiddlewareBase">
+            <summary>
+            Represents an abstract middleware pipeline for ASP.NET
+            </summary>
+        </member>
+        <member name="M:DNI.Core.Web.Abstractions.MiddlewareBase.Invoke(Microsoft.AspNetCore.Http.HttpContext)">
+            <summary>
+            The pipeline task to be invoked against ASP.NET
+            </summary>
+            <param name="context"></param>
+            <returns></returns>
+        </member>
+        <member name="M:DNI.Core.Web.Abstractions.MiddlewareBase.InvokeMiddleware(Microsoft.AspNetCore.Http.HttpContext)">
+            <summary>
+            A method that will be fired on <see cref="M:DNI.Core.Web.Abstractions.MiddlewareBase.Invoke(Microsoft.AspNetCore.Http.HttpContext)"/>
+            </summary>
+            <param name="context"></param>
+            <returns>Returns a <see cref="T:System.Boolean" /> to determine whether the next middleware should execute/></returns>
+        </member>
+        <member name="M:DNI.Core.Web.Abstractions.MiddlewareBase.#ctor(Microsoft.AspNetCore.Http.RequestDelegate)">
+            <summary>
+            Implementes a middleware pipeline
+            </summary>
+            <param name="next"></param>
+        </member>
+    </members>
+</doc>

@@ -4,6 +4,7 @@ using System;
 
 namespace DNI.Core.Shared.Handlers
 {
+    /// <inheritdoc cref="ITryHandler" />
     internal class DefaultTryHandler : DefaultHandler, ITryHandler
     {
         public static ITryHandler Create(Action action, Action<ICatchHandler> catchAction, Action<IFinallyHandler> finalAction)
@@ -11,12 +12,13 @@ namespace DNI.Core.Shared.Handlers
             return new DefaultTryHandler(action, catchAction, finalAction);
         }
 
-        public static ITryHandler Create(ICatchHandler catchHandler, IFinallyHandler finallyHandler, 
+        internal static ITryHandler Create(ICatchHandler catchHandler, IFinallyHandler finallyHandler, 
             Action action, Action<ICatchHandler> catchAction, Action<IFinallyHandler> finalAction)
         {
             return new DefaultTryHandler(catchHandler, finallyHandler, action, catchAction, finalAction);
         }
 
+        private bool IsFinalActionInvoked { get; set; }
         public Action Action { get; }
         public Action<ICatchHandler> CatchAction { get; }
         public Action<IFinallyHandler> FinalAction { get; }
@@ -47,7 +49,7 @@ namespace DNI.Core.Shared.Handlers
         
         protected virtual void Dispose(bool disposing)
         {
-            if (disposing)
+            if (disposing && !IsFinalActionInvoked)
             {
                 InvokeFinalAction();
             }
@@ -65,6 +67,7 @@ namespace DNI.Core.Shared.Handlers
         protected void InvokeFinalAction()
         {
             FinalAction?.Invoke(FinallyHandler ?? DefaultFinallyHandler.Create());
+            IsFinalActionInvoked = true;
         }
 
         protected DefaultTryHandler(Action action, Action<ICatchHandler> catchAction, Action<IFinallyHandler> finalAction)
@@ -84,6 +87,7 @@ namespace DNI.Core.Shared.Handlers
         }
     }
 
+    /// <see cref="ITryHandler{TResult}"/>
     internal class DefaultTryHandler<TResult> : DefaultTryHandler, ITryHandler<TResult>
     {
         public static ITryHandler<TResult> Create(Func<TResult> action, Action<ICatchHandler> catchAction, Action<IFinallyHandler> finalAction)
@@ -91,7 +95,7 @@ namespace DNI.Core.Shared.Handlers
             return new DefaultTryHandler<TResult>(action, catchAction, finalAction);
         }
 
-        public static ITryHandler<TResult> Create(ICatchHandler catchHandler, IFinallyHandler finallyHandler, 
+        internal static ITryHandler<TResult> Create(ICatchHandler catchHandler, IFinallyHandler finallyHandler, 
             Func<TResult> action, Action<ICatchHandler> catchAction, Action<IFinallyHandler> finalAction)
         {
             return new DefaultTryHandler<TResult>(catchHandler, finallyHandler, action, catchAction, finalAction);

@@ -3,7 +3,7 @@
 namespace DNI.Core.Shared.Contracts.Handlers
 {
     /// <summary>
-    /// Represents a helper to create a try, catch and finally handler
+    /// Represents a base handler to manage try, catch and finally handlers
     /// </summary>
     public interface IHandler
     {

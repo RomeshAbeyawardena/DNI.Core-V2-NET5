@@ -3,6 +3,8 @@ using System;
 
 namespace DNI.Core.Abstractions
 {
+    /// <see cref="ITriggerEventHandler{T, TEnum}" />
+    /// <see cref="ITriggerEventHandler{T}" />
     public abstract class TriggerEventHandlerBase<T, TEnum> : ITriggerEventHandler<T, TEnum>
         where TEnum : Enum
     {
