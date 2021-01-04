@@ -11,16 +11,11 @@ namespace DNI.Core.Abstractions.Extensions
 {
     public static class ServiceCollectionExtensions
     {
-        public static IServiceCollection RegisterModelForFluentEncryption<T>(this IServiceCollection services, Action<IFluentEncryptionConfiguration<T>> action)
+        public static IFluentEncryptionConfiguration RegisterModelForFluentEncryption<T>(this IServiceCollection services, Action<IFluentEncryptionConfiguration<T>> action)
         {
-            services
-                .TryAddSingleton<IFluentEncryptionConfiguration<T>>((s) => {
-                    var configuration = new FluentEncryptionConfiguration<T>();
-                    action(configuration);
-                    return configuration;
-                });
+            var config = new FluentEncryptionConfiguration(services);
 
-            return services;
+            return config.Configure(action);
         }
 
         public static IServiceCollection RegisterServices<TServiceRegistration>(this IServiceCollection services, bool registerInternalServices = true)
@@ -29,7 +24,7 @@ namespace DNI.Core.Abstractions.Extensions
             var serviceRegistration = Activator.CreateInstance<TServiceRegistration>();
             if (registerInternalServices)
             {
-                new DefaultServiceRegistration().RegisterServices(services);
+                DefaultServiceRegistration.Create().RegisterServices(services);
             }
             serviceRegistration.RegisterServices(services);
             return services;

@@ -6,6 +6,12 @@ using System.Net.Security;
 
 namespace DNI.Core.Shared.Contracts
 {
+    public interface IFluentEncryptionConfiguration
+    {
+        IFluentEncryptionConfiguration Configure<T>(Action<IFluentEncryptionConfiguration<T>> action);
+
+    }
+
     public interface IFluentEncryptionConfiguration<T>
     {
         IFluentEncryptionConfiguration<T> Configure(

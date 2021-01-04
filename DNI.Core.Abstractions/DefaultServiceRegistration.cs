@@ -13,9 +13,13 @@ using System.Reflection;
 
 namespace DNI.Core.Abstractions
 {
-
     internal class DefaultServiceRegistration : ServiceRegistrationBase
     {
+        public static IServiceRegistration Create()
+        {
+            return new DefaultServiceRegistration();
+        }
+
         public override IServiceCollection RegisterServices(IServiceCollection services)
         {
             services
@@ -29,6 +33,11 @@ namespace DNI.Core.Abstractions
                 .AddSingleton(typeof(IChangeTracker<>), typeof(DefaultChangeTracker<>))
                 .ScanForTypes(typeDefinition => typeDefinition.AddRange(ScanTypes), 
                     AssemblyDefinitions.ToArray());
+        }
+
+        private DefaultServiceRegistration()
+        {
+
         }
 
         private static IDefinition<Assembly> AssemblyDefinitions => 

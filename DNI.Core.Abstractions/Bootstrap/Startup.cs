@@ -3,6 +3,7 @@ using DNI.Core.Shared.Contracts;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.DependencyInjection;
+using System;
 
 namespace DNI.Core.Abstractions.Bootstrap
 {
@@ -15,6 +16,12 @@ namespace DNI.Core.Abstractions.Bootstrap
                 .RegisterServices<TServiceRegistration>()
                 .AddDistributedMemoryCache();
         }
+
+        public IFluentEncryptionConfiguration ConfigureEncryption<T>(IServiceCollection services, 
+            Action<IFluentEncryptionConfiguration<T>> configurationAction)
+        {
+            return services.RegisterModelForFluentEncryption(configurationAction);
+        } 
 
         public abstract void Configure(IApplicationBuilder app, IWebHostEnvironment env);
     }
