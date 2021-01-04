@@ -17,7 +17,7 @@ namespace DNI.Core.Abstractions.Bootstrap
                 .AddDistributedMemoryCache();
         }
 
-        public IFluentEncryptionConfiguration ConfigureEncryption<T>(IServiceCollection services, 
+        public IFluentEncryptionConfiguration ConfigureEncryptionModel<T>(IServiceCollection services, 
             Action<IFluentEncryptionConfiguration<T>> configurationAction)
         {
             return services.RegisterModelForFluentEncryption(configurationAction);
