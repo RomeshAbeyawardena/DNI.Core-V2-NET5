@@ -317,9 +317,20 @@
             </summary>
             <returns>An instance of an <see cref="T:DNI.Core.Shared.Contracts.IAttempt"/></returns>
         </member>
+        <member name="M:DNI.Core.Shared.Contracts.Handlers.ITryHandler.AsAttemptAsync(System.Threading.CancellationToken)">
+            <summary>
+            
+            </summary>
+            <returns></returns>
+        </member>
         <member name="P:DNI.Core.Shared.Contracts.Handlers.ITryHandler.Action">
             <summary>
             Represents the action that the handler will attempt
+            </summary>
+        </member>
+        <member name="P:DNI.Core.Shared.Contracts.Handlers.ITryHandler.ActionAsync">
+            <summary>
+            
             </summary>
         </member>
         <member name="P:DNI.Core.Shared.Contracts.Handlers.ITryHandler.CatchAction">
@@ -343,6 +354,18 @@
             Creates an attempt object based on this TryHandler
             </summary>
             <returns>An instance of an <see cref="T:DNI.Core.Shared.Contracts.IAttempt`1"/></returns>
+        </member>
+        <member name="M:DNI.Core.Shared.Contracts.Handlers.ITryHandler`1.AsAttemptAsync(System.Threading.CancellationToken)">
+            <summary>
+            
+            </summary>
+            <param name="cancellationToken"></param>
+            <returns></returns>
+        </member>
+        <member name="P:DNI.Core.Shared.Contracts.Handlers.ITryHandler`1.ActionAsync">
+            <summary>
+            
+            </summary>
         </member>
         <member name="P:DNI.Core.Shared.Contracts.Handlers.ITryHandler`1.Action">
             <summary>
