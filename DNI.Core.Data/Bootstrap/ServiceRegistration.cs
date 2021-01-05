@@ -13,7 +13,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
 
-namespace DNI.Core.Data
+namespace DNI.Core.Data.Bootstrap
 {
     public abstract class ServiceRegistration<TDbContext> : ServiceRegistrationBase
         where TDbContext : DbContext

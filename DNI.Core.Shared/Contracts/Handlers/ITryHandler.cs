@@ -1,4 +1,6 @@
 ﻿using System;
+using System.Threading;
+using System.Threading.Tasks;
 
 namespace DNI.Core.Shared.Contracts.Handlers
 {
@@ -12,12 +14,20 @@ namespace DNI.Core.Shared.Contracts.Handlers
         /// </summary>
         /// <returns>An instance of an <see cref="IAttempt"/></returns>
         IAttempt AsAttempt();
-
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <returns></returns>
+        Task<IAttempt> AsAttemptAsync(CancellationToken cancellationToken);
         /// <summary>
         /// Represents the action that the handler will attempt
         /// </summary>
         Action Action { get; }
-        
+
+        /// <summary>
+        /// 
+        /// </summary>
+        Func<CancellationToken, Task> ActionAsync { get; }
         /// <summary>
         /// Represents the action that gets triggered when <see cref="Action"/> throws an exception
         /// </summary>
@@ -40,6 +50,19 @@ namespace DNI.Core.Shared.Contracts.Handlers
         /// </summary>
         /// <returns>An instance of an <see cref="IAttempt{T}"/></returns>
         new IAttempt<TResult> AsAttempt();
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="cancellationToken"></param>
+        /// <returns></returns>
+        Task<IAttempt<TResult>> AsAttemptAsync(CancellationToken cancellationToken);
+
+        /// <summary>
+        /// 
+        /// </summary>
+        new Func<CancellationToken, Task<TResult>> ActionAsync { get; }
+
         /// <summary>
         /// Represents the action that the handler will attempt
         /// </summary>

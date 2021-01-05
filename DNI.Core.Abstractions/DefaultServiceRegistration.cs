@@ -10,6 +10,7 @@ using Microsoft.Extensions.DependencyInjection;
 using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
+using System.Security.Cryptography;
 
 namespace DNI.Core.Abstractions
 {
@@ -28,6 +29,8 @@ namespace DNI.Core.Abstractions
                 .AddSingleton(Builders.Default)
                 .AddOptions<EncryptionOptions>();
             return services
+                .AddSingleton(RandomNumberGenerator.Create())
+                .AddSingleton(serviceProvider => RandomStringGenerator.Create(serviceProvider.GetRequiredService<RandomNumberGenerator>()))
                 .AddSingleton(Newtonsoft.Json.JsonSerializer.CreateDefault())
                 .AddSingleton(typeof(IModelEncryptionService<>), typeof(DefaultModelEncryptionService<>))
                 .AddSingleton(typeof(IChangeTracker<>), typeof(DefaultChangeTracker<>))
