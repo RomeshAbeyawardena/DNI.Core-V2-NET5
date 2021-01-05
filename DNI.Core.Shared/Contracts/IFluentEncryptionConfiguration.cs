@@ -8,8 +8,8 @@ namespace DNI.Core.Shared.Contracts
 {
     public interface IFluentEncryptionConfiguration
     {
-        IFluentEncryptionConfiguration Configure<T>(Action<IFluentEncryptionConfiguration<T>> action);
-
+        IFluentEncryptionConfiguration RegisterModel<T>(Action<IFluentEncryptionConfiguration<T>> action);
+        IFluentEncryptionConfiguration RegisterEncryptionClassifications(Action<IEncryptionClassificationOptions> action);
     }
 
     public interface IFluentEncryptionConfiguration<T>

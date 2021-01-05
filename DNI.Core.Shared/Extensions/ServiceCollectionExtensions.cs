@@ -3,20 +3,12 @@ using Microsoft.Extensions.DependencyInjection;
 using System;
 using DNI.Core.Shared.Enumerations;
 using DNI.Core.Shared.Options;
+using DNI.Core.Shared.Contracts;
 
 namespace DNI.Core.Shared.Extensions
 {
     public static class ServiceCollectionExtensions
     {
-        public static IServiceCollection RegisterEncryptionClassifications(this IServiceCollection services, Action<EncryptionClassificationOptions> action)
-        {
-            return services.AddSingleton(serviceProvider => {
-                var encryptionClassificationOptions = new EncryptionClassificationOptions(serviceProvider);
-                action(encryptionClassificationOptions);
-                return encryptionClassificationOptions.EncryptionClassifications;
-            });
-            
-        }
         public static IServiceCollection RegisterDbContext<TDbContext>(
             this IServiceCollection services,
             DbContextMethod dbContextMethod = DbContextMethod.SingleInstance,

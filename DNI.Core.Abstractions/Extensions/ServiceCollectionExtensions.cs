@@ -11,11 +11,16 @@ namespace DNI.Core.Abstractions.Extensions
 {
     public static class ServiceCollectionExtensions
     {
+        public static IFluentEncryptionConfiguration RegisterEncryptionClassifications(this IServiceCollection services, Action<IEncryptionClassificationOptions> action)
+        {
+            return new FluentEncryptionConfiguration(services)
+                .RegisterEncryptionClassifications(action);
+        }
+
         public static IFluentEncryptionConfiguration RegisterModelForFluentEncryption<T>(this IServiceCollection services, Action<IFluentEncryptionConfiguration<T>> action)
         {
-            var config = new FluentEncryptionConfiguration(services);
-
-            return config.Configure(action);
+            return new FluentEncryptionConfiguration(services)
+                .RegisterModel(action);
         }
 
         public static IServiceCollection RegisterServices<TServiceRegistration>(this IServiceCollection services, bool registerInternalServices = true)

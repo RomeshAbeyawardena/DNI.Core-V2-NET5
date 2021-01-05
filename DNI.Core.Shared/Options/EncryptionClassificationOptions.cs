@@ -4,20 +4,19 @@ using System;
 
 namespace DNI.Core.Shared.Options
 {
-    public class EncryptionClassificationOptions
+    internal class EncryptionClassificationOptions : IEncryptionClassificationOptions
     {
-        public EncryptionClassificationOptions(IServiceProvider serviceProvider)
+        public static IEncryptionClassificationOptions Create(IServiceProvider serviceProvider)
         {
-            this.serviceProvider = serviceProvider;
-            EncryptionClassifications = Switch.Create<EncryptionClassification, EncryptionOptions>();
+            return new EncryptionClassificationOptions(serviceProvider);
         }
 
-        public EncryptionClassificationOptions Configure(EncryptionClassification encryptionClassification, Action<IServiceProvider, EncryptionOptions> options)
+        public IEncryptionClassificationOptions Configure(EncryptionClassification encryptionClassification, Action<IServiceProvider, EncryptionOptions> options)
         {
             return Configure(encryptionClassification, (opt) => options(serviceProvider, opt));
         }
 
-        public EncryptionClassificationOptions Configure(EncryptionClassification encryptionClassification, Action<EncryptionOptions> options)
+        public IEncryptionClassificationOptions Configure(EncryptionClassification encryptionClassification, Action<EncryptionOptions> options)
         {
             var encryptionOptions = new EncryptionOptions();
             options(encryptionOptions);
@@ -26,6 +25,12 @@ namespace DNI.Core.Shared.Options
         }
 
         public ISwitch<EncryptionClassification, EncryptionOptions> EncryptionClassifications { get; }
+
+        private EncryptionClassificationOptions(IServiceProvider serviceProvider)
+        {
+            this.serviceProvider = serviceProvider;
+            EncryptionClassifications = Switch.Create<EncryptionClassification, EncryptionOptions>();
+        }
 
         private readonly IServiceProvider serviceProvider;
     }

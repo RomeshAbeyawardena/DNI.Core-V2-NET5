@@ -12,7 +12,7 @@ namespace DNI.Core.Abstractions
 {
     internal class FluentEncryptionConfiguration : IFluentEncryptionConfiguration
     {
-        public IFluentEncryptionConfiguration Configure<T>(Action<IFluentEncryptionConfiguration<T>> action)
+        public IFluentEncryptionConfiguration RegisterModel<T>(Action<IFluentEncryptionConfiguration<T>> action)
         {
             services
                 .TryAddSingleton<IFluentEncryptionConfiguration<T>>((s) => {
@@ -21,6 +21,18 @@ namespace DNI.Core.Abstractions
                     return configuration;
                 });
 
+            return this;
+        }
+
+        public IFluentEncryptionConfiguration RegisterEncryptionClassifications(Action<IEncryptionClassificationOptions> action)
+        {
+
+            services.AddSingleton(serviceProvider => {
+                var encryptionClassificationOptions = EncryptionClassificationOptions.Create(serviceProvider);
+                action(encryptionClassificationOptions);
+                return encryptionClassificationOptions.EncryptionClassifications;
+            });
+            
             return this;
         }
 
