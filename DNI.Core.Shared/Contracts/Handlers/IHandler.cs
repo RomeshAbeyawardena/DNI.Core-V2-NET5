@@ -1,4 +1,6 @@
 ﻿using System;
+using System.Threading;
+using System.Threading.Tasks;
 
 namespace DNI.Core.Shared.Contracts.Handlers
 {
@@ -24,5 +26,15 @@ namespace DNI.Core.Shared.Contracts.Handlers
         /// <param name="finalAction"></param>
         /// <returns></returns>
         ITryHandler<TResult> Try<TResult>(Func<TResult> resultAction, Action<ICatchHandler> catchAction, Action<IFinallyHandler> finalAction);
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <typeparam name="TResult"></typeparam>
+        /// <param name="resultAction"></param>
+        /// <param name="catchAction"></param>
+        /// <param name="finalAction"></param>
+        /// <returns></returns>
+        ITryHandler<TResult> TryAsync<TResult>(Func<CancellationToken, Task<TResult>> resultAction, Action<ICatchHandler> catchAction, Action<IFinallyHandler> finalAction);
     }
 }
