@@ -306,6 +306,16 @@
             <param name="finalAction"></param>
             <returns></returns>
         </member>
+        <member name="M:DNI.Core.Shared.Contracts.Handlers.IHandler.TryAsync``1(System.Func{System.Threading.CancellationToken,System.Threading.Tasks.Task{``0}},System.Action{DNI.Core.Shared.Contracts.Handlers.ICatchHandler},System.Action{DNI.Core.Shared.Contracts.Handlers.IFinallyHandler})">
+            <summary>
+            
+            </summary>
+            <typeparam name="TResult"></typeparam>
+            <param name="resultAction"></param>
+            <param name="catchAction"></param>
+            <param name="finalAction"></param>
+            <returns></returns>
+        </member>
         <member name="T:DNI.Core.Shared.Contracts.Handlers.ITryHandler">
             <summary>
             

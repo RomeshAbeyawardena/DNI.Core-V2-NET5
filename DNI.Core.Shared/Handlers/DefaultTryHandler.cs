@@ -19,7 +19,6 @@ namespace DNI.Core.Shared.Handlers
             return new DefaultTryHandler(action, catchAction, finalAction);
         }
 
-
         internal static ITryHandler Create(ICatchHandler catchHandler, IFinallyHandler finallyHandler,
             Action action, Action<ICatchHandler> catchAction, Action<IFinallyHandler> finalAction)
         {
@@ -138,6 +137,11 @@ namespace DNI.Core.Shared.Handlers
             return new DefaultTryHandler<TResult>(action, catchAction, finalAction);
         }
 
+        public static ITryHandler<TResult> Create(Func<CancellationToken, Task<TResult>> action, Action<ICatchHandler> catchAction, Action<IFinallyHandler> finalAction)
+        {
+            return new DefaultTryHandler<TResult>(action, catchAction, finalAction);
+        }
+
         internal static ITryHandler<TResult> Create(ICatchHandler catchHandler, IFinallyHandler finallyHandler,
             Func<TResult> action, Action<ICatchHandler> catchAction, Action<IFinallyHandler> finalAction)
         {
@@ -166,7 +170,7 @@ namespace DNI.Core.Shared.Handlers
             }
         }
 
-        public async Task<IAttempt<TResult>> AsAttemptAsync(CancellationToken cancellationToken)
+        public new async Task<IAttempt<TResult>> AsAttemptAsync(CancellationToken cancellationToken)
         {
             try
             {
@@ -190,6 +194,12 @@ namespace DNI.Core.Shared.Handlers
             : base(() => action(), catchAction, finalAction)
         {
             Action = action;
+        }
+
+        protected DefaultTryHandler(Func<CancellationToken, Task<TResult>> action, Action<ICatchHandler> catchAction, Action<IFinallyHandler> finalAction)
+            : base(() => action(CancellationToken.None), catchAction, finalAction)
+        {
+            ActionAsync = action;
         }
 
         protected DefaultTryHandler(ICatchHandler catchHandler, IFinallyHandler finallyHandler,

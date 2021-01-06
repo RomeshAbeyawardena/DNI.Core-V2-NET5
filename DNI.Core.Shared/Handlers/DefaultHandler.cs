@@ -1,5 +1,7 @@
 ﻿using DNI.Core.Shared.Contracts.Handlers;
 using System;
+using System.Threading;
+using System.Threading.Tasks;
 
 namespace DNI.Core.Shared.Handlers
 {
@@ -18,6 +20,11 @@ namespace DNI.Core.Shared.Handlers
             return IsCatchOrFinallyHandlerNull
                 ? DefaultTryHandler<TResult>.Create(CatchHandler, FinallyHandler, resultAction, catchAction, finalAction) 
                 : DefaultTryHandler<TResult>.Create(resultAction, catchAction, finalAction);
+        }
+
+        public ITryHandler<TResult> TryAsync<TResult>(Func<CancellationToken, Task<TResult>> resultAction, Action<ICatchHandler> catchAction, Action<IFinallyHandler> finalAction)
+        {
+            return DefaultTryHandler<TResult>.Create(resultAction, catchAction, finalAction);
         }
 
         public DefaultHandler()
