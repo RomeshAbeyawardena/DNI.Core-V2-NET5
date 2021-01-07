@@ -11,5 +11,6 @@ namespace DNI.Core.Shared.Contracts.Services
         where TEntity : class
     {
         Task<int> SaveChanges(CancellationToken cancellationToken);
+        Task<int> Save(TEntity entity, CancellationToken cancellationToken);
     }
 }

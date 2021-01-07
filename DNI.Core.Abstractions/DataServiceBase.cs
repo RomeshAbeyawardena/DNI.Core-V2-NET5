@@ -12,7 +12,9 @@ namespace DNI.Core.Abstractions
     public abstract class DataServiceBase<TEntity> : IDataService<TEntity>
         where TEntity : class
     {
-        public Task<int> SaveChanges(CancellationToken cancellationToken)
+        public abstract Task<int> Save(TEntity entity, CancellationToken cancellationToken);
+
+        Task<int> IDataService<TEntity>.SaveChanges(CancellationToken cancellationToken)
         {
             return Repository.SaveChangesAsync(cancellationToken);
         }
