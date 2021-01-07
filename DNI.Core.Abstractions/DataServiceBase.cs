@@ -22,6 +22,7 @@ namespace DNI.Core.Abstractions
             Repository = entityRepository;
         }
 
+        protected IQueryable<TEntity> NoTrackingQuery => Repository.EnableTracking(Repository.Query);
         protected IAsyncRepository<TEntity> Repository { get; }
     }
 }
