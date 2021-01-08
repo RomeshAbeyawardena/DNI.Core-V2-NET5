@@ -11,6 +11,7 @@ namespace DNI.Core.Shared.Contracts.Services
     public interface IDataService<TEntity>
         where TEntity : class
     {
+        Task<IEnumerable<TEntity>> ToArray(CancellationToken cancellationToken);
         Task<TEntity> FirstOrDefault(Expression<Func<TEntity, bool>> expression, CancellationToken cancellationToken);
         Task<IEnumerable<TEntity>> ToArray(Expression<Func<TEntity, bool>> expression, CancellationToken cancellationToken);
         Task<int> SaveChanges(CancellationToken cancellationToken);
