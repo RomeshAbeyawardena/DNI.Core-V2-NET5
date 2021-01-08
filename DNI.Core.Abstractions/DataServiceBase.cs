@@ -20,14 +20,19 @@ namespace DNI.Core.Abstractions
             return Repository.SaveChangesAsync(cancellationToken);
         }
 
-        public Task<TEntity> FirstOrDefault(Expression<Func<TEntity, bool>> expression, CancellationToken cancellationToken)
+        Task<TEntity> IDataService<TEntity>.FirstOrDefault(Expression<Func<TEntity, bool>> expression, CancellationToken cancellationToken)
         {
             return Repository.FirstOrDefaultAsync(NoTrackingQuery, expression, cancellationToken);
         }
 
-        public Task<IEnumerable<TEntity>> ToArray(Expression<Func<TEntity, bool>> expression, CancellationToken cancellationToken)
+        Task<IEnumerable<TEntity>> IDataService<TEntity>.ToArray(Expression<Func<TEntity, bool>> expression, CancellationToken cancellationToken)
         {
             return Repository.ToArrayAsync(NoTrackingQuery, expression, cancellationToken);
+        }
+
+        Task<IEnumerable<TEntity>> IDataService<TEntity>.ToArray(CancellationToken cancellationToken)
+        {
+            return Repository.ToArrayAsync(cancellationToken: cancellationToken);
         }
 
         protected DataServiceBase(IAsyncRepository<TEntity> entityRepository)
