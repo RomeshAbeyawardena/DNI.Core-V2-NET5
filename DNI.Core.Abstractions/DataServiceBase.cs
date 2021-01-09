@@ -20,9 +20,9 @@ namespace DNI.Core.Abstractions
             return Repository.SaveChangesAsync(cancellationToken);
         }
 
-        Task<TEntity> IDataService<TEntity>.AnyAsync(Expression<Func<TEntity, bool>> expression, CancellationToken cancellationToken)
+        Task<bool> IDataService<TEntity>.AnyAsync(Expression<Func<TEntity, bool>> expression, CancellationToken cancellationToken)
         {
-            return Repository.FirstOrDefaultAsync(NoTrackingQuery, expression, cancellationToken);
+            return Repository.AnyAsync(NoTrackingQuery, expression, cancellationToken);
         }
 
         Task<TEntity> IDataService<TEntity>.FirstOrDefaultAsync(Expression<Func<TEntity, bool>> expression, CancellationToken cancellationToken)
