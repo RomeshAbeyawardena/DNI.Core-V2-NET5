@@ -6,9 +6,10 @@ using System.Threading.Tasks;
 
 namespace DNI.Core.Shared.Contracts.Services
 {
-    public interface ILookupService<TEntity>
+    public interface ILookupService<TLookupParameters, TEntity>
+        where TLookupParameters : ILookupParameters
     {
-        TEntity Lookup(ILookupParameters parameters);
-        Task<TEntity> LookupAsync(ILookupParameters parameters);
+        TEntity Lookup(TLookupParameters parameters);
+        Task<TEntity> LookupAsync(TLookupParameters parameters);
     }
 }
