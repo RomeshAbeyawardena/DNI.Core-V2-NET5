@@ -11,10 +11,11 @@ namespace DNI.Core.Shared.Contracts.Services
     public interface IDataService<TEntity>
         where TEntity : class
     {
-        Task<IEnumerable<TEntity>> ToArray(CancellationToken cancellationToken);
-        Task<TEntity> FirstOrDefault(Expression<Func<TEntity, bool>> expression, CancellationToken cancellationToken);
-        Task<IEnumerable<TEntity>> ToArray(Expression<Func<TEntity, bool>> expression, CancellationToken cancellationToken);
-        Task<int> SaveChanges(CancellationToken cancellationToken);
-        Task<int> Save(TEntity entity, CancellationToken cancellationToken);
+        Task<IEnumerable<TEntity>> ToArrayAsync(CancellationToken cancellationToken);
+        Task<TEntity> FirstOrDefaultAsync(Expression<Func<TEntity, bool>> expression, CancellationToken cancellationToken);
+        Task<TEntity> AnyAsync(Expression<Func<TEntity, bool>> expression, CancellationToken cancellationToken);
+        Task<IEnumerable<TEntity>> ToArrayAsync(Expression<Func<TEntity, bool>> expression, CancellationToken cancellationToken);
+        Task<int> SaveChangesAsync(CancellationToken cancellationToken);
+        Task<int> SaveAsync(TEntity entity, CancellationToken cancellationToken);
     }
 }

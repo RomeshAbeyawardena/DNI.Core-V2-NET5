@@ -13,24 +13,29 @@ namespace DNI.Core.Abstractions
     public abstract class DataServiceBase<TEntity> : IDataService<TEntity>
         where TEntity : class
     {
-        public abstract Task<int> Save(TEntity entity, CancellationToken cancellationToken);
+        public abstract Task<int> SaveAsync(TEntity entity, CancellationToken cancellationToken);
 
-        Task<int> IDataService<TEntity>.SaveChanges(CancellationToken cancellationToken)
+        Task<int> IDataService<TEntity>.SaveChangesAsync(CancellationToken cancellationToken)
         {
             return Repository.SaveChangesAsync(cancellationToken);
         }
 
-        Task<TEntity> IDataService<TEntity>.FirstOrDefault(Expression<Func<TEntity, bool>> expression, CancellationToken cancellationToken)
+        Task<TEntity> IDataService<TEntity>.AnyAsync(Expression<Func<TEntity, bool>> expression, CancellationToken cancellationToken)
         {
             return Repository.FirstOrDefaultAsync(NoTrackingQuery, expression, cancellationToken);
         }
 
-        Task<IEnumerable<TEntity>> IDataService<TEntity>.ToArray(Expression<Func<TEntity, bool>> expression, CancellationToken cancellationToken)
+        Task<TEntity> IDataService<TEntity>.FirstOrDefaultAsync(Expression<Func<TEntity, bool>> expression, CancellationToken cancellationToken)
+        {
+            return Repository.FirstOrDefaultAsync(NoTrackingQuery, expression, cancellationToken);
+        }
+
+        Task<IEnumerable<TEntity>> IDataService<TEntity>.ToArrayAsync(Expression<Func<TEntity, bool>> expression, CancellationToken cancellationToken)
         {
             return Repository.ToArrayAsync(NoTrackingQuery, expression, cancellationToken);
         }
 
-        Task<IEnumerable<TEntity>> IDataService<TEntity>.ToArray(CancellationToken cancellationToken)
+        Task<IEnumerable<TEntity>> IDataService<TEntity>.ToArrayAsync(CancellationToken cancellationToken)
         {
             return Repository.ToArrayAsync(cancellationToken: cancellationToken);
         }
