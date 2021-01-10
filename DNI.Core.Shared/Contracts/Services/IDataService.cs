@@ -14,6 +14,7 @@ namespace DNI.Core.Shared.Contracts.Services
         Task<IEnumerable<TEntity>> ToArrayAsync(CancellationToken cancellationToken);
         Task<TEntity> FirstOrDefaultAsync(Expression<Func<TEntity, bool>> expression, CancellationToken cancellationToken);
         Task<bool> AnyAsync(Expression<Func<TEntity, bool>> expression, CancellationToken cancellationToken);
+        Task<bool> ExistsAsync(TEntity entity, CancellationToken cancellationToken);
         Task<IEnumerable<TEntity>> ToArrayAsync(Expression<Func<TEntity, bool>> expression, CancellationToken cancellationToken);
         Task<int> SaveChangesAsync(CancellationToken cancellationToken);
         Task<int> SaveAsync(TEntity entity, CancellationToken cancellationToken);

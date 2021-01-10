@@ -58,10 +58,18 @@ namespace DNI.Core.Abstractions
         }
 
         public DefaultAppHost()
+            : this(new ServiceCollection())
         {
+            
+        }
+
+        public DefaultAppHost(IServiceCollection services)
+        {
+            this.services = new ServiceCollection();
             configurationBuilder = new DefaultConfigurationBuilder();
             hostBuilderContext = new HostBuilderContext(Properties);
         }
+
 
         private readonly IServiceCollection services;
         private readonly IConfigurationBuilder configurationBuilder;

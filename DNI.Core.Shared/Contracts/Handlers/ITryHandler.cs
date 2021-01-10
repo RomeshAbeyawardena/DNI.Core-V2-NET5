@@ -56,7 +56,7 @@ namespace DNI.Core.Shared.Contracts.Handlers
         /// </summary>
         /// <param name="cancellationToken"></param>
         /// <returns></returns>
-        Task<IAttempt<TResult>> AsAttemptAsync(CancellationToken cancellationToken);
+        new Task<IAttempt<TResult>> AsAttemptAsync(CancellationToken cancellationToken);
 
         /// <summary>
         /// 

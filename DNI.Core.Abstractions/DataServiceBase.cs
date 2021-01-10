@@ -14,6 +14,7 @@ namespace DNI.Core.Abstractions
         where TEntity : class
     {
         public abstract Task<int> SaveAsync(TEntity entity, CancellationToken cancellationToken);
+        public abstract Task<bool> ExistsAsync(TEntity entity, CancellationToken cancellationToken);
 
         Task<int> IDataService<TEntity>.SaveChangesAsync(CancellationToken cancellationToken)
         {
