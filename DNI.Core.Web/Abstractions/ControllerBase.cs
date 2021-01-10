@@ -22,14 +22,14 @@ namespace DNI.Core.Web.Abstractions
         {
             return attempt.AttemptedResult<T, IActionResult>(
                 result => Ok(result), 
-                (attempt) => BadRequest(attempt.Exception));
+                (attempt) => BadRequest(new Shared.Dto.Exception(attempt.Exception)));
         }
 
         protected IActionResult ValidateAttemptedResponse<T>(IAttemptedResponse<T> attempt)
         {
             return attempt.AttemptedResponseResult<T, IActionResult>(
                 (result, type) => Ok(result), 
-                (attempt) => BadRequest(attempt.Exception));
+                (attempt) => BadRequest(new Shared.Dto.Exception(attempt.Exception)));
         }
 
         protected IActionResult ValidateAttemptedResponse<T, TResult>(IAttemptedResponse<T> attempt)
@@ -38,7 +38,7 @@ namespace DNI.Core.Web.Abstractions
                 (result, type) => Ok(type == RequestQueryType.Multiple 
                     ? Mapper.Map<IEnumerable<TResult>>(result) 
                     : Mapper.Map<TResult>(result)),
-                (attempt) => BadRequest(attempt.Exception));
+                (attempt) => BadRequest(new Shared.Dto.Exception(attempt.Exception)));
         }
 
 
