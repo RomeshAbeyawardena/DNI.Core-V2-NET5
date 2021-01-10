@@ -1,16 +1,12 @@
 ﻿using Microsoft.Extensions.Caching.Distributed;
 using Microsoft.Extensions.Options;
 using System;
-using System.Collections.Generic;
 using System.Linq;
-using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 using DNI.Core.Shared;
-using DNI.Core.Shared.Abstractions;
 using DNI.Core.Shared.Contracts;
 using DNI.Core.Shared.Contracts.Factories;
-using DNI.Core.Shared.Contracts.Services;
 using DNI.Core.Shared.Enumerations;
 
 namespace DNI.Core.Abstractions.Services
@@ -39,7 +35,7 @@ namespace DNI.Core.Abstractions.Services
         public override async Task<IAttempt<T>> TryGetAsync<T>(string cacheKeyName, SerializerType serializerType, CancellationToken cancellationToken)
         {
             var result = await distributedCache.GetAsync(cacheKeyName, cancellationToken);
-            if(result == null || result.Length < 1)
+            if(result == null || result.Length == 0)
             {
                 return Attempt.Failed<T>(new NullReferenceException($"Item with the key {cacheKeyName} not found"));
             }

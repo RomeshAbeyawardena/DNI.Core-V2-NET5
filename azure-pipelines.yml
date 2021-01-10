@@ -4,23 +4,25 @@
 # https://aka.ms/yaml
 name: "$(VERSION)$(Rev:.r)"
 trigger:
-- release/*
+- release/stage-*
 
 pool:
-  vmImage: 'ubuntu-latest'
+  name: 'local'
 
 variables:
   solution: '**/*.sln'
   projects: '**/DNI.Core.*.csproj'
+  testProjects: '**/DNI.Core.Tests.csproj'
   buildPlatform: 'Any CPU'
   buildConfiguration: 'Release'
+  currentVersion: "$(Build.BuildNumber)-pre"
 
 steps:
   - task: PowerShell@2
     displayName: Update assembly version
     inputs:
      filePath: ./Update-Version.ps1 
-     arguments: -fileName "./Directory.Build.props" -version ${Build.BuildNumber}
+     arguments: -fileName "./Directory.Build.props" -version $env:BUILD_BUILDNUMBER
   - task: UseDotNet@2
     displayName: Download NET Core 5 SDK
     inputs:
@@ -31,12 +33,23 @@ steps:
     inputs:
       command: 'restore'
       projects: $(projects)
+
   - task: DotNetCoreCLI@2
     displayName: Build project
     inputs:
       command: 'build'
       projects: $(projects)
       arguments: '--no-restore --nologo --configuration Release'
+      
+  - task: DotNetCoreCLI@2
+    displayName: 'Test Project'
+    inputs:
+      command: 'test'
+      projects: $(testProjects)
+      publishTestResults: true
+      nobuild: true
+      arguments: '--no-restore --nologo --configuration Release'
+
   - task: DotNetCoreCLI@2
     displayName: Pack project for NuGet
     inputs:
@@ -44,8 +57,7 @@ steps:
       packagesToPack: $(projects)
       nobuild: true
       versioningScheme: 'byEnvVar'
-      versionEnvVar: 'Build.BuildNumber'
-
+      versionEnvVar: 'currentVersion'
   - task: DotNetCoreCLI@2
     inputs:
       command: 'push'

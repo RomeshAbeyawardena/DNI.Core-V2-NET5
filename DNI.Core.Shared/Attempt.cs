@@ -6,6 +6,7 @@ using DNI.Core.Shared.Contracts;
 
 namespace DNI.Core.Shared
 {
+    /// <inheritdoc cref="IAttempt"/>
     public class Attempt : IAttempt
     {
         public static IAttempt Success()

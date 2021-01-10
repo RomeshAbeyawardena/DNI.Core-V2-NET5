@@ -1,9 +1,6 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Linq;
 using System.Linq.Expressions;
-using System.Threading;
-using System.Threading.Tasks;
 
 namespace DNI.Core.Shared.Contracts
 {
@@ -12,11 +9,13 @@ namespace DNI.Core.Shared.Contracts
     /// </summary>
     /// <typeparam name="T"></typeparam>
     public interface IRepository<T>
+        where T : class
     {
         /// <summary>
         /// Returns a <see cref="IQueryable{T}"/> object to query the data source
         /// </summary>
         IQueryable<T> Query { get; }
+
         /// <summary>
         /// Enables or disables change tracking on the <paramref name="query"/> 
         /// </summary>
@@ -26,6 +25,14 @@ namespace DNI.Core.Shared.Contracts
         /// <returns></returns>
         IQueryable<T> EnableTracking(IQueryable<T> query, bool enableTracking = true, bool enableIdentityResolution = true);
 
+        /// <summary>
+        /// An include expression to join data from other tables or data objects
+        /// </summary>
+        /// <typeparam name="TSelector"></typeparam>
+        /// <param name="query"></param>
+        /// <param name="includeExpression"></param>
+        /// <returns></returns>
+        IIncludeableQuery<T> Include<TSelector>(IQueryable<T> query, Expression<Func<T, TSelector>> includeExpression);
         /// <summary>
         /// Finds an entity in the data source with the specified unique keys 
         /// </summary>
@@ -56,51 +63,5 @@ namespace DNI.Core.Shared.Contracts
         /// </summary>
         /// <param name="result"></param>
         void Remove(T result);
-    }
-
-    /// <summary>
-    /// Represents a repository for database access of <typeparamref name="T"/> entity
-    /// </summary>
-    /// <typeparam name="T"></typeparam>
-    public interface IAsyncRepository<T> : IRepository<T>
-    {
-        
-        /// <summary>
-        /// Finds an entity in the data source with the specified unique keys 
-        /// </summary>
-        /// <param name="keys"></param>
-        /// <param name="cancellationToken"></param>
-        /// <returns>An entity of <see cref="Task{T}"/></returns>
-        Task<T> FindAsync(
-            CancellationToken? cancellationToken = default, 
-            params object[] keys);
-
-
-        Task<T> FirstOrDefaultAsync(IQueryable<T> query = default,
-            Expression<Func<T, bool>> whereExpression = default,
-            CancellationToken? cancellationToken = null);
-
-        Task<T> SingleOrDefaultAsync(IQueryable<T> query = default,
-            Expression<Func<T, bool>> whereExpression = default,
-            CancellationToken? cancellationToken = null);
-
-        Task<IEnumerable<T>> ToArrayAsync(IQueryable<T> query = default,
-            Expression<Func<T, bool>> whereExpression = default,
-            CancellationToken? cancellationToken = null);
-
-        Task<bool> AnyAsync(IQueryable<T> query,
-            Expression<Func<T, bool>> whereExpression = default,
-            CancellationToken? cancellationToken = null);
-
-        Task<int> CountAsync(IQueryable<T> query = default,
-            Expression<Func<T, bool>> whereExpression = default,
-            CancellationToken? cancellationToken = null);
-
-        /// <summary>
-        /// Commit changes to data source
-        /// </summary>
-        /// <param name="cancellationToken"></param>
-        /// <returns></returns>
-        Task<int> SaveChangesAsync(CancellationToken? cancellationToken = null);
     }
 }

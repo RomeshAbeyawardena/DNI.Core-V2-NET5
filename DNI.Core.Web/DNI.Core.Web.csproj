@@ -1,11 +1,14 @@
-<Project Sdk="Microsoft.NET.Sdk">
+﻿<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
     <TargetFramework>net5.0</TargetFramework>
     <Description>
       Consists of a set of useful classes to aid faster development of Web Applications.
-      (Not yet implemented)
     </Description>
+  </PropertyGroup>
+
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
+    <DocumentationFile>C:\Dev\Root\V2\DNI.Core\DNI.Core.Web\DNI.Core.Web.xml</DocumentationFile>
   </PropertyGroup>
 
   <ItemGroup>
@@ -14,8 +17,44 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\DNI.Core.Abstractions\DNI.Core.Abstractions.csproj" />
-    <ProjectReference Include="..\DNI.Core.Shared\DNI.Core.Shared.csproj" />
+    <ProjectReference Include="$(SolutionDir)\DNI.Core.Abstractions\DNI.Core.Abstractions.csproj" />
+    <ProjectReference Include="$(SolutionDir)\DNI.Core.Shared\DNI.Core.Shared.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Reference Include="Microsoft.AspNetCore.Authentication">
+      <HintPath>$(SolutionDir)\Lib\net5.0\Microsoft.AspNetCore.Authentication.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.AspNetCore.Authentication.Abstractions">
+      <HintPath>$(SolutionDir)\Lib\net5.0\Microsoft.AspNetCore.Authentication.Abstractions.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.AspNetCore.Authorization">
+      <HintPath>$(SolutionDir)\Lib\net5.0\Microsoft.AspNetCore.Authorization.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.AspNetCore.Authorization.Policy">
+      <HintPath>$(SolutionDir)\Lib\net5.0\Microsoft.AspNetCore.Authorization.Policy.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.AspNetCore.Http">
+      <HintPath>$(SolutionDir)\Lib\net5.0\Microsoft.AspNetCore.Http.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.AspNetCore.Http.Abstractions">
+      <HintPath>$(SolutionDir)\Lib\net5.0\Microsoft.AspNetCore.Http.Abstractions.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.AspNetCore.Http.Extensions">
+      <HintPath>$(SolutionDir)\Lib\net5.0\Microsoft.AspNetCore.Http.Extensions.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.AspNetCore.Http.Features">
+      <HintPath>$(SolutionDir)\Lib\net5.0\Microsoft.AspNetCore.Http.Features.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.AspNetCore.Mvc.Abstractions">
+      <HintPath>$(SolutionDir)\Lib\net5.0\Microsoft.AspNetCore.Mvc.Abstractions.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.AspNetCore.Mvc">
+      <HintPath>$(SolutionDir)\Lib\net5.0\Microsoft.AspNetCore.Mvc.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.AspNetCore.Mvc.Core">
+      <HintPath>$(SolutionDir)\Lib\net5.0\Microsoft.AspNetCore.Mvc.Core.dll</HintPath>
+    </Reference>
   </ItemGroup>
 
 </Project>

@@ -1,0 +1,921 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>DNI.Core.Shared</name>
+    </assembly>
+    <members>
+        <member name="T:DNI.Core.Shared.Attempt">
+            <inheritdoc cref="T:DNI.Core.Shared.Contracts.IAttempt"/>
+        </member>
+        <member name="T:DNI.Core.Shared.Attempt`1">
+            <inheritdoc cref="T:DNI.Core.Shared.Contracts.IAttempt`1"/>
+        </member>
+        <member name="T:DNI.Core.Shared.Attributes.IgnoreScanningAttribute">
+            <summary>
+            Scrutor will ignore any classes decorating this attribute
+            </summary>
+        </member>
+        <member name="T:DNI.Core.Shared.Builder">
+            <inheritdoc cref="T:DNI.Core.Shared.Contracts.IBuilder" />
+        </member>
+        <member name="M:DNI.Core.Shared.Builders.Dictionary``2">
+            <summary>
+            Creates a dictionary builder
+            </summary>
+            <typeparam name="TKey"></typeparam>
+            <typeparam name="TValue"></typeparam>
+            <returns></returns>
+        </member>
+        <member name="M:DNI.Core.Shared.Builders.List``1">
+            <summary>
+            Creates a list builder
+            </summary>
+            <typeparam name="T"></typeparam>
+            <returns></returns>
+        </member>
+        <member name="M:DNI.Core.Shared.Builders.Dictionary``2(System.Action{DNI.Core.Shared.Contracts.IDictionaryBuilder{``0,``1}})">
+            <summary>
+            Creates a dictionary builder with a declared build action
+            </summary>
+            <typeparam name="TKey"></typeparam>
+            <typeparam name="TValue"></typeparam>
+            <param name="buildAction"></param>
+            <returns></returns>
+        </member>
+        <member name="M:DNI.Core.Shared.Builders.List``1(System.Action{DNI.Core.Shared.Contracts.IListBuilder{``0}})">
+            <summary>
+            Creates a list builder with a declared build action
+            </summary>
+            <typeparam name="T"></typeparam>
+            <param name="buildAction"></param>
+            <returns></returns>
+        </member>
+        <member name="M:DNI.Core.Shared.Builders.Switch``2(System.Action{DNI.Core.Shared.Contracts.ISwitch{``0,``1}})">
+            <summary>
+            Creates a switch with a declared build action
+            </summary>
+            <typeparam name="TKey"></typeparam>
+            <typeparam name="TValue"></typeparam>
+            <param name="buildAction"></param>
+            <returns></returns>
+        </member>
+        <member name="M:DNI.Core.Shared.Builders.GetBuilder">
+            <summary>
+            Gets or creates a builder to create list, switch or dictionary builders
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="P:DNI.Core.Shared.Builders.Default">
+            <summary>
+            Gets the default builder
+            </summary>
+        </member>
+        <member name="T:DNI.Core.Shared.Constants.Encryption">
+            <summary>
+            Constants related to encryption
+            </summary>
+        </member>
+        <member name="F:DNI.Core.Shared.Constants.Encryption.DefaultIterations">
+            <summary>
+            Gets the default number of iterations to be used
+            </summary>
+        </member>
+        <member name="T:DNI.Core.Shared.Contracts.Factories.ICacheServiceFactory">
+            <summary>
+            Represents a factory used for returning a specific <see cref="T:DNI.Core.Shared.Contracts.Services.ICacheService"/> from a dependency container
+            </summary>
+        </member>
+        <member name="M:DNI.Core.Shared.Contracts.Factories.ICacheServiceFactory.GetCacheService(DNI.Core.Shared.Enumerations.CacheServiceType)">
+            <summary>
+            Retrieves an <see cref="T:DNI.Core.Shared.Contracts.Services.ICacheService"/> from a dependecy container
+            </summary>
+            <param name="cacheServiceType">The type of <see cref="T:DNI.Core.Shared.Contracts.Services.ICacheService"/> to be returned</param>
+            <returns>An instance of <see cref="T:DNI.Core.Shared.Contracts.Services.ICacheService"/></returns>
+        </member>
+        <member name="T:DNI.Core.Shared.Contracts.Factories.IEncryptionClassificationFactory">
+            <summary>
+            Represents a factory for getting encrpytion options for a specific encryption classification configured by the consumer
+            </summary>
+        </member>
+        <member name="M:DNI.Core.Shared.Contracts.Factories.IEncryptionClassificationFactory.GetEncryptionOptions(DNI.Core.Shared.Enumerations.EncryptionClassification)">
+            <summary>
+            Gets the encryption options for a specific encryption classification
+            </summary>
+            <param name="encryptionClassification"></param>
+            <returns></returns>
+        </member>
+        <member name="T:DNI.Core.Shared.Contracts.Factories.IEncryptionFactory">
+            <summary>
+            Represents an implementation factory for getting the encryption service based on algorithm
+            </summary>
+        </member>
+        <member name="M:DNI.Core.Shared.Contracts.Factories.IEncryptionFactory.GetEncryptionService(System.String)">
+            <summary>
+            Gets the encryption service to be used based on algorithm
+            </summary>
+            <param name="algorithName"></param>
+            <returns>An instance of <see cref="T:DNI.Core.Shared.Contracts.Services.IEncryptionService"/></returns>
+        </member>
+        <member name="T:DNI.Core.Shared.Contracts.Factories.IHashServiceFactory">
+            <summary>
+            Represents a hash service factory for getting an <see cref="T:DNI.Core.Shared.Contracts.Services.IHashService"/> based on algorithm
+            </summary>
+        </member>
+        <member name="M:DNI.Core.Shared.Contracts.Factories.IHashServiceFactory.GetHashService(System.String)">
+            <summary>
+            Gets a specific <see cref="T:DNI.Core.Shared.Contracts.Services.IHashService"/>
+            </summary>
+            <param name="algorithmName"></param>
+            <returns>An instance of <see cref="T:DNI.Core.Shared.Contracts.Services.IHashService"/></returns>
+        </member>
+        <member name="M:DNI.Core.Shared.Contracts.Factories.IHashServiceFactory.GetHashService(System.Security.Cryptography.HashAlgorithmName)">
+            <summary>
+            Gets a specific <see cref="T:DNI.Core.Shared.Contracts.Services.IHashService"/>
+            </summary>
+            <param name="hashAlgorithmName"></param>
+            <returns>An instance of <see cref="T:DNI.Core.Shared.Contracts.Services.IHashService"/></returns>
+        </member>
+        <member name="T:DNI.Core.Shared.Contracts.Factories.IModelEncryptionFactory">
+            <summary>
+            Represents a model encryption factory for getting a model encryption service used for encrypting and decrypting entire models at a time
+            </summary>
+        </member>
+        <member name="M:DNI.Core.Shared.Contracts.Factories.IModelEncryptionFactory.GetModelEncryptionService``1">
+            <summary>
+            Retrieves the model encryption service to use
+            </summary>
+            <typeparam name="T"></typeparam>
+            <returns></returns>
+        </member>
+        <member name="M:DNI.Core.Shared.Contracts.Factories.IModelEncryptionFactory.Encrypt``1(``0)">
+            <summary>
+            Encrypts a model
+            </summary>
+            <typeparam name="T"></typeparam>
+            <param name="model"></param>
+        </member>
+        <member name="M:DNI.Core.Shared.Contracts.Factories.IModelEncryptionFactory.Decrypt``1(``0)">
+            <summary>
+            Decrypts a model
+            </summary>
+            <typeparam name="T"></typeparam>
+            <param name="model"></param>
+        </member>
+        <member name="M:DNI.Core.Shared.Contracts.Factories.IModelEncryptionFactory.Encrypt``1(System.Collections.Generic.IEnumerable{``0})">
+            <summary>
+            Encrypts a list of models
+            </summary>
+            <typeparam name="T"></typeparam>
+            <param name="model"></param>
+        </member>
+        <member name="M:DNI.Core.Shared.Contracts.Factories.IModelEncryptionFactory.Decrypt``1(System.Collections.Generic.IEnumerable{``0})">
+            <summary>
+            Decrypts a list of models
+            </summary>
+            <typeparam name="T"></typeparam>
+            <param name="model"></param>
+        </member>
+        <member name="M:DNI.Core.Shared.Contracts.Factories.IModelEncryptionFactory.Encrypt``2(``0,System.Func{``0,``1})">
+            <summary>
+            Encrypts a model within a model
+            </summary>
+            <typeparam name="T"></typeparam>
+            <typeparam name="TSelector"></typeparam>
+            <param name="model"></param>
+            <param name="propertySelector"></param>
+        </member>
+        <member name="M:DNI.Core.Shared.Contracts.Factories.IModelEncryptionFactory.Decrypt``2(``0,System.Func{``0,``1})">
+            <summary>
+            Decrypts a model within a model
+            </summary>
+            <typeparam name="T"></typeparam>
+            <typeparam name="TSelector"></typeparam>
+            <param name="model"></param>
+            <param name="propertySelector"></param>
+        </member>
+        <member name="M:DNI.Core.Shared.Contracts.Factories.IModelEncryptionFactory.Encrypt``2(``0,System.Func{``0,System.Collections.Generic.IEnumerable{``1}})">
+            <summary>
+            Encrypts a list of models within a model
+            </summary>
+            <typeparam name="T"></typeparam>
+            <typeparam name="TSelector"></typeparam>
+            <param name="model"></param>
+            <param name="propertySelector"></param>
+        </member>
+        <member name="M:DNI.Core.Shared.Contracts.Factories.IModelEncryptionFactory.Encrypt``2(``0,System.Func{``0,System.Collections.Generic.ICollection{``1}})">
+            <summary>
+            Encrypts a collection of models within a model
+            </summary>
+            <typeparam name="T"></typeparam>
+            <typeparam name="TSelector"></typeparam>
+            <param name="model"></param>
+            <param name="propertySelector"></param>
+        </member>
+        <member name="M:DNI.Core.Shared.Contracts.Factories.IModelEncryptionFactory.Decrypt``2(``0,System.Func{``0,System.Collections.Generic.IEnumerable{``1}})">
+            <summary>
+            Decrpts a list of models within a model
+            </summary>
+            <typeparam name="T"></typeparam>
+            <typeparam name="TSelector"></typeparam>
+            <param name="model"></param>
+            <param name="propertySelector"></param>
+        </member>
+        <member name="M:DNI.Core.Shared.Contracts.Factories.IModelEncryptionFactory.Decrypt``2(``0,System.Func{``0,System.Collections.Generic.ICollection{``1}})">
+            <summary>
+            Decrpts a list of models within a model
+            </summary>
+            <typeparam name="T"></typeparam>
+            <typeparam name="TSelector"></typeparam>
+            <param name="model"></param>
+            <param name="propertySelector"></param>
+        </member>
+        <member name="T:DNI.Core.Shared.Contracts.Factories.ISerializerFactory">
+            <summary>
+            Represents a factory used for returning a specific <see cref="T:DNI.Core.Shared.Contracts.ISerializer"/> from a dependency container
+            </summary>
+        </member>
+        <member name="M:DNI.Core.Shared.Contracts.Factories.ISerializerFactory.GetSerializer(DNI.Core.Shared.Enumerations.SerializerType)">
+            <summary>
+            Retrieves a <see cref="T:DNI.Core.Shared.Contracts.ISerializer"/> from a dependency container
+            </summary>
+            <param name="serializerType">The type of <see cref="T:DNI.Core.Shared.Contracts.ISerializer"/> to be returned</param>
+            <returns>An instance of <see cref="T:DNI.Core.Shared.Contracts.ISerializer"/></returns>
+        </member>
+        <member name="T:DNI.Core.Shared.Contracts.Factories.ITriggerFactory">
+            <summary>
+            Represents a trigger factory used to get a list of <see cref="T:DNI.Core.Shared.Contracts.ITriggerEventHandler`1"/>
+            </summary>
+        </member>
+        <member name="T:DNI.Core.Shared.Contracts.Handlers.ICatchHandler">
+            <summary>
+            Represents a catch handler used to handle a particular exception being thrown
+            </summary>
+        </member>
+        <member name="P:DNI.Core.Shared.Contracts.Handlers.ICatchHandler.Exception">
+            <summary>
+            Gets the exception the catch handler handles
+            </summary>
+        </member>
+        <member name="M:DNI.Core.Shared.Contracts.Handlers.ICatchHandler.When``1(System.Action{System.Exception})">
+            <summary>
+            Describes a catch handler this instance is capable of handling
+            </summary>
+            <typeparam name="TException"></typeparam>
+            <param name="catchAction"></param>
+            <returns></returns>
+        </member>
+        <member name="M:DNI.Core.Shared.Contracts.Handlers.ICatchHandler.Default(System.Action{System.Exception})">
+            <summary>
+            Describes a default catch handler that will be triggered if a suitable catch handler for an exception can not be found.
+            </summary>
+            <param name="catchAllAction"></param>
+            <returns></returns>
+        </member>
+        <member name="M:DNI.Core.Shared.Contracts.Handlers.ICatchHandler.GetCatchAction">
+            <summary>
+            Describes how a suitable catch handler will be determined based on an exception.
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="T:DNI.Core.Shared.Contracts.Handlers.IFinallyHandler">
+            <summary>
+            Represents a finally handler
+            </summary>
+        </member>
+        <member name="T:DNI.Core.Shared.Contracts.Handlers.IHandler">
+            <summary>
+            Represents a base handler to manage try, catch and finally handlers
+            </summary>
+        </member>
+        <member name="M:DNI.Core.Shared.Contracts.Handlers.IHandler.Try(System.Action,System.Action{DNI.Core.Shared.Contracts.Handlers.ICatchHandler},System.Action{DNI.Core.Shared.Contracts.Handlers.IFinallyHandler})">
+            <summary>
+            Creates an instance of a try, catch and finally handler
+            </summary>
+            <param name="action"></param>
+            <param name="catchAction"></param>
+            <param name="finalAction"></param>
+            <returns></returns>
+        </member>
+        <member name="M:DNI.Core.Shared.Contracts.Handlers.IHandler.Try``1(System.Func{``0},System.Action{DNI.Core.Shared.Contracts.Handlers.ICatchHandler},System.Action{DNI.Core.Shared.Contracts.Handlers.IFinallyHandler})">
+            <summary>
+            Creates an instance of a try, catch and finally handler
+            </summary>
+            <typeparam name="TResult"></typeparam>
+            <param name="resultAction"></param>
+            <param name="catchAction"></param>
+            <param name="finalAction"></param>
+            <returns></returns>
+        </member>
+        <member name="M:DNI.Core.Shared.Contracts.Handlers.IHandler.TryAsync``1(System.Func{System.Threading.CancellationToken,System.Threading.Tasks.Task{``0}},System.Action{DNI.Core.Shared.Contracts.Handlers.ICatchHandler},System.Action{DNI.Core.Shared.Contracts.Handlers.IFinallyHandler})">
+            <summary>
+            
+            </summary>
+            <typeparam name="TResult"></typeparam>
+            <param name="resultAction"></param>
+            <param name="catchAction"></param>
+            <param name="finalAction"></param>
+            <returns></returns>
+        </member>
+        <member name="T:DNI.Core.Shared.Contracts.Handlers.ITryHandler">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="M:DNI.Core.Shared.Contracts.Handlers.ITryHandler.AsAttempt">
+            <summary>
+            Creates an attempt object based on this TryHandler
+            </summary>
+            <returns>An instance of an <see cref="T:DNI.Core.Shared.Contracts.IAttempt"/></returns>
+        </member>
+        <member name="M:DNI.Core.Shared.Contracts.Handlers.ITryHandler.AsAttemptAsync(System.Threading.CancellationToken)">
+            <summary>
+            
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="P:DNI.Core.Shared.Contracts.Handlers.ITryHandler.Action">
+            <summary>
+            Represents the action that the handler will attempt
+            </summary>
+        </member>
+        <member name="P:DNI.Core.Shared.Contracts.Handlers.ITryHandler.ActionAsync">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:DNI.Core.Shared.Contracts.Handlers.ITryHandler.CatchAction">
+            <summary>
+            Represents the action that gets triggered when <see cref="P:DNI.Core.Shared.Contracts.Handlers.ITryHandler.Action"/> throws an exception
+            </summary>
+        </member>
+        <member name="P:DNI.Core.Shared.Contracts.Handlers.ITryHandler.FinalAction">
+            <summary>
+            Represents the action that gets fired each time irrespective of success or failure
+            </summary>
+        </member>
+        <member name="T:DNI.Core.Shared.Contracts.Handlers.ITryHandler`1">
+            <summary>
+            
+            </summary>
+            <typeparam name="TResult"></typeparam>
+        </member>
+        <member name="M:DNI.Core.Shared.Contracts.Handlers.ITryHandler`1.AsAttempt">
+            <summary>
+            Creates an attempt object based on this TryHandler
+            </summary>
+            <returns>An instance of an <see cref="T:DNI.Core.Shared.Contracts.IAttempt`1"/></returns>
+        </member>
+        <member name="M:DNI.Core.Shared.Contracts.Handlers.ITryHandler`1.AsAttemptAsync(System.Threading.CancellationToken)">
+            <summary>
+            
+            </summary>
+            <param name="cancellationToken"></param>
+            <returns></returns>
+        </member>
+        <member name="P:DNI.Core.Shared.Contracts.Handlers.ITryHandler`1.ActionAsync">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:DNI.Core.Shared.Contracts.Handlers.ITryHandler`1.Action">
+            <summary>
+            Represents the action that the handler will attempt
+            </summary>
+        </member>
+        <member name="T:DNI.Core.Shared.Contracts.IAsyncRepository`1">
+            <summary>
+            Represents a repository for database access of <typeparamref name="T"/> entity
+            </summary>
+            <typeparam name="T"></typeparam>
+        </member>
+        <member name="M:DNI.Core.Shared.Contracts.IAsyncRepository`1.FindAsync(System.Nullable{System.Threading.CancellationToken},System.Object[])">
+            <summary>
+            Finds an entity in the data source with the specified unique keys 
+            </summary>
+            <param name="keys"></param>
+            <param name="cancellationToken"></param>
+            <returns>An entity of <see cref="T:System.Threading.Tasks.Task`1"/></returns>
+        </member>
+        <member name="M:DNI.Core.Shared.Contracts.IAsyncRepository`1.SaveChangesAsync(System.Nullable{System.Threading.CancellationToken})">
+            <summary>
+            Commit changes to data source
+            </summary>
+            <param name="cancellationToken"></param>
+            <returns></returns>
+        </member>
+        <member name="T:DNI.Core.Shared.Contracts.IAttempt">
+            <summary>
+            Represents an attempt
+            </summary>
+        </member>
+        <member name="P:DNI.Core.Shared.Contracts.IAttempt.ValidationFailures">
+            <summary>
+            <para>Gets a list of <see cref="T:FluentValidation.Results.ValidationFailure"/>s</para>
+            <para>Returns null if the <see cref="T:DNI.Core.Shared.Contracts.IAttempt"/> was successful</para>
+            </summary>
+        </member>
+        <member name="P:DNI.Core.Shared.Contracts.IAttempt.Successful">
+            <summary>
+            Gets whether the attempt was successful
+            </summary>
+        </member>
+        <member name="P:DNI.Core.Shared.Contracts.IAttempt.Exception">
+            <summary>
+            <para>Gets the <see cref="T:System.Exception"/> handled by the attempt, if the <see cref="T:DNI.Core.Shared.Contracts.IAttempt"/> was unsuccessful</para>
+            <para>Returns null if the <see cref="T:DNI.Core.Shared.Contracts.IAttempt"/> was successful</para>
+            </summary>
+        </member>
+        <member name="T:DNI.Core.Shared.Contracts.IAttempt`1">
+            <summary>
+            Represents an attempt of <typeparamref name="T"/>
+            </summary>
+            <typeparam name="T"></typeparam>
+        </member>
+        <member name="P:DNI.Core.Shared.Contracts.IAttempt`1.Result">
+            <summary>
+            Gets the result if the <see cref="T:DNI.Core.Shared.Attempt`1"/> was successful
+            </summary>
+        </member>
+        <member name="T:DNI.Core.Shared.Contracts.IBuilder">
+            <summary>
+            Represents a builder that can create list and dictionary builders
+            </summary>
+        </member>
+        <member name="M:DNI.Core.Shared.Contracts.IBuilder.Create``1">
+            <summary>
+            Creates a list builder
+            </summary>
+            <typeparam name="T"></typeparam>
+            <returns></returns>
+        </member>
+        <member name="M:DNI.Core.Shared.Contracts.IBuilder.Create``2">
+            <summary>
+            Creates a dictionary builder
+            </summary>
+            <typeparam name="TKey"></typeparam>
+            <typeparam name="TValue"></typeparam>
+            <returns></returns>
+        </member>
+        <member name="M:DNI.Core.Shared.Contracts.IBuilder.Create``1(System.Action{DNI.Core.Shared.Contracts.IListBuilder{``0}})">
+            <summary>
+            Creates a list builder using a declared build action
+            </summary>
+            <typeparam name="T"></typeparam>
+            <param name="buildAction"></param>
+            <returns></returns>
+        </member>
+        <member name="M:DNI.Core.Shared.Contracts.IBuilder.Create``2(System.Action{DNI.Core.Shared.Contracts.IDictionaryBuilder{``0,``1}})">
+            <summary>
+            Creates a <see cref="T:DNI.Core.Shared.Contracts.IDictionaryBuilder`2"/> using a declared build action
+            </summary>
+            <typeparam name="TKey"></typeparam>
+            <typeparam name="TValue"></typeparam>
+            <param name="buildAction"></param>
+            <returns></returns>
+        </member>
+        <member name="M:DNI.Core.Shared.Contracts.IBuilder.Create``2(System.Action{DNI.Core.Shared.Contracts.ISwitch{``0,``1}})">
+            <summary>
+            Creates a <see cref="T:DNI.Core.Shared.Contracts.ISwitch`2"/> using a declared build action
+            </summary>
+            <typeparam name="TKey"></typeparam>
+            <typeparam name="TValue"></typeparam>
+            <param name="buildAction"></param>
+            <returns></returns>
+        </member>
+        <member name="T:DNI.Core.Shared.Contracts.IChangeTracker`1">
+            <summary>
+            Represents a simple object change tracker
+            </summary>
+            <typeparam name="T"></typeparam>
+        </member>
+        <member name="M:DNI.Core.Shared.Contracts.IChangeTracker`1.HasChanges(`0,`0,System.Collections.Generic.IEnumerable{DNI.Core.Shared.PropertyChange}@)">
+            <summary>
+            Determines whether there are changes between the source and value parameters
+            </summary>
+            <param name="source"></param>
+            <param name="value"></param>
+            <param name="propertyChanges"></param>
+            <returns></returns>
+        </member>
+        <member name="M:DNI.Core.Shared.Contracts.IChangeTracker`1.MergeChanges(`0,`0)">
+            <summary>
+            Merges any changes from the value parameter to the source parameter
+            </summary>
+            <param name="source"></param>
+            <param name="value"></param>
+            <returns></returns>
+        </member>
+        <member name="M:DNI.Core.Shared.Contracts.IChangeTracker`1.MergeChanges(`0,`0,System.Collections.Generic.IEnumerable{DNI.Core.Shared.PropertyChange})">
+            <summary>
+            Merges any changes from the value parameter to the source parameter, using pre-determined property-changes.
+            </summary>
+            <param name="source"></param>
+            <param name="value"></param>
+            <param name="propertyChanges"></param>
+            <returns></returns>
+        </member>
+        <member name="T:DNI.Core.Shared.Contracts.IDefinition`1">
+            <summary>
+            Represents a definition collection of <typeparamref name="T"/>
+            </summary>
+            <typeparam name="T"></typeparam>
+        </member>
+        <member name="P:DNI.Core.Shared.Contracts.IDefinition`1.Items">
+            <summary>
+            Gets items of <typeparamref name="T"/> in definition
+            </summary>
+        </member>
+        <member name="M:DNI.Core.Shared.Contracts.IDefinition`1.Add(`0)">
+            <summary>
+            Adds item of <typeparamref name="T"/> to definition
+            </summary>
+            <param name="item"></param>
+            <returns>The current instance of <see cref="T:DNI.Core.Shared.Contracts.IDefinition`1"/></returns>
+        </member>
+        <member name="M:DNI.Core.Shared.Contracts.IDefinition`1.AddRange(System.Collections.Generic.IEnumerable{`0})">
+            <summary>
+            Adds items of <typeparamref name="T"/> to definition
+            </summary>
+            <param name="items"></param>
+            <returns>The current instance of <see cref="T:DNI.Core.Shared.Contracts.IDefinition`1"/></returns>
+        </member>
+        <member name="T:DNI.Core.Shared.Contracts.IRepository`1">
+            <summary>
+            Represents a repository pattern for data source access of <typeparamref name="T"/> entity
+            </summary>
+            <typeparam name="T"></typeparam>
+        </member>
+        <member name="P:DNI.Core.Shared.Contracts.IRepository`1.Query">
+            <summary>
+            Returns a <see cref="T:System.Linq.IQueryable`1"/> object to query the data source
+            </summary>
+        </member>
+        <member name="M:DNI.Core.Shared.Contracts.IRepository`1.EnableTracking(System.Linq.IQueryable{`0},System.Boolean,System.Boolean)">
+            <summary>
+            Enables or disables change tracking on the <paramref name="query"/> 
+            </summary>
+            <param name="query"></param>
+            <param name="enableTracking">Sets whether change tracking should be enabled</param>
+            <param name="enableIdentityResolution">Sets whether identity resolution should be enabled</param>
+            <returns></returns>
+        </member>
+        <member name="M:DNI.Core.Shared.Contracts.IRepository`1.Include``1(System.Linq.IQueryable{`0},System.Linq.Expressions.Expression{System.Func{`0,``0}})">
+            <summary>
+            An include expression to join data from other tables or data objects
+            </summary>
+            <typeparam name="TSelector"></typeparam>
+            <param name="query"></param>
+            <param name="includeExpression"></param>
+            <returns></returns>
+        </member>
+        <member name="M:DNI.Core.Shared.Contracts.IRepository`1.Find(System.Object[])">
+            <summary>
+            Finds an entity in the data source with the specified unique keys 
+            </summary>
+            <param name="keys"></param>
+            <returns>An entity of <typeparamref name="T"/></returns>
+        </member>
+        <member name="M:DNI.Core.Shared.Contracts.IRepository`1.SaveChanges">
+            <summary>
+            Commit changes to data source
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:DNI.Core.Shared.Contracts.IRepository`1.Add(`0)">
+            <summary>
+            Marks entity to be added to data source change tracker
+            </summary>
+            <param name="result"></param>
+        </member>
+        <member name="M:DNI.Core.Shared.Contracts.IRepository`1.Update(`0)">
+            <summary>
+            Marks entity to be updated to data source change tracker
+            </summary>
+            <param name="result"></param>
+        </member>
+        <member name="M:DNI.Core.Shared.Contracts.IRepository`1.Remove(`0)">
+            <summary>
+            Marks entity to be removed from the data source change tracker
+            </summary>
+            <param name="result"></param>
+        </member>
+        <member name="T:DNI.Core.Shared.Contracts.ISerializer">
+            <summary>
+            Represents a serializer used to serialize and deserialize objects.
+            </summary>
+        </member>
+        <member name="P:DNI.Core.Shared.Contracts.ISerializer.Type">
+            <summary>
+            Returns the <see cref="T:DNI.Core.Shared.Enumerations.SerializerType" /> of the current instance
+            </summary>
+        </member>
+        <member name="M:DNI.Core.Shared.Contracts.ISerializer.Serialize``1(``0)">
+            <summary>
+            Serialises the <paramref name="value"/> into a byte <see cref="T:System.Collections.IEnumerable" />
+            </summary>
+            <typeparam name="T"></typeparam>
+            <param name="value"></param>
+            <returns></returns>
+        </member>
+        <member name="M:DNI.Core.Shared.Contracts.ISerializer.Deserialize``1(System.Collections.Generic.IEnumerable{System.Byte})">
+            <summary>
+            Deserializes the serialized <paramref name="data"/> into <typeparamref name="T"/>
+            </summary>
+            <typeparam name="T"></typeparam>
+            <param name="data"></param>
+            <returns></returns>
+        </member>
+        <member name="T:DNI.Core.Shared.Contracts.ISwitch`2">
+            <summary>
+            Represents a multi-purpose and re-useable switch
+            </summary>
+            <typeparam name="TKey">The <typeparamref name="TKey"/> used  </typeparam>
+            <typeparam name="TValue"></typeparam>
+        </member>
+        <member name="M:DNI.Core.Shared.Contracts.ISwitch`2.Case(`0)">
+            <summary>
+            Retrieves the switch value for <paramref name="key"/>
+            </summary>
+            <param name="key">The key for the switch value to be returned</param>
+            <returns>Instance of <typeparamref name="TValue"/></returns>
+        </member>
+        <member name="M:DNI.Core.Shared.Contracts.ISwitch`2.Add(System.Collections.Generic.KeyValuePair{`0,`1})">
+            <summary>
+            Attempts to add the specified key and value to this i <see cref="T:DNI.Core.Shared.Contracts.ISwitch`2"/>
+            </summary>
+            <param name="item">A <see cref="T:System.Collections.Generic.KeyValuePair`2" /> to add to the Switch"</param>
+            <returns>This instance of <see cref="T:DNI.Core.Shared.Contracts.ISwitch`2"/></returns>
+        </member>
+        <member name="M:DNI.Core.Shared.Contracts.ISwitch`2.Add(`0,`1)">
+            <summary>
+            Attempts to add the specified key and value to the <see cref="T:DNI.Core.Shared.Contracts.ISwitch`2"/>
+            </summary>
+            <param name="key"></param>
+            <param name="value"></param>
+            <returns>This instance of <see cref="T:DNI.Core.Shared.Contracts.ISwitch`2"/></returns>
+            <exception cref="T:System.ArgumentException"></exception>
+            <exception cref="T:System.ArgumentNullException"></exception>
+            <exception cref="T:System.InvalidOperationException"></exception>
+        </member>
+        <member name="T:DNI.Core.Shared.Contracts.ISystemClock">
+            <summary>
+            Represents the system clock that supports overriding in test instances
+            </summary>
+        </member>
+        <member name="P:DNI.Core.Shared.Contracts.ISystemClock.Now">
+            <summary>
+            Represents the current date and time, may be overridden in a test instance
+            </summary>
+        </member>
+        <member name="T:DNI.Core.Shared.Contracts.ITriggerEventHandler`1">
+            <summary>
+            
+            </summary>
+            <typeparam name="TEnum"></typeparam>
+        </member>
+        <member name="M:DNI.Core.Shared.Contracts.ITriggerEventHandler`1.Handle(System.Object)">
+            <summary>
+            
+            </summary>
+            <param name="value"></param>
+        </member>
+        <member name="P:DNI.Core.Shared.Contracts.ITriggerEventHandler`1.State">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="T:DNI.Core.Shared.Contracts.ITriggerEventHandler`2">
+            <summary>
+            
+            </summary>
+            <typeparam name="T"></typeparam>
+            <typeparam name="TEnum"></typeparam>
+            <see cref="T:DNI.Core.Shared.Contracts.ITriggerEventHandler`1"/>
+        </member>
+        <member name="M:DNI.Core.Shared.Contracts.ITriggerEventHandler`2.Handle(`0)">
+            <summary>
+            
+            </summary>
+            <param name="value"></param>
+        </member>
+        <member name="T:DNI.Core.Shared.Contracts.Services.ICacheService">
+            <summary>
+            Represents a cache service used to retrieve and save items to a caching store
+            </summary>
+        </member>
+        <member name="P:DNI.Core.Shared.Contracts.Services.ICacheService.Type">
+            <summary>
+            The type of <see cref="T:DNI.Core.Shared.Contracts.Services.ICacheService"/> this instance implements
+            </summary>
+        </member>
+        <member name="M:DNI.Core.Shared.Contracts.Services.ICacheService.TryGet``1(System.String,DNI.Core.Shared.Enumerations.SerializerType)">
+            <summary>
+            Method to retrieve a value of <typeparamref name="T"/> from the caching store
+            </summary>
+            <typeparam name="T">The <typeparamref name="T"/> value to be returned</typeparam>
+            <param name="cacheKeyName">The key of the item stored</param>
+            <param name="serializer">The <see cref="T:DNI.Core.Shared.Enumerations.SerializerType"/> that should be used to convert the byte representation to <typeparamref name="T"/></param>
+            <returns>An instance of <see cref="T:DNI.Core.Shared.Contracts.IAttempt`1"/></returns>
+        </member>
+        <member name="M:DNI.Core.Shared.Contracts.Services.ICacheService.TrySet``1(System.String,``0,DNI.Core.Shared.Enumerations.SerializerType)">
+            <summary>
+            
+            </summary>
+            <typeparam name="T">The <typeparamref name="T"/> value to be stored</typeparam>
+            <param name="cacheKeyName">The key of the item to be stored</param>
+            <param name="value">The value to be stored against the <paramref name="cacheKeyName"/></param>
+            <param name="serializer">The <see cref="T:DNI.Core.Shared.Enumerations.SerializerType"/> that should be used to convert the byte representation to <typeparamref name="T"/></param>
+            <returns>An instance of <see cref="T:DNI.Core.Shared.Contracts.IAttempt"/></returns>
+        </member>
+        <member name="M:DNI.Core.Shared.Contracts.Services.ICacheService.TryGetAsync``1(System.String,DNI.Core.Shared.Enumerations.SerializerType,System.Threading.CancellationToken)">
+            <summary>
+            Method to retrieve a value of <typeparamref name="T"/> from the caching store
+            </summary>
+            <typeparam name="T">The <typeparamref name="T"/> value to be returned</typeparam>
+            <param name="cacheKeyName">The key of the item stored</param>
+            <param name="serializer">The <see cref="T:DNI.Core.Shared.Enumerations.SerializerType"/> that should be used to convert the byte representation to <typeparamref name="T"/></param>
+            <param name="cancellationToken">Notification to cancel asynchronous task</param>
+            <returns>An awaitable instance of <see cref="T:DNI.Core.Shared.Contracts.IAttempt`1"/></returns>
+        </member>
+        <member name="M:DNI.Core.Shared.Contracts.Services.ICacheService.TrySetAsync``1(System.String,``0,DNI.Core.Shared.Enumerations.SerializerType,System.Threading.CancellationToken)">
+            <summary>
+            Method to retrieve a value of <typeparamref name="T"/> from the caching store
+            </summary>
+            <typeparam name="T">The <typeparamref name="T"/> value to be returned</typeparam>
+            <param name="cacheKeyName">The key of the item stored</param>
+            <param name="value">The key of the item stored</param>
+            <param name="serializer">The <see cref="T:DNI.Core.Shared.Enumerations.SerializerType"/> that should be used to convert the byte representation to <typeparamref name="T"/></param>
+            <param name="cancellationToken">Notification to cancel asynchronous task</param>
+            <returns>An awaitable instance of <see cref="T:DNI.Core.Shared.Contracts.IAttempt`1"/></returns>
+        </member>
+        <member name="P:DNI.Core.Shared.Contracts.Services.IEncryptionService.EncryptionMethod">
+            <summary>
+            The implemented encryption method to encrypt and decrypt values
+            </summary>
+        </member>
+        <member name="P:DNI.Core.Shared.Contracts.Services.IEncryptionService.EncryptionOptions">
+            <summary>
+            The encryption keys used to encrpyt and decrypt values
+            </summary>
+        </member>
+        <member name="M:DNI.Core.Shared.Contracts.Services.IEncryptionService.Encrypt(System.String,DNI.Core.Shared.Options.EncryptionOptions)">
+            <summary>
+            Encrypts a value using the default or specified <see cref="T:DNI.Core.Shared.Options.EncryptionOptions"/>
+            </summary>
+            <param name="value"></param>
+            <param name="encryptionOptions"></param>
+            <returns></returns>
+        </member>
+        <member name="M:DNI.Core.Shared.Contracts.Services.IEncryptionService.Decrypt(System.String,DNI.Core.Shared.Options.EncryptionOptions)">
+            <summary>
+            Decrypts a value using the default or specified <see cref="T:DNI.Core.Shared.Options.EncryptionOptions"/>
+            </summary>
+            <param name="value"></param>
+            <param name="encryptionOptions"></param>
+            <returns></returns>
+        </member>
+        <member name="M:DNI.Core.Shared.Contracts.Services.IHashService.Hash(System.String,System.String,System.Int32,System.Int32,System.Text.Encoding)">
+            <summary>
+            <para>Hashes a value using specified parameters</para>
+            <para>Use <see cref="M:DNI.Core.Shared.Contracts.Services.IHashService.HashString(System.String,System.Text.Encoding)" /> to use default values</para>
+            </summary>
+            <param name="value"></param>
+            <param name="salt"></param>
+            <param name="iterations"></param>
+            <param name="totalNumberOfBytes"></param>
+            <param name="encoding"></param>
+            <returns></returns>
+        </member>
+        <member name="M:DNI.Core.Shared.Contracts.Services.IHashService.HashString(System.String,System.Text.Encoding)">
+            <summary>
+            <para>Hashes a value using specified parameters</para>
+            </summary>
+            <param name="value"></param>
+            <param name="encoding"></param>
+            <returns></returns>
+        </member>
+        <member name="M:DNI.Core.Shared.Contracts.Services.IHashService.HashString(System.String,System.String,System.Int32,System.Int32,System.Text.Encoding)">
+            <summary>
+            <para>Hashes a value using specified parameters</para>
+            <para>Use <see cref="M:DNI.Core.Shared.Contracts.Services.IHashService.HashString(System.String,System.Text.Encoding)" /> to use default values</para>
+            </summary>
+            <param name="value"></param>
+            <param name="salt"></param>
+            <param name="iterations"></param>
+            <param name="totalNumberOfBytes"></param>
+            <param name="encoding"></param>
+            <returns></returns>
+        </member>
+        <member name="P:DNI.Core.Shared.Contracts.Services.IHashService.AlgorithmName">
+            <summary>
+            Gets the algorithm name used to hash values
+            </summary>
+        </member>
+        <member name="T:DNI.Core.Shared.Contracts.Services.IModelEncryptionService`1">
+            <summary>
+            Represents a model encryption service to encrypt and decrypt a model
+            </summary>
+            <typeparam name="T"></typeparam>
+        </member>
+        <member name="M:DNI.Core.Shared.Contracts.Services.IModelEncryptionService`1.Encrypt(`0)">
+            <summary>
+            Encrypts a model
+            </summary>
+            <param name="model"></param>
+        </member>
+        <member name="M:DNI.Core.Shared.Contracts.Services.IModelEncryptionService`1.Decrypt(`0)">
+            <summary>
+            Decrypts a model
+            </summary>
+            <param name="model"></param>
+        </member>
+        <member name="T:DNI.Core.Shared.Definition`1">
+            <inheritdoc cref="T:DNI.Core.Shared.Contracts.IDefinition`1" />
+        </member>
+        <member name="T:DNI.Core.Shared.Enumerations.EncryptionClassification">
+            <summary>
+            The encryption classification used for encrypting data
+            </summary>
+        </member>
+        <member name="F:DNI.Core.Shared.Enumerations.EncryptionClassification.None">
+            <summary>
+            Level 0: No encryption
+            </summary>
+        </member>
+        <member name="F:DNI.Core.Shared.Enumerations.EncryptionClassification.PersonalData">
+            <summary>
+            Level 3: Requires encryption to protect unique data belonging to an entity, such as an e-mail address or national identity details
+            </summary>
+        </member>
+        <member name="F:DNI.Core.Shared.Enumerations.EncryptionClassification.CommonData">
+            <summary>
+            Level 2: Requires encryption to protect common data that can be shared between entities, but when combined with other common fields can lead to personal identification of an entity
+            </summary>
+        </member>
+        <member name="F:DNI.Core.Shared.Enumerations.EncryptionClassification.SharedData">
+            <summary>
+            Level 1: Requires encryption to protect shared data that would not lead to direct identification to an entity, but should be protected securely
+            </summary>
+        </member>
+        <member name="T:DNI.Core.Shared.Handlers.DefaultHandler">
+            <inheritdoc cref="T:DNI.Core.Shared.Contracts.Handlers.IHandler" />
+        </member>
+        <member name="T:DNI.Core.Shared.Handlers.DefaultTryHandler">
+            <inheritdoc cref="T:DNI.Core.Shared.Contracts.Handlers.ITryHandler" />
+        </member>
+        <member name="T:DNI.Core.Shared.Handlers.DefaultTryHandler`1">
+            <see cref="T:DNI.Core.Shared.Contracts.Handlers.ITryHandler`1"/>
+        </member>
+        <member name="P:DNI.Core.Shared.Handlers.Handler.Default">
+            <summary>
+            Gets the default handler
+            </summary>
+        </member>
+        <member name="M:DNI.Core.Shared.Handlers.Handler.GetHandler">
+            <summary>
+            Gets or creates an instance of <see cref="T:DNI.Core.Shared.Contracts.Handlers.IHandler"/>
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="T:DNI.Core.Shared.Range`1">
+            <summary>
+            Represents a range of <typeparamref name="T"/>
+            </summary>
+            <typeparam name="T"></typeparam>
+        </member>
+        <member name="M:DNI.Core.Shared.Range`1.#ctor(`0,`0)">
+            <summary>
+            Creates an instance of <see cref="T:DNI.Core.Shared.Range`1"/>
+            </summary>
+            <param name="minimum">The minimum value for this range</param>
+            <param name="maximum">The maximum value for this range</param>
+        </member>
+        <member name="P:DNI.Core.Shared.Range`1.Minimum">
+            <summary>
+            Gets the minimum value for this range
+            </summary>
+        </member>
+        <member name="P:DNI.Core.Shared.Range`1.Maximum">
+            <summary>
+            Gets the maximum value for this range
+            </summary>
+        </member>
+        <member name="T:DNI.Core.Shared.Switch">
+            <summary>
+            <inheritdoc cref="T:DNI.Core.Shared.Contracts.ISwitch`2" />
+            </summary>
+        </member>
+        <member name="M:DNI.Core.Shared.Switch.Create``2(System.Action{DNI.Core.Shared.Contracts.ISwitch{``0,``1}})">
+            <summary>
+            Creates an instance of <see cref="T:DNI.Core.Shared.Contracts.ISwitch`2"/>
+            </summary>
+            <typeparam name="TKey"></typeparam>
+            <typeparam name="TValue"></typeparam>
+            <param name="createSwitchDelegate"></param>
+            <returns></returns>
+        </member>
+        <member name="T:DNI.Core.Shared.DefaultSwitch`2">
+            <inheritdoc cref="T:DNI.Core.Shared.Contracts.ISwitch`2"/>
+        </member>
+    </members>
+</doc>

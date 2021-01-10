@@ -4,13 +4,10 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace DNI.Core.Web
+namespace DNI.Core.Shared.Contracts
 {
-    public static class Program
+    public interface ILookupParameters
     {
-        public static void Main()
-        {
-
-        }
+        
     }
 }
