@@ -39,25 +39,24 @@ namespace DNI.Core.Shared.Extensions
 
             var parameters = searchParameters ?? GetSearchParameters(searchCriteria);
             
-            var parameterExpression = Expression.Parameter(entityType);
+            var parameterExpression = Expression.Parameter(entityType, entityType.Name.ToLower());
             Expression expression = default;
             foreach (var parameter in parameters)
             {
                 var propertyInfo = parameter.Item1;
                 var value = parameter.Item2;
-                //var variableExpression = Expression.Variable(propertyInfo.PropertyType);
                 
                 var constantExpression = Expression.Constant(value);
-                var propertyOrFieldexpression = Expression.MakeMemberAccess(parameterExpression, propertyInfo);
+                var propertyOrFieldExpression = Expression.PropertyOrField(parameterExpression, propertyInfo.Name);
 
-                var equalexpression = Expression.Equal(propertyOrFieldexpression, constantExpression);
+                var equalexpression = Expression.Equal(propertyOrFieldExpression, constantExpression);
 
                 expression = (expression == default)
                     ? equalexpression
                     : Expression.Or(expression, equalexpression);
             }
 
-            return Expression.Lambda<Func<T, bool>>(expression, "s", new [] { parameterExpression });
+            return Expression.Lambda<Func<T, bool>>(expression, parameterExpression);
         }
     }
 }
