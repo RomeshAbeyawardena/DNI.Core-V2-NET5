@@ -13,7 +13,11 @@ namespace DNI.Core.Shared.Dto
             Message = exception.Message;
             Code = exception.HResult;
             HelpLink = exception.HelpLink;
-            InnerException = new Exception(exception.InnerException);
+
+            if(exception.InnerException != null)
+            { 
+                InnerException = new Exception(exception.InnerException);
+            }
         }
 
         public string Message { get; }
