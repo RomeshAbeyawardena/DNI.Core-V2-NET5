@@ -22,7 +22,7 @@ namespace DNI.Core.Abstractions
             var dictionary = await GetDictionary();
 
             return dictionary.TryGetValue(key, out var keyElapsedDate) 
-                && keyElapsedDate < systemClock.Now;
+                && keyElapsedDate >= systemClock.Now;
         }
 
         public async Task<bool> Update(string key, CancellationToken cancellationToken)
