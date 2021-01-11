@@ -18,7 +18,7 @@ namespace DNI.Core.Shared
 
         public Task<IAttempt> Save(string content, string fileName)
         {
-            return WriteFile(fileName, async(fs,sw) => await sw.WriteAsync(content));
+            return WriteFile(fileName, async(fs, sw) => await sw.WriteAsync(content));
         }
 
         public Task<IAttempt> Save(IEnumerable<byte> byteData, string fileName)

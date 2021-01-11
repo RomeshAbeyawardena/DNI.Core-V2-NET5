@@ -1,6 +1,7 @@
 ﻿using DNI.Core.Shared;
 using DNI.Core.Shared.Attributes;
 using DNI.Core.Shared.Contracts;
+using DNI.Core.Shared.Options;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.DependencyInjection.Extensions;
 using System;
@@ -11,19 +12,45 @@ namespace DNI.Core.Abstractions.Extensions
 {
     public static class ServiceCollectionExtensions
     {
-        public static IFluentEncryptionConfiguration RegisterEncryptionClassifications(this IServiceCollection services, Action<IEncryptionClassificationOptions> action)
+        public static IServiceCollection RegisterFileCacheDependency(this IServiceCollection services, 
+            Action<FileCacheDependencyOptions> configAction)
+        {
+            var options = new FileCacheDependencyOptions();
+            configAction(options);
+            return services
+                .AddSingleton<ICacheDependencyOptions>(options)
+                .AddSingleton<ICacheDependency, FileCacheDependency>();
+        }
+
+        public static IServiceCollection RegisterFileCacheDependency(this IServiceCollection services, 
+            Action<IServiceProvider, FileCacheDependencyOptions> configAction)
+        {
+            var options = new FileCacheDependencyOptions();
+            
+            return services
+                .AddSingleton<ICacheDependencyOptions>(s => { 
+                    configAction(s, options); 
+                    return options; 
+                })
+                .AddSingleton<ICacheDependency, FileCacheDependency>();
+        }
+
+        public static IFluentEncryptionConfiguration RegisterEncryptionClassifications(this IServiceCollection services, 
+            Action<IEncryptionClassificationOptions> action)
         {
             return new FluentEncryptionConfiguration(services)
                 .RegisterEncryptionClassifications(action);
         }
 
-        public static IFluentEncryptionConfiguration RegisterModelForFluentEncryption<T>(this IServiceCollection services, Action<IFluentEncryptionConfiguration<T>> action)
+        public static IFluentEncryptionConfiguration RegisterModelForFluentEncryption<T>(this IServiceCollection services, 
+            Action<IFluentEncryptionConfiguration<T>> action)
         {
             return new FluentEncryptionConfiguration(services)
                 .RegisterModel(action);
         }
 
-        public static IServiceCollection RegisterServices<TServiceRegistration>(this IServiceCollection services, bool registerInternalServices = true)
+        public static IServiceCollection RegisterServices<TServiceRegistration>(this IServiceCollection services, 
+            bool registerInternalServices = true)
             where TServiceRegistration : IServiceRegistration
         {
             var serviceRegistration = Activator.CreateInstance<TServiceRegistration>();
