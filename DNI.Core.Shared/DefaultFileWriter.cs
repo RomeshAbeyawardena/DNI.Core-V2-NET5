@@ -26,7 +26,7 @@ namespace DNI.Core.Shared
             return WriteFile(fileName, async(fs, sw) => await fs.WriteAsync(byteData.ToArray()));
         }
 
-        private async Task<IAttempt> WriteFile(string fileName, Func<FileStream, StreamWriter, Task> action)
+        private async Task<IAttempt> WriteFile(string fileName, Func<FileStream, StreamWriter, ValueTask> action)
         {
             using var fileStream = File.OpenWrite(fileName);
 
