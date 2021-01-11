@@ -1,6 +1,7 @@
 ﻿using DNI.Core.Shared.Contracts;
 using DNI.Core.Shared.Contracts.Factories;
 using DNI.Core.Shared.Contracts.Services;
+using DNI.Core.Shared.ExpressionVisitors;
 using DNI.Core.Shared.Options;
 using System;
 using System.Linq.Expressions;
@@ -71,23 +72,6 @@ namespace DNI.Core.Abstractions.Services
                     property.SetValue(model, encryptionService.Decrypt(value.ToString(), encryptionOptions));
                 }
             });
-        }
-
-        internal class ModelExpressionVisitor : ExpressionVisitor
-        {
-            public string GetLastVisitedMember(Expression exp)
-            {
-                Visit(exp);
-                return memberName;
-            }
-
-            protected override Expression VisitMember(MemberExpression node)
-            {
-                memberName = node.Member.Name;
-                return base.VisitMember(node);
-            }
-
-            private string memberName;
         }
 
         private readonly IEncryptionFactory encryptionFactory;

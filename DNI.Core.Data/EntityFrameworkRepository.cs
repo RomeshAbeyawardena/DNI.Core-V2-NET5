@@ -84,7 +84,7 @@ namespace DNI.Core.Data
         public async Task<IEnumerable<T>> ToArrayAsync(IQueryable<T> query, Expression<Func<T, bool>> whereExpression, CancellationToken? cancellationToken)
         {
             return await TransformQuery(query,
-                (query, whereExpression, ct) => query.ToArrayAsync(ct),
+                (query, whereExpression, ct) => query.ToArrayAsync(whereExpression, ct),
                     whereExpression, cancellationToken);
         }
 
