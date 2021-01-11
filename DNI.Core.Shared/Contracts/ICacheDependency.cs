@@ -11,6 +11,6 @@ namespace DNI.Core.Shared.Contracts
     {
         ICacheDependencyOptions Options { get; }
         Task<bool> Verify(string key, CancellationToken cancellationToken);
-        Task Update(string key, CancellationToken cancellationToken);
+        Task<bool> Update(string key, CancellationToken cancellationToken);
     }
 }

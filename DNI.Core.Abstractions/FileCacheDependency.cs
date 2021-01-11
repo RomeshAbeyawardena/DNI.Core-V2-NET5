@@ -25,7 +25,7 @@ namespace DNI.Core.Abstractions
                 && keyElapsedDate < systemClock.Now;
         }
 
-        public async Task Update(string key, CancellationToken cancellationToken)
+        public async Task<bool> Update(string key, CancellationToken cancellationToken)
         {
             var dictionary = await GetDictionary();
             
@@ -34,6 +34,8 @@ namespace DNI.Core.Abstractions
             var attempt = await fileWriter.Save(
                 JsonConvert.SerializeObject(dictionary), 
                 FileOptions.DependencyFile);
+
+            return attempt.Successful;
         }
 
         public FileCacheDependency(
