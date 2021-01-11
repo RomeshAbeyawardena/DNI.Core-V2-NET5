@@ -19,7 +19,7 @@ namespace DNI.Core.Web.Abstractions
         }
     }
 
-    public class ApiControllerBase<TRequest, TResponse, TResult> : ControllerBase
+    public class ApiControllerBase<TRequest, TResponse, TResult> : ApiControllerBase
         where TRequest : IRequest<TResponse>
         where TResponse : IAttemptedResponse<TResult>
     {
