@@ -1,10 +1,12 @@
 ﻿using AutoMapper;
+using DNI.Core.Shared.Contracts;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
 
 namespace DNI.Core.Web.Abstractions
@@ -14,6 +16,22 @@ namespace DNI.Core.Web.Abstractions
     {
         protected ApiControllerBase(IMediator mediator, IMapper mapper) : base(mediator, mapper)
         {
+        }
+    }
+
+    public class ApiControllerBase<TRequest, TResponse, TResult> : ControllerBase
+        where TRequest : IRequest<TResponse>
+        where TResponse : IAttemptedResponse<TResult>
+    {
+        protected ApiControllerBase(IMediator mediator, IMapper mapper) : base(mediator, mapper)
+        {
+        }
+
+        protected async Task<IActionResult> Process(TRequest request, CancellationToken cancellationToken)
+        {
+            var response = await Mediator.Send(request, cancellationToken);
+
+            return ValidateAttemptedResponse(response);
         }
     }
 }
