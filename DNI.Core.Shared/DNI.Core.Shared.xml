@@ -482,6 +482,30 @@
             <param name="buildAction"></param>
             <returns></returns>
         </member>
+        <member name="M:DNI.Core.Shared.Contracts.ICacheDependency.IsValid(System.String,System.Threading.CancellationToken)">
+            <summary>
+            Verifies whether the cache dependency object is valid for a cache entry
+            </summary>
+            <param name="key"></param>
+            <param name="cancellationToken"></param>
+            <returns></returns>
+        </member>
+        <member name="M:DNI.Core.Shared.Contracts.ICacheDependency.Invalidate(System.String,System.Threading.CancellationToken)">
+            <summary>
+            Invalidates a cache entry, forcing the items to be retrieved from source
+            </summary>
+            <param name="key"></param>
+            <param name="cancellationToken"></param>
+            <returns></returns>
+        </member>
+        <member name="M:DNI.Core.Shared.Contracts.ICacheDependency.Set(System.String,System.Threading.CancellationToken)">
+            <summary>
+            Sets a cache entry as valid and can be relied upon for a specific time period
+            </summary>
+            <param name="key"></param>
+            <param name="cancellationToken"></param>
+            <returns></returns>
+        </member>
         <member name="T:DNI.Core.Shared.Contracts.IChangeTracker`1">
             <summary>
             Represents a simple object change tracker

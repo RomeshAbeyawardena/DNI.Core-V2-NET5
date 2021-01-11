@@ -13,11 +13,13 @@ using System.Threading.Tasks;
 
 namespace DNI.Core.Abstractions
 {
+    /// <inheritdoc cref="ICacheDependency"/>
     public class FileCacheDependency : ICacheDependency
     {
         public ICacheDependencyOptions Options { get; }
         public FileCacheDependencyOptions FileOptions => Options as FileCacheDependencyOptions;
-        public async Task<bool> Verify(string key, CancellationToken cancellationToken)
+
+        public async Task<bool> IsValid(string key, CancellationToken cancellationToken)
         {
             var dictionary = await GetDictionary();
 
@@ -25,7 +27,20 @@ namespace DNI.Core.Abstractions
                 && keyElapsedDate >= systemClock.Now;
         }
 
-        public async Task<bool> Update(string key, CancellationToken cancellationToken)
+        public async Task<bool> Invalidate(string key, CancellationToken cancellationToken)
+        {
+            var dictionary = await GetDictionary();
+            
+            dictionary.TryAddOrUpdate(key, systemClock.Now.Subtract(Options.ElapsedPeriod));
+
+            var attempt = await fileWriter.Save(
+                JsonConvert.SerializeObject(dictionary), 
+                FileOptions.DependencyFile);
+
+            return attempt.Successful;
+        }
+
+        public async Task<bool> Set(string key, CancellationToken cancellationToken)
         {
             var dictionary = await GetDictionary();
             
@@ -37,6 +52,7 @@ namespace DNI.Core.Abstractions
 
             return attempt.Successful;
         }
+
 
         public FileCacheDependency(
             ICacheDependencyOptions options, 
