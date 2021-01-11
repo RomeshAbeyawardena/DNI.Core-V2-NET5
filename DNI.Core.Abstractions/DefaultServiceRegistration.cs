@@ -24,6 +24,7 @@ namespace DNI.Core.Abstractions
         public override IServiceCollection RegisterServices(IServiceCollection services)
         {
             services
+                .AddSingleton(DefaultFileWriter.Create())
                 .AddSingleton(SystemClock.CreateDefault())
                 .AddSingleton(Handler.Default)
                 .AddSingleton(Builders.Default)
