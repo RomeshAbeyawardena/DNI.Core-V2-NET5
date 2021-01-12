@@ -7,7 +7,6 @@ using DNI.Core.Shared.Extensions;
 using DNI.Core.Shared.Handlers;
 using DNI.Core.Shared.Options;
 using Microsoft.Extensions.DependencyInjection;
-using Microsoft.Extensions.FileProviders;
 using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
