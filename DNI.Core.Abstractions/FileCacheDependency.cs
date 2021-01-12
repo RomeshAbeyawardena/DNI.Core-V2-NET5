@@ -12,7 +12,7 @@ using System.Threading.Tasks;
 namespace DNI.Core.Abstractions
 {
     /// <inheritdoc cref="ICacheDependency"/>
-    public class FileCacheDependency : ICacheDependency
+    internal class FileCacheDependency : ICacheDependency
     {
         public ICacheDependencyOptions Options { get; }
         public FileCacheDependencyOptions FileOptions => Options as FileCacheDependencyOptions;
