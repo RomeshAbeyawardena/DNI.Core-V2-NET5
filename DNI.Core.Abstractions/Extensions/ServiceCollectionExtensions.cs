@@ -2,6 +2,7 @@
 using DNI.Core.Shared.Attributes;
 using DNI.Core.Shared.Contracts;
 using DNI.Core.Shared.Options;
+using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using System;
 using System.Linq;
@@ -11,7 +12,19 @@ namespace DNI.Core.Abstractions.Extensions
 {
     public static class ServiceCollectionExtensions
     {
-        public static IServiceCollection RegisterFileCacheDependency(this IServiceCollection services, 
+        public static IServiceCollection RegisterFileCacheDependency(this IServiceCollection services)
+        {
+            return RegisterFileCacheDependency(services, (serviceProvider, configure) =>
+            {
+                var configuration = serviceProvider.GetRequiredService<IConfiguration>();
+                var cacheDependencySection = configuration.GetSection("CacheDependency");
+
+                configure.DependencyFile = cacheDependencySection.GetValue<string>("File");
+                configure.ElapsedPeriod = cacheDependencySection.GetValue<TimeSpan>("ElapsedPeriod");
+            });
+        }
+
+        public static IServiceCollection RegisterFileCacheDependency(this IServiceCollection services,
             Action<FileCacheDependencyOptions> configAction)
         {
             var options = new FileCacheDependencyOptions();
@@ -21,34 +34,35 @@ namespace DNI.Core.Abstractions.Extensions
                 .AddSingleton<ICacheDependency, FileCacheDependency>();
         }
 
-        public static IServiceCollection RegisterFileCacheDependency(this IServiceCollection services, 
+        public static IServiceCollection RegisterFileCacheDependency(this IServiceCollection services,
             Action<IServiceProvider, FileCacheDependencyOptions> configAction)
         {
             var options = new FileCacheDependencyOptions();
-            
+
             return services
-                .AddSingleton<ICacheDependencyOptions>(s => { 
-                    configAction(s, options); 
-                    return options; 
+                .AddSingleton<ICacheDependencyOptions>(s =>
+                {
+                    configAction(s, options);
+                    return options;
                 })
                 .AddSingleton<ICacheDependency, FileCacheDependency>();
         }
 
-        public static IFluentEncryptionConfiguration RegisterEncryptionClassifications(this IServiceCollection services, 
+        public static IFluentEncryptionConfiguration RegisterEncryptionClassifications(this IServiceCollection services,
             Action<IEncryptionClassificationOptions> action)
         {
             return new FluentEncryptionConfiguration(services)
                 .RegisterEncryptionClassifications(action);
         }
 
-        public static IFluentEncryptionConfiguration RegisterModelForFluentEncryption<T>(this IServiceCollection services, 
+        public static IFluentEncryptionConfiguration RegisterModelForFluentEncryption<T>(this IServiceCollection services,
             Action<IFluentEncryptionConfiguration<T>> action)
         {
             return new FluentEncryptionConfiguration(services)
                 .RegisterModel(action);
         }
 
-        public static IServiceCollection RegisterServices<TServiceRegistration>(this IServiceCollection services, 
+        public static IServiceCollection RegisterServices<TServiceRegistration>(this IServiceCollection services,
             bool registerInternalServices = true)
             where TServiceRegistration : IServiceRegistration
         {
@@ -61,8 +75,8 @@ namespace DNI.Core.Abstractions.Extensions
             return services;
         }
 
-        public static IServiceCollection ScanForTypes(this IServiceCollection services, 
-            Action<IDefinition<string>> scanTypeDefinitionAction, 
+        public static IServiceCollection ScanForTypes(this IServiceCollection services,
+            Action<IDefinition<string>> scanTypeDefinitionAction,
             params Assembly[] assemblies)
         {
             return services.Scan(scan => scan
