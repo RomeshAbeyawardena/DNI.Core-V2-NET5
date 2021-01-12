@@ -13,6 +13,6 @@ namespace DNI.Core.Shared.Contracts
         ISettingConfigurator<TSetting> ConfigureSection(Func<IConfiguration, IConfigurationSection> sectionConfiguration);
         ISettingConfigurator<TSetting> Configure<T>(Expression<Func<TSetting, T>> setting, Func<IConfigurationSection, T> sectionValue);
         IConfigurationSection Section { get; }
-        IDictionary<Tuple<Expression<Func<TSetting, object>>, Func<IConfigurationSection, object>> Values { get; }
+        IDictionary<string, Func<IConfigurationSection, object>> Values { get; }
     }
 }
