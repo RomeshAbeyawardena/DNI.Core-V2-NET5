@@ -1,0 +1,67 @@
+﻿# Starter pipeline
+# Start with a minimal pipeline that you can customize to build and deploy your code.
+# Add steps that build, run tests, deploy, and more:
+# https://aka.ms/yaml
+name: "$(VERSION)$(Rev:.r)"
+trigger:
+- release/snapshot-*
+
+pool:
+  name: 'local'
+
+variables:
+  solution: '**/*.sln'
+  projects: '**/DNI.Core.*.csproj'
+  testProjects: '**/DNI.Core.Tests.csproj'
+  buildPlatform: 'Any CPU'
+  buildConfiguration: 'Release'
+  currentVersion: "$(Build.BuildNumber)-pre"
+
+steps:
+  - task: PowerShell@2
+    displayName: Update assembly version
+    inputs:
+     filePath: ./Update-Version.ps1 
+     arguments: -fileName "./Directory.Build.props" -version $env:BUILD_BUILDNUMBER
+  - task: UseDotNet@2
+    displayName: Download NET Core 5 SDK
+    inputs:
+      packageType: sdk
+      version: 5.0.100
+  - task: DotNetCoreCLI@2
+    displayName: Restore project
+    inputs:
+      command: 'restore'
+      projects: $(projects)
+
+  - task: DotNetCoreCLI@2
+    displayName: Build project
+    inputs:
+      command: 'build'
+      projects: $(projects)
+      arguments: '--no-restore --nologo --configuration Release'
+      
+  - task: DotNetCoreCLI@2
+    displayName: 'Test Project'
+    inputs:
+      command: 'test'
+      projects: $(testProjects)
+      publishTestResults: true
+      nobuild: true
+      arguments: '--no-restore --nologo --configuration Release'
+
+  - task: DotNetCoreCLI@2
+    displayName: Pack project for NuGet
+    inputs:
+      command: 'pack'
+      packagesToPack: $(projects)
+      nobuild: true
+      versioningScheme: 'byEnvVar'
+      versionEnvVar: 'currentVersion'
+  - task: DotNetCoreCLI@2
+    inputs:
+      command: 'push'
+      packagesToPush: '$(Build.ArtifactStagingDirectory)/*.nupkg'
+      nuGetFeedType: 'internal'
+      arguments: --skip-duplicate
+      publishVstsFeed: 'b5eff378-3c9b-4cea-b812-05ff790f2330'
