@@ -15,7 +15,7 @@ variables:
   testProjects: '**/DNI.Core.Tests.csproj'
   buildPlatform: 'Any CPU'
   buildConfiguration: 'Release'
-  currentVersion: "$(Build.BuildNumber)-pre"
+  currentVersion: "$(Build.BuildNumber)-snapshot"
 
 steps:
   - task: PowerShell@2
