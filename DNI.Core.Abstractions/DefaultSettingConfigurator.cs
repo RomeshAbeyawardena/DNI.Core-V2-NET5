@@ -4,10 +4,7 @@ using DNI.Core.Shared.Extensions;
 using Microsoft.Extensions.Configuration;
 using System;
 using System.Collections.Generic;
-using System.Linq;
 using System.Linq.Expressions;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace DNI.Core.Abstractions
 {
@@ -16,6 +13,7 @@ namespace DNI.Core.Abstractions
         public DefaultSettingConfigurator(IConfiguration configuration)
         {
             this.configuration = configuration;
+            Values = new Dictionary<string, Func<IConfigurationSection, object>>();
         }
 
         public IDictionary<string, Func<IConfigurationSection, object>> Values { get; }
