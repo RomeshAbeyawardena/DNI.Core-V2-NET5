@@ -3,7 +3,6 @@ using DNI.Core.Shared.Attributes;
 using DNI.Core.Shared.Contracts;
 using DNI.Core.Shared.Options;
 using Microsoft.Extensions.DependencyInjection;
-using Microsoft.Extensions.DependencyInjection.Extensions;
 using System;
 using System.Linq;
 using System.Reflection;
