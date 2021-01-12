@@ -12,17 +12,29 @@ namespace DNI.Core.Abstractions.Extensions
 {
     public static class ServiceCollectionExtensions
     {
-        public static IServiceCollection RegisterFileCacheDependency(this IServiceCollection services)
+        public static IServiceCollection RegisterFileCacheDependency(this IServiceCollection services,
+            Action<ISettingConfigurator<FileCacheDependencyOptions>, bool> settingConfiguration)
         {
             return RegisterFileCacheDependency(services, (serviceProvider, configure) =>
             {
                 var configuration = serviceProvider.GetRequiredService<IConfiguration>();
-                var cacheDependencySection = configuration.GetSection("CacheDependency");
-
-                configure.DependencyFile = cacheDependencySection.GetValue<string>("File");
-                configure.ElapsedPeriod = cacheDependencySection.GetValue<TimeSpan>("ElapsedPeriod");
+                var fileCacheDependencyOptionsConfigurator = new DefaultSettingConfigurator<FileCacheDependencyOptions>(configuration);
+                
+                settingConfiguration.Invoke(fileCacheDependencyOptionsConfigurator, true);
+                fileCacheDependencyOptionsConfigurator.ConfigureSettings(configure);
             });
         }
+
+        public static IServiceCollection RegisterFileCacheDependency(this IServiceCollection services)
+        {
+            return RegisterFileCacheDependency(services, (configure, b) =>
+            {
+                configure.ConfigureSection(s => s.GetSection("CacheDependency"))
+                    .Configure(s => s.DependencyFile, t => t.GetValue<string>("DependencyFile"))
+                    .Configure(s => s.ElapsedPeriod, t => t.GetValue<TimeSpan>("ElapsedPeriod")); 
+            });
+        }
+
 
         public static IServiceCollection RegisterFileCacheDependency(this IServiceCollection services,
             Action<FileCacheDependencyOptions> configAction)
