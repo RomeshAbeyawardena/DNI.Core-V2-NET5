@@ -8,8 +8,10 @@ namespace DNI.Core.Abstractions.Serializers
     {
         public override T Deserialize<T>(IEnumerable<byte> data)
         {
-            using var jsonReader = ConsumeStreamReader(data, (memoryStream, textReader) => new JsonTextReader(textReader));
-            return jsonSerializer.Deserialize<T>(jsonReader);
+            return ConsumeStreamReader(data, (memoryStream, textReader) => { 
+                using (var jsonReader = new JsonTextReader(textReader))
+                    return jsonSerializer.Deserialize<T>(jsonReader);
+            });
         }
 
         public override IEnumerable<byte> Serialize<T>(T value)
