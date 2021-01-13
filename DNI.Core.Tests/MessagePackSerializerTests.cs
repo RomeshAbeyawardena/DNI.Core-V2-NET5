@@ -1,15 +1,15 @@
-﻿using DNI.Core.Tests.Assets;
-using Newtonsoft.Json;
-using NUnit.Framework;
+﻿using NUnit.Framework;
+using DNI.Core.Abstractions.Serializers;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using JsonSerializer = DNI.Core.Abstractions.Serializers.JsonSerializer;
+using DNI.Core.Tests.Assets;
+
 namespace DNI.Core.Tests
 {
-    public class JsonSerializerTests
+    public class MessagePackSerializerTests
     {
         [Test] public void Serialize_Deserialize()
         {
@@ -21,8 +21,8 @@ namespace DNI.Core.Tests
             var s1 = sut.Deserialize<Student>(s);
 
             Assert.AreEqual(expected, s1);
-        }
+        } 
 
-        JsonSerializer sut = new JsonSerializer(Newtonsoft.Json.JsonSerializer.CreateDefault());
+        private MessagePackSerializer sut = new MessagePackSerializer();
     }
 }

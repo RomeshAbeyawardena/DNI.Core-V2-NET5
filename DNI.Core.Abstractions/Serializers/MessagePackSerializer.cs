@@ -5,19 +5,19 @@ using MessagePack;
 
 namespace DNI.Core.Abstractions.Serializers
 {
-    internal class MemoryPackSerializer : SerializerBase
+    internal class MessagePackSerializer : SerializerBase
     {
         public override T Deserialize<T>(IEnumerable<byte> data)
         {
-            return MessagePackSerializer.Deserialize<T>(data.ToArray());
+            return MessagePack.MessagePackSerializer.Deserialize<T>(data.ToArray());
         }
 
         public override IEnumerable<byte> Serialize<T>(T value)
         {
-            return MessagePackSerializer.Serialize(value);
+            return MessagePack.MessagePackSerializer.Serialize(value);
         }
 
-        public MemoryPackSerializer()
+        public MessagePackSerializer()
             : base(SerializerType.MemoryPack)
         {
             
