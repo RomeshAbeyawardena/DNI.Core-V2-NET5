@@ -37,7 +37,7 @@ namespace DNI.Core.Abstractions
 
         Task<IEnumerable<TEntity>> IDataService<TEntity>.ToArrayAsync(CancellationToken cancellationToken)
         {
-            return Repository.ToArrayAsync(cancellationToken: cancellationToken);
+            return Repository.ToArrayAsync(NoTrackingQuery, cancellationToken: cancellationToken);
         }
 
         protected DataServiceBase(IAsyncRepository<TEntity> entityRepository)
