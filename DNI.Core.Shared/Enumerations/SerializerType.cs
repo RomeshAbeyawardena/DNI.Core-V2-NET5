@@ -3,6 +3,6 @@
     public enum SerializerType
     {
         Json,
-        MemoryPack
+        MessagePack
     }
 }

@@ -18,7 +18,7 @@ namespace DNI.Core.Abstractions.Serializers
         }
 
         public MessagePackSerializer()
-            : base(SerializerType.MemoryPack)
+            : base(SerializerType.MessagePack)
         {
             
         }
