@@ -1,7 +1,7 @@
 ﻿using Microsoft.Extensions.DependencyInjection;
 using System;
 
-namespace DNI.Core.Abstractions
+namespace DNI.Core.Abstractions.Defaults
 {
     public class DefaultServiceProviderFactory<T> : IServiceProviderFactory<T>
     {

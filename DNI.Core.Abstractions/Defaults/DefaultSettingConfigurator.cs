@@ -6,7 +6,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq.Expressions;
 
-namespace DNI.Core.Abstractions
+namespace DNI.Core.Abstractions.Defaults
 {
     internal class DefaultSettingConfigurator<TSetting> : ISettingConfigurator<TSetting>
     {

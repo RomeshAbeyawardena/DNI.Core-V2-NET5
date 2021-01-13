@@ -4,7 +4,7 @@ using Microsoft.Extensions.Hosting;
 using System;
 using System.Collections.Generic;
 
-namespace DNI.Core.Abstractions
+namespace DNI.Core.Abstractions.Defaults
 {
     internal class DefaultAppHost<TStartup> : IHostBuilder
         where TStartup : class, IHost

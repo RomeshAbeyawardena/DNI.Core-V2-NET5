@@ -1,6 +1,6 @@
 ﻿using DNI.Core.Shared.Contracts;
 
-namespace DNI.Core.Abstractions
+namespace DNI.Core.Abstractions.Defaults
 {
     public static class ParameterWithFallback
     {

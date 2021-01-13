@@ -12,7 +12,7 @@ using System.Linq;
 using System.Reflection;
 using System.Security.Cryptography;
 
-namespace DNI.Core.Abstractions
+namespace DNI.Core.Abstractions.Defaults
 {
     internal class DefaultServiceRegistration : ServiceRegistrationBase
     {

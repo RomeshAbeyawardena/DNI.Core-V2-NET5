@@ -3,7 +3,7 @@ using DNI.Core.Shared.Contracts;
 using System.Collections.Generic;
 using System.Linq;
 
-namespace DNI.Core.Abstractions
+namespace DNI.Core.Abstractions.Defaults
 {
     /// <inheritdoc cref="IChangeTracker{T}" />
     internal class DefaultChangeTracker<T> : IChangeTracker<T>

@@ -1,4 +1,5 @@
 ﻿using DNI.Core.Abstractions;
+using DNI.Core.Abstractions.Defaults;
 using NUnit.Framework;
 using System;
 
