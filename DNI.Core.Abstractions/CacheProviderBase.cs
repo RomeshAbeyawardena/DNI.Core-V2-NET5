@@ -66,7 +66,8 @@ namespace DNI.Core.Abstractions
             {
                 if(attempt.Exception != null)
                 {
-                    logger.LogError(attempt.Exception, "Unable to get cache item for {0}", cacheKey);
+                    logger.LogError(attempt.Exception, "Unable to get cache item for {0} from {1} using {2}", 
+                        cacheKey, CacheServiceType, SerializerType);
                 }
                 else
                     logger.LogInformation("CacheDependency is currently invalidated");
@@ -81,6 +82,8 @@ namespace DNI.Core.Abstractions
 
                 if (!setAttempt.Successful)
                 {
+                    logger.LogError(setAttempt.Exception, "Unable to set cache key {0} from {1} using {2}", 
+                        cacheKey, CacheServiceType, SerializerType);
                     throw new InvalidOperationException();
                 }
 

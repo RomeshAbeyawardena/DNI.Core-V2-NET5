@@ -15,22 +15,29 @@ namespace DNI.Core.Shared
             return new DefaultFileWriter();
         }
 
-        public Task<IAttempt> Save(string content, string fileName)
+        public Task<IAttempt> Save(string content, string fileName, bool discardExistingData)
         {
             return WriteFile(fileName, async(fs, sw) => await sw.WriteAsync(content));
         }
 
-        public Task<IAttempt> Save(IEnumerable<byte> byteData, string fileName)
+        public Task<IAttempt> Save(IEnumerable<byte> byteData, string fileName, bool discardExistingData)
         {
             return WriteFile(fileName, async(fs, sw) => await fs.WriteAsync(byteData.ToArray()));
         }
 
-        private async Task<IAttempt> WriteFile(string fileName, Func<FileStream, StreamWriter, ValueTask> action)
+        private async Task<IAttempt> WriteFile(string fileName, Func<FileStream, StreamWriter, ValueTask> action, bool discardExistingData = false)
         {
             using var fileStream = File.OpenWrite(fileName);
 
+            if(discardExistingData)
+            { 
+                fileStream.SetLength(0);
+            }
+
             using var streamWriter = new StreamWriter(fileStream);
+            
             await action(fileStream, streamWriter);
+
 
             return Attempt.Success();
         }

@@ -33,7 +33,7 @@ namespace DNI.Core.Abstractions
 
             var attempt = await fileWriter.Save(
                 JsonConvert.SerializeObject(dictionary), 
-                FileOptions.DependencyFile);
+                FileOptions.DependencyFile, true);
 
             return attempt.Successful;
         }
@@ -46,7 +46,7 @@ namespace DNI.Core.Abstractions
 
             var attempt = await fileWriter.Save(
                 JsonConvert.SerializeObject(dictionary), 
-                FileOptions.DependencyFile);
+                FileOptions.DependencyFile, true);
 
             return attempt.Successful;
         }
