@@ -2,6 +2,7 @@
 using DNI.Core.Shared.Contracts.Factories;
 using DNI.Core.Shared.Contracts.Providers;
 using DNI.Core.Shared.Enumerations;
+using Microsoft.Extensions.Logging;
 using System;
 using System.Collections.Concurrent;
 using System.Collections.Generic;
@@ -21,10 +22,13 @@ namespace DNI.Core.Abstractions
             GC.SuppressFinalize(this);
         }
 
-        protected CacheProviderBase(ICacheServiceFactory cacheServiceFactory,
+        protected CacheProviderBase(
+            ILogger logger,
+            ICacheServiceFactory cacheServiceFactory,
             ICacheDependency cacheDependency)
         {
             concurrentDictionary = new ConcurrentDictionary<Type, SemaphoreSlim>();
+            this.logger = logger;
             this.cacheServiceFactory = cacheServiceFactory;
             this.cacheDependency = cacheDependency;
         }
@@ -58,6 +62,15 @@ namespace DNI.Core.Abstractions
             {
                 return attempt.Result;
             }
+            else
+            {
+                if(attempt.Exception != null)
+                {
+                    logger.LogError(attempt.Exception, "Unable to get cache item for {0}", cacheKey);
+                }
+                else
+                    logger.LogInformation("CacheDependency is currently invalidated");
+            }
 
             var result = await action(cancellationToken);
 
@@ -79,6 +92,7 @@ namespace DNI.Core.Abstractions
             return result;
         }
 
+        private readonly ILogger logger;
         private readonly ConcurrentDictionary<Type, SemaphoreSlim> concurrentDictionary;
         private readonly ICacheServiceFactory cacheServiceFactory;
         private readonly ICacheDependency cacheDependency;
