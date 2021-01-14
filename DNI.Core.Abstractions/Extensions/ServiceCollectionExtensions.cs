@@ -1,7 +1,9 @@
 ﻿using DNI.Core.Abstractions.Defaults;
+using DNI.Core.Abstractions.Managers;
 using DNI.Core.Shared;
 using DNI.Core.Shared.Attributes;
 using DNI.Core.Shared.Contracts;
+using DNI.Core.Shared.Managers;
 using DNI.Core.Shared.Options;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
@@ -13,6 +15,27 @@ namespace DNI.Core.Abstractions.Extensions
 {
     public static class ServiceCollectionExtensions
     {
+        public static IServiceCollection RegisterResourceManager(this IServiceCollection services, 
+            Action<IResourceManager> resourceManagerConfiguration)
+        {
+            var resourceManager = new DefaultResourceManager();
+            resourceManagerConfiguration(resourceManager);
+
+            return services.AddSingleton<IResourceManager>(resourceManager);
+        }
+
+        public static IServiceCollection RegisterResourceManager<TApplicationSettings>(this IServiceCollection services, 
+            Action<IResourceManager> resourceManagerConfiguration)
+        {
+            var resourceManager = new DefaultResourceManager();
+            resourceManagerConfiguration(resourceManager);
+
+            return services.AddSingleton<IResourceManager>((serviceProvider) => { 
+                var applicationSettings = GetApplicationSettings<TApplicationSettings>(serviceProvider); 
+                return resourceManager;
+            });
+        }
+
         public static IServiceCollection RegisterFileCacheDependency(this IServiceCollection services,
             Action<ISettingConfigurator<FileCacheDependencyOptions>, bool> settingConfiguration)
         {
@@ -109,5 +132,9 @@ namespace DNI.Core.Abstractions.Extensions
             return type => scannerDefinitionTypeArray.Any(def => type.Name.EndsWith(def));
         }
 
+        private static TApplicationSettings GetApplicationSettings<TApplicationSettings>(this IServiceProvider serviceProvider)
+        {
+            return serviceProvider.GetRequiredService<TApplicationSettings>();
+        }
     }
 }
