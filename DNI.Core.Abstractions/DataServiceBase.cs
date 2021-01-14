@@ -1,4 +1,5 @@
-﻿using DNI.Core.Shared.Contracts;
+﻿using DNI.Core.Shared;
+using DNI.Core.Shared.Contracts;
 using DNI.Core.Shared.Contracts.Services;
 using System;
 using System.Collections.Generic;
@@ -38,6 +39,13 @@ namespace DNI.Core.Abstractions
         Task<IEnumerable<TEntity>> IDataService<TEntity>.ToArrayAsync(CancellationToken cancellationToken)
         {
             return Repository.ToArrayAsync(NoTrackingQuery, cancellationToken: cancellationToken);
+        }
+
+        public Task<IEnumerable<TEntity>> ToArrayAsync(Expression<Func<TEntity, bool>> expression, IPagingCriteria pagingCriteria, CancellationToken cancellationToken)
+        {
+            var pager = new Pager<TEntity>(NoTrackingQuery.Where(expression));
+
+            return pager.GetPagedItemsAsync(pagingCriteria.PageIndex, pagingCriteria.TotalItemsPerPage, cancellationToken);
         }
 
         protected DataServiceBase(IAsyncRepository<TEntity> entityRepository)

@@ -9,6 +9,8 @@ namespace DNI.Core.Shared.Contracts.Services
     public interface IDataService<TEntity>
         where TEntity : class
     {
+        Task<IEnumerable<TEntity>> ToArrayAsync(Expression<Func<TEntity, bool>> expression,
+            IPagingCriteria pagingCriteria, CancellationToken cancellationToken);
         Task<IEnumerable<TEntity>> ToArrayAsync(CancellationToken cancellationToken);
         Task<TEntity> FirstOrDefaultAsync(Expression<Func<TEntity, bool>> expression, CancellationToken cancellationToken);
         Task<bool> AnyAsync(Expression<Func<TEntity, bool>> expression, CancellationToken cancellationToken);

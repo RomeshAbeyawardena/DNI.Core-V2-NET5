@@ -12,12 +12,12 @@ namespace DNI.Core.Shared
     {
         public IQueryable<T> Query { get; }
 
-        IEnumerable<T> IPager<T>.GetPagedItems(int pageIndex, int totalItemsPerPage)
+        public IEnumerable<T> GetPagedItems(int pageIndex, int totalItemsPerPage)
         {
             return GetPagedItems(pageIndex, totalItemsPerPage, Query.Count()).ToArray();
         }
 
-        async Task<IEnumerable<T>> IPager<T>.GetPagedItemsAsync(int pageIndex, int totalItemsPerPage, CancellationToken cancellationToken)
+        public async Task<IEnumerable<T>> GetPagedItemsAsync(int pageIndex, int totalItemsPerPage, CancellationToken cancellationToken)
         {
             return await GetPagedItems(pageIndex, totalItemsPerPage,
                 await Query.CountAsync(cancellationToken))
