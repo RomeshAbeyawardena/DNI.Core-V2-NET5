@@ -10,6 +10,7 @@ using System.Threading.Tasks;
 
 namespace DNI.Core.Abstractions
 {
+    /// <inheritdoc cref="IDataService{TEntity}"/>
     public abstract class DataServiceBase<TEntity> : IDataService<TEntity>
         where TEntity : class
     {

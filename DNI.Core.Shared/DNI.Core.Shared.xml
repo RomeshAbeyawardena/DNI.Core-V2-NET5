@@ -92,6 +92,48 @@
             <param name="cacheServiceType">The type of <see cref="T:DNI.Core.Shared.Contracts.Services.ICacheService"/> to be returned</param>
             <returns>An instance of <see cref="T:DNI.Core.Shared.Contracts.Services.ICacheService"/></returns>
         </member>
+        <member name="T:DNI.Core.Shared.Contracts.Factories.IChangeTrackerFactory">
+            <summary>
+            Represents a change tracker factory to resolve <see cref="!:IChangeTracker&lt;T&gt; instances" /> 
+            </summary>
+        </member>
+        <member name="M:DNI.Core.Shared.Contracts.Factories.IChangeTrackerFactory.GetChangeTracker``1">
+            <summary>
+            Resolves a <see cref="T:DNI.Core.Shared.Contracts.IChangeTracker`1"/>
+            </summary>
+            <typeparam name="T"></typeparam>
+            <returns>An instance of a <see cref="T:DNI.Core.Shared.Contracts.IChangeTracker`1"/></returns>
+        </member>
+        <member name="M:DNI.Core.Shared.Contracts.Factories.IChangeTrackerFactory.HasChanges``1(``0,``0,System.Collections.Generic.IEnumerable{DNI.Core.Shared.PropertyChange}@)">
+            <summary>
+            Determines whether changes exist between <paramref name="source"/> and  <paramref name="value"/>
+            </summary>
+            <typeparam name="T"></typeparam>
+            <param name="source"></param>
+            <param name="value"></param>
+            <param name="propertyChanges"></param>
+            <returns></returns>
+        </member>
+        <member name="M:DNI.Core.Shared.Contracts.Factories.IChangeTrackerFactory.MergeChanges``1(``0,``0)">
+            <summary>
+            Commits changes between <paramref name="source"/> and <paramref name="value"/>
+            </summary>
+            <typeparam name="T"></typeparam>
+            <param name="source"></param>
+            <param name="value"></param>
+            <returns></returns>
+        </member>
+        <member name="M:DNI.Core.Shared.Contracts.Factories.IChangeTrackerFactory.MergeChanges``1(``0,``0,System.Collections.Generic.IEnumerable{DNI.Core.Shared.PropertyChange})">
+            <summary>
+            Commits changes between <paramref name="source"/> and <paramref name="value"/>
+            using an existing <paramref name="propertyChanges"/> list
+            </summary>
+            <typeparam name="T"></typeparam>
+            <param name="source"></param>
+            <param name="value"></param>
+            <param name="propertyChanges"></param>
+            <returns></returns>
+        </member>
         <member name="T:DNI.Core.Shared.Contracts.Factories.IEncryptionClassificationFactory">
             <summary>
             Represents a factory for getting encrpytion options for a specific encryption classification configured by the consumer
@@ -722,6 +764,21 @@
             </summary>
             <param name="value"></param>
         </member>
+        <member name="T:DNI.Core.Shared.Contracts.Providers.ICacheProvider">
+            <summary>
+            Represents an ICacheProvider that exposes methods available to an instance of <see cref="T:DNI.Core.Shared.Contracts.Services.ICacheService"/>
+            </summary>
+        </member>
+        <member name="P:DNI.Core.Shared.Contracts.Providers.ICacheProvider.CacheServiceType">
+            <summary>
+            Gets or sets the <see cref="P:DNI.Core.Shared.Contracts.Providers.ICacheProvider.CacheServiceType"/> this instance exposes
+            </summary>
+        </member>
+        <member name="P:DNI.Core.Shared.Contracts.Providers.ICacheProvider.SerializerType">
+            <summary>
+            Gets or sets the <see cref="P:DNI.Core.Shared.Contracts.Providers.ICacheProvider.SerializerType"/> this instance uses to serialize and deserialize data
+            </summary>
+        </member>
         <member name="T:DNI.Core.Shared.Contracts.Services.ICacheService">
             <summary>
             Represents a cache service used to retrieve and save items to a caching store
@@ -771,6 +828,28 @@
             <param name="serializer">The <see cref="T:DNI.Core.Shared.Enumerations.SerializerType"/> that should be used to convert the byte representation to <typeparamref name="T"/></param>
             <param name="cancellationToken">Notification to cancel asynchronous task</param>
             <returns>An awaitable instance of <see cref="T:DNI.Core.Shared.Contracts.IAttempt`1"/></returns>
+        </member>
+        <member name="T:DNI.Core.Shared.Contracts.Services.IDataService`1">
+            <summary>
+            Implements an abstract data service that supports interfacing with an <see cref="T:DNI.Core.Shared.Contracts.IRepository`1"/>
+            </summary>
+            <typeparam name="TEntity"></typeparam>
+        </member>
+        <member name="M:DNI.Core.Shared.Contracts.Services.IDataService`1.ToArrayAsync(System.Linq.Expressions.Expression{System.Func{`0,System.Boolean}},DNI.Core.Shared.Contracts.IPagingCriteria,System.Threading.CancellationToken)">
+            <summary>
+            Retrieves an array based off <paramref name="expression"/>
+            </summary>
+            <param name="expression"></param>
+            <param name="pagingCriteria"></param>
+            <param name="cancellationToken"></param>
+            <returns>A page list in the form of <see cref="T:System.Collections.Generic.IEnumerable`1"/></returns>
+        </member>
+        <member name="M:DNI.Core.Shared.Contracts.Services.IDataService`1.ToArrayAsync(System.Threading.CancellationToken)">
+            <summary>
+            
+            </summary>
+            <param name="cancellationToken"></param>
+            <returns></returns>
         </member>
         <member name="P:DNI.Core.Shared.Contracts.Services.IEncryptionService.EncryptionMethod">
             <summary>
