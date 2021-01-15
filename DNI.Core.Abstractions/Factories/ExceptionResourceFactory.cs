@@ -19,7 +19,7 @@ namespace DNI.Core.Abstractions.Factories
 
         public TException GetException<TException>(bool isMultiple, params object[] args) where TException : Exception
         {
-            return GetException(s => CreateException<TException>(args.Prepend(s)), isMultiple);
+            return GetException(s => CreateException<TException>(args.Prepend(s).ToArray()), isMultiple);
         }
 
         public TException GetException<TException>(Func<string, TException> buildAction, bool isMultiple) where TException : Exception
@@ -30,7 +30,7 @@ namespace DNI.Core.Abstractions.Factories
         public TException GetException<TEntity, TException>(bool isMultiple, params object[] args)
             where TException : Exception
         {
-            return GetException<TEntity, TException>(s => CreateException<TException>(args.Prepend(s)), isMultiple);
+            return GetException<TEntity, TException>(s => CreateException<TException>(args.Prepend(s).ToArray()), isMultiple);
         }
 
         public TException GetException<TEntity, TException>(Func<string, TException> buildAction, bool isMultiple)
@@ -39,7 +39,7 @@ namespace DNI.Core.Abstractions.Factories
             return buildAction(GetResourceText<TException, TEntity>(null, isMultiple));
         }
 
-        private TException CreateException<TException>(params object[] args)
+        private TException CreateException<TException>(object[] args)
         {
             return (TException)Activator.CreateInstance(typeof(TException), args);
         }
@@ -49,7 +49,7 @@ namespace DNI.Core.Abstractions.Factories
         {
             placeHolders ??= new Dictionary<string, string>();
 
-            placeHolders.Add("Type", GetEntityName<T>(isMultiple));
+            placeHolders.Add("type", GetEntityName<T>(isMultiple));
 
             return resourceManager.Get<TException>(placeHolders);
         }

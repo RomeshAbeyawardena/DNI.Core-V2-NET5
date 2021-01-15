@@ -35,8 +35,7 @@ namespace DNI.Core.Abstractions.Managers
             if(resourceDictionary.TryGetValue(typeof(TException), out var resourceText))
             { 
                 return placeHolders
-                    .Aggregate(resourceText, (s, kvp) => s.Replace(kvp.Key
-                    .ReplaceAll(string.Empty, "[", "]"), kvp.Value));
+                    .Aggregate(resourceText, (s, kvp) => s.Replace("[" + kvp.Key + "]", kvp.Value));
             }
 
             return string.Empty;
