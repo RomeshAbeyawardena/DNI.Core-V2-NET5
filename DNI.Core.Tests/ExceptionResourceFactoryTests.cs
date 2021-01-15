@@ -43,10 +43,13 @@ namespace DNI.Core.Tests
         {
             var expected = "Null Student Type reference exception";
             var expected2 = "Null Student Types reference exception";
+            var expected3 = "Argument is null Student Types (Parameter 'Potato')";
             resourceManager = new DefaultResourceManager();
             exceptionResourceFactory = new ExceptionResourceFactory(resourceManager);
             
-            resourceManager.AddExceptionErrorMessage<NullReferenceException>("Null [type] reference exception");
+            resourceManager
+                .AddExceptionErrorMessage<NullReferenceException>("Null [type] reference exception")
+                .AddExceptionErrorMessage<ArgumentNullException>("Argument is null [type]");
             var exception = exceptionResourceFactory.GetException<StudentType, NullReferenceException>(false);
 
             Assert.IsNotNull(exception);
@@ -61,6 +64,11 @@ namespace DNI.Core.Tests
 
             Assert.IsNotNull(exception1);
             Assert.AreEqual(expected2, exception1.Message);
+
+            exception1 = exceptionResourceFactory.GetException<StudentType>(typeof(ArgumentNullException), true, "Potato");
+
+            Assert.IsNotNull(exception1);
+            Assert.AreEqual(expected3, exception1.Message);
 
         }
         

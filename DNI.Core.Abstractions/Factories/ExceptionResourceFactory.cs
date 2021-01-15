@@ -19,7 +19,8 @@ namespace DNI.Core.Abstractions.Factories
 
         public TException GetException<TException>(bool isMultiple, params object[] args) where TException : Exception
         {
-            return GetException(s => CreateException<TException>(args.Prepend(s).ToArray()), isMultiple);
+            return GetException(s => CreateException<TException>(
+                PrependOrAppend(args, typeof(TException), s).ToArray()), isMultiple);
         }
 
         public TException GetException<TException>(Func<string, TException> buildAction, bool isMultiple) where TException : Exception
@@ -30,7 +31,8 @@ namespace DNI.Core.Abstractions.Factories
         public TException GetException<TEntity, TException>(bool isMultiple, params object[] args)
             where TException : Exception
         {
-            return GetException<TEntity, TException>(s => CreateException<TException>(args.Prepend(s).ToArray()), isMultiple);
+            return GetException<TEntity, TException>(s => CreateException<TException>(
+                PrependOrAppend(args, typeof(TException), s).ToArray()), isMultiple);
         }
 
         public TException GetException<TEntity, TException>(Func<string, TException> buildAction, bool isMultiple)
@@ -41,12 +43,12 @@ namespace DNI.Core.Abstractions.Factories
 
         public Exception GetException(Type type, bool isMultiple, params object[] args)
         {
-            return GetException<object>(type, s => CreateException(type, args.Prepend(s).ToArray()), isMultiple);
+            return GetException<object>(type, s => CreateException(type, PrependOrAppend(args, type, s).ToArray()), isMultiple);
         }
 
         public Exception GetException<TEntity>(Type type, bool isMultiple, params object[] args)
         {
-            return GetException<TEntity>(type, s => CreateException(type, args.Prepend(s).ToArray()), isMultiple);
+            return GetException<TEntity>(type, s => CreateException(type, PrependOrAppend(args, type, s).ToArray()), isMultiple);
         }
 
         public Exception GetException<TEntity>(Type type, Func<string, Exception> buildAction, bool isMultiple)
@@ -54,6 +56,15 @@ namespace DNI.Core.Abstractions.Factories
             return buildAction(GetResourceText<TEntity>(type, null, isMultiple));
         }
 
+        private IEnumerable<object> PrependOrAppend(IEnumerable<object> items, Type exceptionType, object parameter)
+        {
+            if(exceptionType == typeof(ArgumentNullException))
+            {
+                return items.Append(parameter);
+            }
+
+            return items.Prepend(parameter);
+        }
 
         private TException CreateException<TException>(object[] args)
             where TException : Exception
