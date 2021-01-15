@@ -13,6 +13,22 @@ using DNI.Core.Shared;
 
 namespace DNI.Core.Abstractions
 {
+    public abstract class ActionRequestHandlerBaseWithExceptionResourceFactory<TRequest, TResponse> : ActionRequestHandlerBase<TRequest, TResponse>
+        where TRequest : IActionRequest<TResponse>
+    {
+        protected ActionRequestHandlerBaseWithExceptionResourceFactory(
+            ICacheServiceFactory cacheServiceFactory,
+            IValidatorFactory validatorFactory,
+            IExceptionResourceFactory exceptionResourceFactory)
+            : base(cacheServiceFactory, validatorFactory)
+        {
+            ExceptionResourceFactory = exceptionResourceFactory;
+        }
+
+        protected IExceptionResourceFactory ExceptionResourceFactory { get;}
+    }
+
+
     public abstract class ActionRequestHandlerBase<TRequest, TResponse> : RequestHandlerBase<TRequest, TResponse>
         where TRequest : IActionRequest<TResponse>
     {
