@@ -44,6 +44,11 @@ namespace DNI.Core.Abstractions.Factories
             return GetException<object>(type, s => CreateException(type, args.Prepend(s).ToArray()), isMultiple);
         }
 
+        public Exception GetException<TEntity>(Type type, bool isMultiple, params object[] args)
+        {
+            return GetException<TEntity>(type, s => CreateException(type, args.Prepend(s).ToArray()), isMultiple);
+        }
+
         public Exception GetException<TEntity>(Type type, Func<string, Exception> buildAction, bool isMultiple)
         {
             return buildAction(GetResourceText<TEntity>(type, null, isMultiple));

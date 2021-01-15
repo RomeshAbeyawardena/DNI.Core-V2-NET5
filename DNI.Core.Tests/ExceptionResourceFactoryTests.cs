@@ -42,6 +42,7 @@ namespace DNI.Core.Tests
         [Test] public void GetEntityException_with_camel_case()
         {
             var expected = "Null Student Type reference exception";
+            var expected2 = "Null Student Types reference exception";
             resourceManager = new DefaultResourceManager();
             exceptionResourceFactory = new ExceptionResourceFactory(resourceManager);
             
@@ -50,6 +51,17 @@ namespace DNI.Core.Tests
 
             Assert.IsNotNull(exception);
             Assert.AreEqual(expected, exception.Message);
+
+            var exception1 = exceptionResourceFactory.GetException<StudentType>(typeof(NullReferenceException), false);
+
+            Assert.IsNotNull(exception1);
+            Assert.AreEqual(expected, exception1.Message);
+
+            exception1 = exceptionResourceFactory.GetException<StudentType>(typeof(NullReferenceException), true);
+
+            Assert.IsNotNull(exception1);
+            Assert.AreEqual(expected2, exception1.Message);
+
         }
         
         private DefaultResourceManager resourceManager;
