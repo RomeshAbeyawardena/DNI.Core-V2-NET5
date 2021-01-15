@@ -25,13 +25,14 @@ namespace DNI.Core.Abstractions.Extensions
         }
 
         public static IServiceCollection RegisterResourceManager<TApplicationSettings>(this IServiceCollection services, 
-            Action<IResourceManager> resourceManagerConfiguration)
+            Action<TApplicationSettings, IResourceManager> resourceManagerConfiguration)
         {
             var resourceManager = new DefaultResourceManager();
-            resourceManagerConfiguration(resourceManager);
-
+            
             return services.AddSingleton<IResourceManager>((serviceProvider) => { 
                 var applicationSettings = GetApplicationSettings<TApplicationSettings>(serviceProvider); 
+                resourceManagerConfiguration(applicationSettings, resourceManager);
+
                 return resourceManager;
             });
         }
