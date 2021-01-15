@@ -12,7 +12,7 @@ namespace DNI.Core.Shared.Managers
             where TException : Exception;
 
         string Get<TException>(IDictionary<string, string> placeHolders = default);
-       
+        string Get(Type type, IDictionary<string, string> placeHolders = default);
         IReadOnlyDictionary<Type, string> Resources { get; }
     }
 }

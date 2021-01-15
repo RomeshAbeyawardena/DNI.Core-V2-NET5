@@ -41,7 +41,7 @@ namespace DNI.Core.Tests
 
         [Test] public void GetEntityException_with_camel_case()
         {
-            var expected = "Null Student Type reference exception";;
+            var expected = "Null Student Type reference exception";
             resourceManager = new DefaultResourceManager();
             exceptionResourceFactory = new ExceptionResourceFactory(resourceManager);
             

@@ -39,9 +39,26 @@ namespace DNI.Core.Abstractions.Factories
             return buildAction(GetResourceText<TException, TEntity>(null, isMultiple));
         }
 
-        private TException CreateException<TException>(object[] args)
+        public Exception GetException(Type type, bool isMultiple, params object[] args)
         {
-            return (TException)Activator.CreateInstance(typeof(TException), args);
+            return GetException<object>(type, s => CreateException(type, args.Prepend(s).ToArray()), isMultiple);
+        }
+
+        public Exception GetException<TEntity>(Type type, Func<string, Exception> buildAction, bool isMultiple)
+        {
+            return buildAction(GetResourceText<TEntity>(type, null, isMultiple));
+        }
+
+
+        private TException CreateException<TException>(object[] args)
+            where TException : Exception
+        {
+            return (TException)CreateException(typeof(TException), args);
+        }
+
+        private Exception CreateException(Type type, object[] args)
+        {
+            return (Exception)Activator.CreateInstance(type, args);
         }
 
         private string GetResourceText<TException, T>(IDictionary<string, string> placeHolders, bool isMultiple)
@@ -52,6 +69,15 @@ namespace DNI.Core.Abstractions.Factories
             placeHolders.Add("type", GetEntityName<T>(isMultiple));
 
             return resourceManager.Get<TException>(placeHolders);
+        }
+
+        private string GetResourceText<T>(Type type, IDictionary<string, string> placeHolders, bool isMultiple)
+        {
+            placeHolders ??= new Dictionary<string, string>();
+
+            placeHolders.Add("type", GetEntityName<T>(isMultiple));
+
+            return resourceManager.Get(type, placeHolders);
         }
 
         private string GetEntityName<T>(bool isMultiple)

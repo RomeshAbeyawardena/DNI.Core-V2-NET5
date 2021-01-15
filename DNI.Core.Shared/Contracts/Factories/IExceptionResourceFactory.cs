@@ -18,5 +18,8 @@ namespace DNI.Core.Shared.Contracts.Factories
 
         TException GetException<TEntity, TException>(Func<string, TException> buildAction, bool isMultiple)
             where TException : Exception;
+
+        Exception GetException(Type type, bool isMultiple, params object[] args);
+        Exception GetException<TEntity>(Type type, Func<string, Exception> buildAction, bool isMultiple);
     }
 }

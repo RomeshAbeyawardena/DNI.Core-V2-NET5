@@ -27,12 +27,17 @@ namespace DNI.Core.Abstractions.Managers
 
         public string Get<TException>(IDictionary<string, string> placeHolders = null)
         {
+            return Get(typeof(TException), placeHolders);
+        }
+
+        public string Get(Type type, IDictionary<string, string> placeHolders = null)
+        {
             if(placeHolders == null)
             {
                 placeHolders = new Dictionary<string, string>();
             }
 
-            if(resourceDictionary.TryGetValue(typeof(TException), out var resourceText))
+            if(resourceDictionary.TryGetValue(type, out var resourceText))
             { 
                 return placeHolders
                     .Aggregate(resourceText, (s, kvp) => s.Replace("[" + kvp.Key + "]", kvp.Value));
@@ -41,7 +46,6 @@ namespace DNI.Core.Abstractions.Managers
             return string.Empty;
         }
 
-        
         private readonly ConcurrentDictionary<Type, string> resourceDictionary;
     }
 }
