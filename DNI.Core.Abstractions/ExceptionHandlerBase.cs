@@ -13,9 +13,9 @@ namespace DNI.Core.Abstractions
         where TRequest : IActionRequest<TResponse>
         where TResponse : IAttemptedResponse
     {
-        protected ExceptionHandlerBase(IExceptionResourceFactory exceptionResourceFactory)
+        protected ExceptionHandlerBase()
         {
-            ExceptionResourceFactory = exceptionResourceFactory;
+            
         }
 
         protected override void Handle(TRequest request, Exception exception, RequestExceptionHandlerState<TResponse> state)
@@ -33,6 +33,6 @@ namespace DNI.Core.Abstractions
             return (TResponse)Activator.CreateInstance(typeof(TResponse), exception);
         }
 
-        protected IExceptionResourceFactory ExceptionResourceFactory { get; }
+        
     }
 }
