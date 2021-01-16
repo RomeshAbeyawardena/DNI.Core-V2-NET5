@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Threading.Tasks;
 
-namespace DNI.Core.Shared.Extensions
+namespace DNI.Core.Shared.Contracts
 {
     public interface IFileWriter
     {
