@@ -17,12 +17,12 @@ namespace DNI.Core.Shared
 
         public Task<IAttempt> Save(string content, string fileName, bool discardExistingData)
         {
-            return WriteFile(fileName, async(fs, sw) => await sw.WriteAsync(content));
+            return WriteFile(fileName, async(fs, sw) => await sw.WriteAsync(content), discardExistingData);
         }
 
         public Task<IAttempt> Save(IEnumerable<byte> byteData, string fileName, bool discardExistingData)
         {
-            return WriteFile(fileName, async(fs, sw) => await fs.WriteAsync(byteData.ToArray()));
+            return WriteFile(fileName, async(fs, sw) => await fs.WriteAsync(byteData.ToArray()), discardExistingData);
         }
 
         private async Task<IAttempt> WriteFile(string fileName, Func<FileStream, StreamWriter, ValueTask> action, bool discardExistingData = false)
