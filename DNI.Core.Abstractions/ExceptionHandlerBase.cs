@@ -8,7 +8,6 @@ using System.Linq;
 namespace DNI.Core.Abstractions
 {
     public abstract class ExceptionHandlerBase<TRequest, TResponse> : RequestExceptionHandler<TRequest, TResponse>
-        where TRequest : IActionRequest<TResponse>
     {
         protected ExceptionHandlerBase(Action<IDefinition<Type>> configureSupportedExceptionTypes)
         {
