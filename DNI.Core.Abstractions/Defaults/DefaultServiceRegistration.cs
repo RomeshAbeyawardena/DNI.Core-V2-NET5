@@ -45,7 +45,7 @@ namespace DNI.Core.Abstractions.Defaults
         }
 
         private static IDefinition<Assembly> AssemblyDefinitions => 
-            GetAssemblies(assembly => assembly.GetAssembly<DefaultServiceRegistration>());
+            GetAssemblies(assembly => assembly.AddAssembly<DefaultServiceRegistration>());
 
         private static IEnumerable<string> ScanTypes => new []{ "Factory", "Serializer", "Service" };
     }

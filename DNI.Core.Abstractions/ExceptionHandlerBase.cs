@@ -9,7 +9,6 @@ namespace DNI.Core.Abstractions
 {
     public abstract class ExceptionHandlerBase<TRequest, TResponse> : RequestExceptionHandler<TRequest, TResponse>
         where TRequest : IActionRequest<TResponse>
-        where TResponse : IAttemptedResponse
     {
         protected ExceptionHandlerBase(Action<IDefinition<Type>> configureSupportedExceptionTypes)
         {
