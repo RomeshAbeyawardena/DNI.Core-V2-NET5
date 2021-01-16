@@ -1,11 +1,9 @@
-﻿using DNI.Core.Shared.Contracts;
-using DNI.Core.Shared.Contracts.Factories;
+﻿using DNI.Core.Shared;
+using DNI.Core.Shared.Contracts;
 using MediatR.Pipeline;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace DNI.Core.Abstractions
 {
@@ -13,9 +11,10 @@ namespace DNI.Core.Abstractions
         where TRequest : IActionRequest<TResponse>
         where TResponse : IAttemptedResponse
     {
-        protected ExceptionHandlerBase()
+        protected ExceptionHandlerBase(Action<IDefinition<Type>> configureSupportedExceptionTypes)
         {
-            
+            var supportedExceptionTypes = Definition.CreateTypeDefinition(configureSupportedExceptionTypes);
+            SupportedExceptionTypes = supportedExceptionTypes;
         }
 
         protected override void Handle(TRequest request, Exception exception, RequestExceptionHandlerState<TResponse> state)
@@ -25,7 +24,10 @@ namespace DNI.Core.Abstractions
 
         protected virtual void OnHandle(TRequest request, Exception exception, RequestExceptionHandlerState<TResponse> state)
         {
-            state.SetHandled(CreateInstance(exception));
+            if(SupportedExceptionTypes.Contains(exception.GetType()))
+            { 
+                state.SetHandled(CreateInstance(exception));
+            }
         }
 
         protected virtual TResponse CreateInstance(Exception exception)
@@ -33,6 +35,6 @@ namespace DNI.Core.Abstractions
             return (TResponse)Activator.CreateInstance(typeof(TResponse), exception);
         }
 
-        
+        protected IEnumerable<Type> SupportedExceptionTypes { get; }
     }
 }
