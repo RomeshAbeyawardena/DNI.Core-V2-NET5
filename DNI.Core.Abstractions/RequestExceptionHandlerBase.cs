@@ -4,25 +4,29 @@ using MediatR.Pipeline;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Threading;
+using System.Threading.Tasks;
 
 namespace DNI.Core.Abstractions
 {
-    public abstract class ExceptionHandlerBase<TRequest, TResponse> : RequestExceptionHandler<TRequest, TResponse>
+    public abstract class RequestExceptionHandlerBase<TRequest, TResponse, TException> : IRequestExceptionHandler<TRequest, TResponse, TException>
+        where TException : Exception
     {
-        protected ExceptionHandlerBase(Action<IDefinition<Type>> configureSupportedExceptionTypes)
+        protected RequestExceptionHandlerBase(Action<IDefinition<Type>> configureSupportedExceptionTypes)
         {
             var supportedExceptionTypes = Definition.CreateTypeDefinition(configureSupportedExceptionTypes);
             SupportedExceptionTypes = supportedExceptionTypes;
         }
 
-        protected override void Handle(TRequest request, Exception exception, RequestExceptionHandlerState<TResponse> state)
+        public Task Handle(TRequest request, TException exception, RequestExceptionHandlerState<TResponse> state, CancellationToken cancellationToken)
         {
             OnHandle(request, exception, state);
+            return Task.CompletedTask;
         }
 
-        protected virtual void OnHandle(TRequest request, Exception exception, RequestExceptionHandlerState<TResponse> state)
+        protected virtual void OnHandle(TRequest request, TException exception, RequestExceptionHandlerState<TResponse> state)
         {
-            if(SupportedExceptionTypes.Contains(exception.GetType()))
+            if(SupportedExceptionTypes.Contains(typeof(TRequest)))
             { 
                 state.SetHandled(CreateInstance(exception));
             }
