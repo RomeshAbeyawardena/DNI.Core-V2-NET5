@@ -12,7 +12,7 @@ namespace DNI.Core.Abstractions
     {
         private void CheckModelType(Type type, object model)
         {
-            if(model.GetType() != type)
+            if (model.GetType() != type)
             {
                 throw new ArgumentException("", nameof(model));
             }
@@ -32,27 +32,22 @@ namespace DNI.Core.Abstractions
             foreach (var property in properties)
             {
                 var propertyType = property.PropertyType;
-                if (propertyType == typeof(string) 
+
+                var propertyValue = property.GetValue(model);
+                if (propertyValue == null)
+                {
+                    continue;
+                }
+
+                if (propertyType == typeof(string)
                     && property.CanWrite)
                 {
-                    var propertyValue = property.GetValue(model);
-                    if(propertyValue == null)
-                    {
-                        continue;
-                    }
 
                     property.SetValue(model, SanitizeString(propertyValue.ToString()));
                 }
                 else if (!(propertyType.IsPrimitive || propertyType.IsValueType))
                 {
-                    var value = property.GetValue(model);
-
-                    if(value == null)
-                    {
-                        continue;
-                    }
-
-                    SanitizeModel(propertyType, value);
+                    SanitizeModel(propertyType, propertyValue);
                 }
             }
         }
@@ -65,7 +60,7 @@ namespace DNI.Core.Abstractions
 
         public virtual string SanitizeString(string propertyValue)
         {
-            if(string.IsNullOrWhiteSpace(propertyValue))
+            if (string.IsNullOrWhiteSpace(propertyValue))
             {
                 return string.Empty;
             }
