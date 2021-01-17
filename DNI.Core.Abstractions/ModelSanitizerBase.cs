@@ -10,11 +10,11 @@ namespace DNI.Core.Abstractions
 {
     public abstract class ModelSanitizerBase : IModelSanitizer
     {
-        private void CheckModelType(Type type, object model)
+        private void CheckModelType(Type modelType, object model)
         {
-            if (model.GetType() != type)
+            if (model.GetType() != modelType)
             {
-                throw new ArgumentException("", nameof(model));
+                throw new ArgumentException($"The model parameter is not of type {modelType}", nameof(modelType));
             }
         }
 
@@ -42,7 +42,6 @@ namespace DNI.Core.Abstractions
                 if (propertyType == typeof(string)
                     && property.CanWrite)
                 {
-
                     property.SetValue(model, SanitizeString(propertyValue.ToString()));
                 }
                 else if (!(propertyType.IsPrimitive || propertyType.IsValueType))
