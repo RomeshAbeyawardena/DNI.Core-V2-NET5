@@ -1,4 +1,5 @@
 ﻿using DNI.Core.Shared.Contracts;
+using DNI.Core.Shared.Contracts.Builders;
 using System;
 
 namespace DNI.Core.Shared

@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace DNI.Core.Shared.Contracts
+namespace DNI.Core.Shared.Contracts.Builders
 {
     /// <summary>
     /// Represents a builder that can create list and dictionary builders

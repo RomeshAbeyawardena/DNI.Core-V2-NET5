@@ -1,6 +1,6 @@
 ﻿using System.Collections.Generic;
 
-namespace DNI.Core.Shared.Contracts
+namespace DNI.Core.Shared.Contracts.Builders
 {
     public interface IDictionaryBuilder<TKey, TValue> : IDictionary<TKey, TValue>
     {

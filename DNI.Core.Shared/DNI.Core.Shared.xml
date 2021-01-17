@@ -16,7 +16,7 @@
             </summary>
         </member>
         <member name="T:DNI.Core.Shared.Builder">
-            <inheritdoc cref="T:DNI.Core.Shared.Contracts.IBuilder" />
+            <inheritdoc cref="T:DNI.Core.Shared.Contracts.Builders.IBuilder" />
         </member>
         <member name="M:DNI.Core.Shared.Builders.Dictionary``2">
             <summary>
@@ -33,7 +33,7 @@
             <typeparam name="T"></typeparam>
             <returns></returns>
         </member>
-        <member name="M:DNI.Core.Shared.Builders.Dictionary``2(System.Action{DNI.Core.Shared.Contracts.IDictionaryBuilder{``0,``1}})">
+        <member name="M:DNI.Core.Shared.Builders.Dictionary``2(System.Action{DNI.Core.Shared.Contracts.Builders.IDictionaryBuilder{``0,``1}})">
             <summary>
             Creates a dictionary builder with a declared build action
             </summary>
@@ -79,6 +79,52 @@
             <summary>
             Gets the default number of iterations to be used
             </summary>
+        </member>
+        <member name="T:DNI.Core.Shared.Contracts.Builders.IBuilder">
+            <summary>
+            Represents a builder that can create list and dictionary builders
+            </summary>
+        </member>
+        <member name="M:DNI.Core.Shared.Contracts.Builders.IBuilder.Create``1">
+            <summary>
+            Creates a list builder
+            </summary>
+            <typeparam name="T"></typeparam>
+            <returns></returns>
+        </member>
+        <member name="M:DNI.Core.Shared.Contracts.Builders.IBuilder.Create``2">
+            <summary>
+            Creates a dictionary builder
+            </summary>
+            <typeparam name="TKey"></typeparam>
+            <typeparam name="TValue"></typeparam>
+            <returns></returns>
+        </member>
+        <member name="M:DNI.Core.Shared.Contracts.Builders.IBuilder.Create``1(System.Action{DNI.Core.Shared.Contracts.IListBuilder{``0}})">
+            <summary>
+            Creates a list builder using a declared build action
+            </summary>
+            <typeparam name="T"></typeparam>
+            <param name="buildAction"></param>
+            <returns></returns>
+        </member>
+        <member name="M:DNI.Core.Shared.Contracts.Builders.IBuilder.Create``2(System.Action{DNI.Core.Shared.Contracts.Builders.IDictionaryBuilder{``0,``1}})">
+            <summary>
+            Creates a <see cref="T:DNI.Core.Shared.Contracts.Builders.IDictionaryBuilder`2"/> using a declared build action
+            </summary>
+            <typeparam name="TKey"></typeparam>
+            <typeparam name="TValue"></typeparam>
+            <param name="buildAction"></param>
+            <returns></returns>
+        </member>
+        <member name="M:DNI.Core.Shared.Contracts.Builders.IBuilder.Create``2(System.Action{DNI.Core.Shared.Contracts.ISwitch{``0,``1}})">
+            <summary>
+            Creates a <see cref="T:DNI.Core.Shared.Contracts.ISwitch`2"/> using a declared build action
+            </summary>
+            <typeparam name="TKey"></typeparam>
+            <typeparam name="TValue"></typeparam>
+            <param name="buildAction"></param>
+            <returns></returns>
         </member>
         <member name="T:DNI.Core.Shared.Contracts.Factories.ICacheServiceFactory">
             <summary>
@@ -477,52 +523,6 @@
             <summary>
             Gets the result if the <see cref="T:DNI.Core.Shared.Attempt`1"/> was successful
             </summary>
-        </member>
-        <member name="T:DNI.Core.Shared.Contracts.IBuilder">
-            <summary>
-            Represents a builder that can create list and dictionary builders
-            </summary>
-        </member>
-        <member name="M:DNI.Core.Shared.Contracts.IBuilder.Create``1">
-            <summary>
-            Creates a list builder
-            </summary>
-            <typeparam name="T"></typeparam>
-            <returns></returns>
-        </member>
-        <member name="M:DNI.Core.Shared.Contracts.IBuilder.Create``2">
-            <summary>
-            Creates a dictionary builder
-            </summary>
-            <typeparam name="TKey"></typeparam>
-            <typeparam name="TValue"></typeparam>
-            <returns></returns>
-        </member>
-        <member name="M:DNI.Core.Shared.Contracts.IBuilder.Create``1(System.Action{DNI.Core.Shared.Contracts.IListBuilder{``0}})">
-            <summary>
-            Creates a list builder using a declared build action
-            </summary>
-            <typeparam name="T"></typeparam>
-            <param name="buildAction"></param>
-            <returns></returns>
-        </member>
-        <member name="M:DNI.Core.Shared.Contracts.IBuilder.Create``2(System.Action{DNI.Core.Shared.Contracts.IDictionaryBuilder{``0,``1}})">
-            <summary>
-            Creates a <see cref="T:DNI.Core.Shared.Contracts.IDictionaryBuilder`2"/> using a declared build action
-            </summary>
-            <typeparam name="TKey"></typeparam>
-            <typeparam name="TValue"></typeparam>
-            <param name="buildAction"></param>
-            <returns></returns>
-        </member>
-        <member name="M:DNI.Core.Shared.Contracts.IBuilder.Create``2(System.Action{DNI.Core.Shared.Contracts.ISwitch{``0,``1}})">
-            <summary>
-            Creates a <see cref="T:DNI.Core.Shared.Contracts.ISwitch`2"/> using a declared build action
-            </summary>
-            <typeparam name="TKey"></typeparam>
-            <typeparam name="TValue"></typeparam>
-            <param name="buildAction"></param>
-            <returns></returns>
         </member>
         <member name="M:DNI.Core.Shared.Contracts.ICacheDependency.IsValid(System.String,System.Threading.CancellationToken)">
             <summary>
