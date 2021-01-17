@@ -11,6 +11,7 @@ namespace DNI.Core.Tests.Assets
     {
         public int Id { get; set; }
         public string Name { get; set; }
+        public Gender Gender { get; set; }
         public StudentType Type { get; set; }
         public DateTime Created { get; set; }
 

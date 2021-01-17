@@ -47,6 +47,11 @@ namespace DNI.Core.Abstractions
                 {
                     var value = property.GetValue(model);
 
+                    if(value == null)
+                    {
+                        continue;
+                    }
+
                     SanitizeModel(propertyType, value);
                 }
             }

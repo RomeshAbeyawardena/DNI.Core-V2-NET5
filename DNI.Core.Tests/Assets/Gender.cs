@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 namespace DNI.Core.Tests.Assets
 {
     [MessagePack.MessagePackObject(true)]
-    public class StudentType
+    public class Gender
     {
         public string Name { get; set; }
     }
