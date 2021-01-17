@@ -8,9 +8,9 @@ using System.Threading.Tasks;
 
 namespace DNI.Core.Shared.Conventions
 {
-    public class ApplySpecificCaseToAllStringPropertiesConvention : IConvention
+    public class ApplyCaseConvention : IConvention
     {
-        public ApplySpecificCaseToAllStringPropertiesConvention(CharacterCase characterCase)
+        public ApplyCaseConvention(CharacterCase characterCase)
         {
             CharacterCase = characterCase;
         }
