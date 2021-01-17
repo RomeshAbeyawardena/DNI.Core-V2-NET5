@@ -13,9 +13,10 @@ namespace DNI.Core.Tests
         [Test]public void SanitizeModel()
         {
             testModelSanitizer = new TestModelSanitizer();
-            var student = new Student{ Name = " Johnny" };
+            var student = new Student{ Name = " Johnny", Type = new StudentType { Name = " Senior" } };
             testModelSanitizer.SanitizeModel(student);
             Assert.AreEqual("Johnny", student.Name);
+            Assert.AreEqual("Senior", student.Type.Name);
         }
 
         private TestModelSanitizer testModelSanitizer;

@@ -8,6 +8,6 @@ namespace DNI.Core.Tests.Assets
 {
     public class StudentType
     {
-        
+        public string Name { get; set; }
     }
 }

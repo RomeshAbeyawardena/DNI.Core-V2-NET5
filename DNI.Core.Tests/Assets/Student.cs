@@ -11,6 +11,7 @@ namespace DNI.Core.Tests.Assets
     {
         public int Id { get; set; }
         public string Name { get; set; }
+        public StudentType Type { get; set; }
         public DateTime Created { get; set; }
 
         public override bool Equals(object obj)
