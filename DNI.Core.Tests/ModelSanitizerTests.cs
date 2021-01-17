@@ -12,11 +12,23 @@ namespace DNI.Core.Tests
     {
         [Test]public void SanitizeModel()
         {
-            testModelSanitizer = new TestModelSanitizer();
+            testModelSanitizer = new TestModelSanitizer(false);
             var student = new Student{ Name = " Johnny", Type = new StudentType { Name = " Senior" } };
             testModelSanitizer.SanitizeModel(student);
             Assert.AreEqual("Johnny", student.Name);
             Assert.AreEqual("Senior", student.Type.Name);
+        }
+
+        [Test]public void SanitizeModel_with_html_stripping()
+        {
+            testModelSanitizer = new TestModelSanitizer(true);
+            var student = new Student{ Name = "<p>Johnny</p>", 
+                Gender = new Gender { Name = "<p>Male<br/>Female</p>" }, 
+                Type = new StudentType { Name = "<div><b>S</b>enior</div>" } };
+            testModelSanitizer.SanitizeModel(student);
+            Assert.AreEqual("Johnny", student.Name);
+            Assert.AreEqual("Senior", student.Type.Name);
+            Assert.AreEqual("MaleFemale", student.Gender.Name);
         }
 
         private TestModelSanitizer testModelSanitizer;

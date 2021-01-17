@@ -1,23 +1,17 @@
-﻿using DNI.Core.Shared.Contracts;
+﻿using DNI.Core.Shared.Constants;
+using DNI.Core.Shared.Contracts;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
 using System.Text;
+using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 
 namespace DNI.Core.Abstractions
 {
     public abstract class ModelSanitizerBase : IModelSanitizer
     {
-        private void CheckModelType(Type modelType, object model)
-        {
-            if (model.GetType() != modelType)
-            {
-                throw new ArgumentException($"The model parameter is not of type {modelType}", nameof(modelType));
-            }
-        }
-
         public void SanitizeModel(Type modelType, object model)
         {
             CheckModelType(modelType, model);
@@ -64,8 +58,32 @@ namespace DNI.Core.Abstractions
                 return string.Empty;
             }
 
+            if (SanitizeHtml)
+            {
+                propertyValue = Regex.Replace(propertyValue, 
+                    RegularExpressions.HtmlReplacer, 
+                    string.Empty, 
+                    RegexOptions.Multiline, 
+                    TimeSpan.FromMinutes(5));
+            }
+
             return propertyValue.Trim();
         }
+
+        protected ModelSanitizerBase(bool sanitizeHtml)
+        {
+            SanitizeHtml = sanitizeHtml;
+        }
+
+        private void CheckModelType(Type modelType, object model)
+        {
+            if (model.GetType() != modelType)
+            {
+                throw new ArgumentException($"The model parameter is not of type {modelType}", nameof(modelType));
+            }
+        }
+
+        private bool SanitizeHtml { get; }
     }
 
 

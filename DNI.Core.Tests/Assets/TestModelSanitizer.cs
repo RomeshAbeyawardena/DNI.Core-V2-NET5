@@ -10,6 +10,12 @@ namespace DNI.Core.Tests.Assets
 {
     public class TestModelSanitizer : ModelSanitizerBase
     {
+        public TestModelSanitizer(bool sanitizeHtml) 
+            : base(sanitizeHtml)
+        {
+
+        }
+
         public override string SanitizeString(string propertyValue)
         {
             return base.SanitizeString(propertyValue);
