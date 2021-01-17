@@ -6,7 +6,7 @@ namespace DNI.Core.Shared.Extensions
     {
         public static bool IsDefault(this object value)
         {
-            if( value == default)
+            if(value == null || value == default)
             {
                 return true;
             }

@@ -1,7 +1,9 @@
 ﻿using DNI.Core.Abstractions;
 using DNI.Core.Abstractions.Defaults;
+using DNI.Core.Tests.Assets;
 using NUnit.Framework;
 using System;
+using System.Linq;
 
 namespace DNI.Core.Tests
 {
@@ -67,17 +69,36 @@ namespace DNI.Core.Tests
             Assert.IsFalse(userChangeTracker.HasChanges(originalUser, destinationUser, out propertyChanges));
         }
 
-        private DefaultChangeTracker<User> userChangeTracker;
-
-        internal class User
+        [Test]
+        public void HasChanges_with_null_value()
         {
-            public int Id { get; set; }
-            public int? CustomerId { get; set; }
-            public string EmailAddress { get; set; }
-            public string FirstName { get; set; }
-            public string MiddleName { get; set; }
-            public string LastName { get; set; }
-            public DateTime DateOfBirth { get; set; }
+            var originalUser = new User
+            {
+                Id = 1,
+                Sid = 238239382,
+                EmailAddress = "john.doe@website.net",
+                FirstName = null,
+                MiddleName = "Middleton",
+                LastName = "Harrison",
+                DateOfBirth = new DateTime(1980, 11, 5)
+            };
+
+            var destinationUser = new User
+            {
+                Id = default,
+                Sid = default,
+                EmailAddress = "john.doe@website.net",
+                FirstName = "John",
+                MiddleName = "Middleton",
+                LastName = null,
+                DateOfBirth = new DateTime(1980, 11, 5)
+            };
+
+            Assert.IsTrue(userChangeTracker.HasChanges(originalUser, destinationUser, out var propertyChanges));
+
+            Assert.IsTrue(propertyChanges.Any(pc => pc.HasChanges));
         }
+
+        private DefaultChangeTracker<User> userChangeTracker;
     }
 }
