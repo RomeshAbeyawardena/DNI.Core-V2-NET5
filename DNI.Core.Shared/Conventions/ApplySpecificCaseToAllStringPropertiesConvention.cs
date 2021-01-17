@@ -19,7 +19,7 @@ namespace DNI.Core.Shared.Conventions
 
         public T Apply<T>(T model)
         {
-            return (T)Apply(typeof(T), model);
+            return (T)Apply(model.GetType(), model);
         }
 
         private object Apply(Type type, object model)

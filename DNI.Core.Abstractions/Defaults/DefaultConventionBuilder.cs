@@ -1,5 +1,6 @@
 ﻿using DNI.Core.Shared.Contracts;
 using DNI.Core.Shared.Contracts.Builders;
+using Microsoft.Extensions.DependencyInjection;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -10,30 +11,18 @@ namespace DNI.Core.Abstractions.Defaults
 {
     public class DefaultConventionBuilder : IConventionBuilder
     {
-        public DefaultConventionBuilder()
+        public DefaultConventionBuilder(IServiceCollection services)
         {
-            Conventions = new List<IConvention>();
+            this.services = services;
         }
 
-        public IEnumerable<IConvention> Conventions { get; }
-
-        public IConventionBuilder Add(IConvention convention)
+        public IConventionBuilder Add<TConvention>(TConvention convention)
+            where TConvention : IConvention
         {
-            Conventions.Append(convention);
+            services.AddSingleton<IConvention>(convention);
             return this;
         }
 
-        public TConvention GetConvention<TConvention>()
-            where TConvention : IConvention
-        {
-            var foundconvention = Conventions.FirstOrDefault(t => t.GetType() == typeof(TConvention));
-
-            if (foundconvention != null && foundconvention is TConvention convention)
-            {
-                return convention;
-            }
-
-            return default;
-        }
+        private readonly IServiceCollection services;
     }
 }

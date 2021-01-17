@@ -8,10 +8,7 @@ namespace DNI.Core.Shared.Contracts.Builders
 {
     public interface IConventionBuilder
     {
-        IConventionBuilder Add(IConvention convention);
-        IEnumerable<IConvention> Conventions { get; }
-
-        TConvention GetConvention<TConvention>()
+        IConventionBuilder Add<TConvention>(TConvention convention)
             where TConvention : IConvention;
     }
 }

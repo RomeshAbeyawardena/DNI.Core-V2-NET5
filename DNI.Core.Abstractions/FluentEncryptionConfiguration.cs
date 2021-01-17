@@ -40,18 +40,18 @@ namespace DNI.Core.Abstractions
 
         public IConventionBuilderConfiguration AddConvention<TConvention>(TConvention convention) where TConvention : IConvention
         {
-            var conventionBuilder = new DefaultConventionBuilder();
-            services
-                .AddSingleton<IConventionBuilder>(conventionBuilder);
-
-            return new ConventionBuilderConfiguration(conventionBuilder);
+            return conventionBuilderConfiguration.AddConvention(convention);
         }
 
         public FluentEncryptionConfiguration(IServiceCollection services)
         {
             this.services = services;
+            conventionBuilder = new DefaultConventionBuilder(services);
+            conventionBuilderConfiguration = new ConventionBuilderConfiguration(conventionBuilder);
         }
 
+        private readonly IConventionBuilder conventionBuilder;
+        private readonly IConventionBuilderConfiguration conventionBuilderConfiguration;
         private readonly IServiceCollection services;
     }
 
@@ -70,8 +70,6 @@ namespace DNI.Core.Abstractions
 
             return this;
         }
-
-
     }
 
     internal class FluentEncryptionConfiguration<T> : IFluentEncryptionConfiguration<T>

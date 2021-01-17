@@ -12,6 +12,9 @@ using DNI.Core.Shared;
 using System.Net.Security;
 using DNI.Core.Shared.Contracts.Builders;
 using DNI.Core.Abstractions.Defaults;
+using DNI.Core.Tests.Assets;
+using DNI.Core.Shared.Conventions;
+using DNI.Core.Abstractions.Factories;
 
 namespace DNI.Core.Tests
 {
@@ -41,17 +44,19 @@ namespace DNI.Core.Tests
             hashServiceMock =  new Mock<IHashServiceFactory>();
             services = new ServiceCollection();
             services
-                .AddSingleton<IConventionBuilder, DefaultConventionBuilder>()
+                //.AddSingleton<IConventionBuilder, DefaultConventionBuilder>()
                 .AddSingleton(typeof(IModelEncryptionService<>), typeof(DefaultModelEncryptionService<>))
                 .AddSingleton(encryptionClassificationFactoryMock.Object)
                 .AddSingleton(encryptionFactoryMock.Object)
                 .AddSingleton(hashServiceMock.Object)
+                .AddSingleton<IConvectionFactory, ConvectionFactory>()
                 .RegisterModelForFluentEncryption<Person>(ct => ct
                     .Configure(person => person.Reference, EncryptionClassification.None, EncryptionPolicy.NoEncryption)
                     .Configure(person => person.EmailAddress, EncryptionClassification.PersonalData)
                     .Configure(person => person.FirstName, EncryptionClassification.CommonData)  
                     .Configure(person => person.MiddleName, EncryptionClassification.CommonData)
-                    .Configure(person => person.LastName, EncryptionClassification.CommonData));
+                    .Configure(person => person.LastName, EncryptionClassification.CommonData))
+                .AddConvention(new ApplySpecificCaseToAllStringPropertiesConvention(CharacterCase.Upper));
         }
 
         [Test]
@@ -97,6 +102,8 @@ namespace DNI.Core.Tests
             encryptionFactoryMock.Verify();
 
             encryptionServiceMock.Verify();
+
+            modelEncryptionService.Decrypt(person);
         }
 
         private Mock<IEncryptionService> encryptionServiceMock;

@@ -16,7 +16,7 @@ namespace DNI.Core.Abstractions.Services
         public DefaultModelEncryptionService(IFluentEncryptionConfiguration<T> fluentEncryptionConfiguration,
             IEncryptionClassificationFactory encryptionClassificationFactory,
             IEncryptionFactory encryptionFactory,
-            IConventionBuilder conventionBuilder)
+            IConvectionFactory conventionBuilder)
         {
             this.encryptionFactory = encryptionFactory;
             this.conventionBuilder = conventionBuilder;
@@ -35,7 +35,7 @@ namespace DNI.Core.Abstractions.Services
             });
         }
 
-        private object ProcessConventions(T model)
+        private object ProcessConventions(object model)
         {
             var result = model;
             foreach (var convention in conventionBuilder.Conventions)
@@ -69,7 +69,7 @@ namespace DNI.Core.Abstractions.Services
 
                 var value = property.GetValue(model);
 
-                value = ProcessConventions(model);
+                value = ProcessConventions(value);
 
                 var val = getPropertyString 
                     ? option.GetPropertyString?.Invoke(model) 
@@ -91,7 +91,7 @@ namespace DNI.Core.Abstractions.Services
         }
 
         private readonly IEncryptionFactory encryptionFactory;
-        private readonly IConventionBuilder conventionBuilder;
+        private readonly IConvectionFactory conventionBuilder;
         private readonly ModelExpressionVisitor modelExpressionVisitor;
         private readonly IFluentEncryptionConfiguration<T> fluentEncryptionConfiguration;
         private readonly IEncryptionClassificationFactory encryptionClassificationFactory;
