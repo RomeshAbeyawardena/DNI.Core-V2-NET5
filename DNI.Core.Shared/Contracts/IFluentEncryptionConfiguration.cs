@@ -1,4 +1,5 @@
-﻿using DNI.Core.Shared.Enumerations;
+﻿using DNI.Core.Shared.Contracts.Builders;
+using DNI.Core.Shared.Enumerations;
 using System;
 using System.Collections.Generic;
 using System.Linq.Expressions;
@@ -10,6 +11,16 @@ namespace DNI.Core.Shared.Contracts
     {
         IFluentEncryptionConfiguration RegisterModel<T>(Action<IFluentEncryptionConfiguration<T>> action);
         IFluentEncryptionConfiguration RegisterEncryptionClassifications(Action<IEncryptionClassificationOptions> action);
+        IConventionBuilderConfiguration AddConvention<TConvention>(TConvention convention)
+            where TConvention : IConvention;
+    }
+
+    public interface IConventionBuilderConfiguration
+    {
+        IConventionBuilderConfiguration AddConvention<TConvention>(TConvention convention)
+            where TConvention : IConvention;
+
+        IConventionBuilder ConventionBuilder { get; }
     }
 
     public interface IFluentEncryptionConfiguration<T>

@@ -8,6 +8,6 @@ namespace DNI.Core.Shared.Contracts
 {
     public interface IConvention
     {
-        
+        T Apply<T>(T model);
     }
 }

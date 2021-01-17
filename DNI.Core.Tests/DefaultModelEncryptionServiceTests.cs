@@ -10,6 +10,8 @@ using DNI.Core.Shared.Enumerations;
 using DNI.Core.Shared.Options;
 using DNI.Core.Shared;
 using System.Net.Security;
+using DNI.Core.Shared.Contracts.Builders;
+using DNI.Core.Abstractions.Defaults;
 
 namespace DNI.Core.Tests
 {
@@ -39,6 +41,7 @@ namespace DNI.Core.Tests
             hashServiceMock =  new Mock<IHashServiceFactory>();
             services = new ServiceCollection();
             services
+                .AddSingleton<IConventionBuilder, DefaultConventionBuilder>()
                 .AddSingleton(typeof(IModelEncryptionService<>), typeof(DefaultModelEncryptionService<>))
                 .AddSingleton(encryptionClassificationFactoryMock.Object)
                 .AddSingleton(encryptionFactoryMock.Object)
@@ -104,13 +107,4 @@ namespace DNI.Core.Tests
         private IServiceProvider ServiceProvider => services.BuildServiceProvider();
     }
 
-    internal class Person
-    {
-        public string EmailAddress { get; set; }
-        public string FirstName { get; set; }
-        public string MiddleName { get; set; }
-        public string LastName { get; set; }
-        public string Reference { get; set; }
-        public DateTime DateOfBirth { get; set; }
-    }
 }

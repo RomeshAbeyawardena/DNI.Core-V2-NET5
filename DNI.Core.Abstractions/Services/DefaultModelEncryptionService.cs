@@ -1,6 +1,8 @@
 ﻿using DNI.Core.Shared.Contracts;
+using DNI.Core.Shared.Contracts.Builders;
 using DNI.Core.Shared.Contracts.Factories;
 using DNI.Core.Shared.Contracts.Services;
+using DNI.Core.Shared.Conventions;
 using DNI.Core.Shared.ExpressionVisitors;
 using DNI.Core.Shared.Options;
 using System;
@@ -13,9 +15,11 @@ namespace DNI.Core.Abstractions.Services
     {
         public DefaultModelEncryptionService(IFluentEncryptionConfiguration<T> fluentEncryptionConfiguration,
             IEncryptionClassificationFactory encryptionClassificationFactory,
-            IEncryptionFactory encryptionFactory)
+            IEncryptionFactory encryptionFactory,
+            IConventionBuilder conventionBuilder)
         {
             this.encryptionFactory = encryptionFactory;
+            this.conventionBuilder = conventionBuilder;
             this.fluentEncryptionConfiguration = fluentEncryptionConfiguration;
             this.encryptionClassificationFactory = encryptionClassificationFactory;
             modelExpressionVisitor = new ModelExpressionVisitor();
@@ -29,6 +33,17 @@ namespace DNI.Core.Abstractions.Services
                     property.SetValue(model, encryptionService.Encrypt(value.ToString(), encryptionOptions));
                 }
             });
+        }
+
+        private object ProcessConventions(T model)
+        {
+            var result = model;
+            foreach (var convention in conventionBuilder.Conventions)
+            {
+                result = convention.Apply(model);
+            }
+
+            return result;
         }
 
         private void ProcessOptions(
@@ -54,6 +69,8 @@ namespace DNI.Core.Abstractions.Services
 
                 var value = property.GetValue(model);
 
+                value = ProcessConventions(model);
+
                 var val = getPropertyString 
                     ? option.GetPropertyString?.Invoke(model) 
                     : string.Empty;
@@ -74,6 +91,7 @@ namespace DNI.Core.Abstractions.Services
         }
 
         private readonly IEncryptionFactory encryptionFactory;
+        private readonly IConventionBuilder conventionBuilder;
         private readonly ModelExpressionVisitor modelExpressionVisitor;
         private readonly IFluentEncryptionConfiguration<T> fluentEncryptionConfiguration;
         private readonly IEncryptionClassificationFactory encryptionClassificationFactory;

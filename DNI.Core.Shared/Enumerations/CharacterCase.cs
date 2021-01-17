@@ -8,8 +8,8 @@ namespace DNI.Core.Shared.Enumerations
 {
     public enum CharacterCase
     {
-        Upper,
-        Lower,
+        Upper = 2,
+        Lower = 1,
         None = 0
     }
 }

@@ -12,7 +12,41 @@ namespace DNI.Core.Shared.Conventions
     {
         public ApplySpecificCaseToAllStringPropertiesConvention(CharacterCase characterCase)
         {
+            CharacterCase = characterCase;
+        }
+        
+        public CharacterCase CharacterCase { get; }
 
+        public T Apply<T>(T model)
+        {
+            return (T)Apply(typeof(T), model);
+        }
+
+        private object Apply(Type type, object model)
+        {
+            if(model != null && type == typeof(string))
+            {
+                var modelString = model.ToString();
+                if(string.IsNullOrWhiteSpace(modelString))
+                {
+                    return model;
+                }
+
+                return SetCase(modelString);
+            }
+
+            return model;
+        }
+
+        private string SetCase(string value)
+        {
+            return CharacterCase switch
+            {
+                CharacterCase.None => value,
+                CharacterCase.Lower => value.ToLower(),
+                CharacterCase.Upper => value.ToUpper(),
+                _ => throw new InvalidOperationException(),
+            };
         }
     }
 }

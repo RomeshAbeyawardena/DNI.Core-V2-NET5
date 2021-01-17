@@ -1,4 +1,6 @@
-﻿using DNI.Core.Shared.Contracts;
+﻿using DNI.Core.Abstractions.Defaults;
+using DNI.Core.Shared.Contracts;
+using DNI.Core.Shared.Contracts.Builders;
 using DNI.Core.Shared.Enumerations;
 using DNI.Core.Shared.Options;
 using Microsoft.Extensions.DependencyInjection;
@@ -36,12 +38,40 @@ namespace DNI.Core.Abstractions
             return this;
         }
 
+        public IConventionBuilderConfiguration AddConvention<TConvention>(TConvention convention) where TConvention : IConvention
+        {
+            var conventionBuilder = new DefaultConventionBuilder();
+            services
+                .AddSingleton<IConventionBuilder>(conventionBuilder);
+
+            return new ConventionBuilderConfiguration(conventionBuilder);
+        }
+
         public FluentEncryptionConfiguration(IServiceCollection services)
         {
             this.services = services;
         }
 
         private readonly IServiceCollection services;
+    }
+
+    internal class ConventionBuilderConfiguration : IConventionBuilderConfiguration
+    {
+        public ConventionBuilderConfiguration(IConventionBuilder conventionBuilder)
+        {
+            ConventionBuilder = conventionBuilder;
+        }
+
+        public IConventionBuilder ConventionBuilder { get; }
+
+        public IConventionBuilderConfiguration AddConvention<TConvention>(TConvention convention) where TConvention : IConvention
+        {
+            ConventionBuilder.Add(convention);
+
+            return this;
+        }
+
+
     }
 
     internal class FluentEncryptionConfiguration<T> : IFluentEncryptionConfiguration<T>
