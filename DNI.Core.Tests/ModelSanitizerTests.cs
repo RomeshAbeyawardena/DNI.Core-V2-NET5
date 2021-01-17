@@ -22,7 +22,7 @@ namespace DNI.Core.Tests
         [Test]public void SanitizeModel_with_html_stripping()
         {
             testModelSanitizer = new TestModelSanitizer(true);
-            var student = new Student{ Name = "<p>Johnny</p>", 
+            var student = new Student{ Name = "<p>Joh<br>nny</p>", 
                 Gender = new Gender { Name = "<p>Male<br/>Female</p>" }, 
                 Type = new StudentType { Name = "<div><b>S</b>enior</div>" } };
             testModelSanitizer.SanitizeModel(student);
