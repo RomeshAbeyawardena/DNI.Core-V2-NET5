@@ -98,6 +98,7 @@ namespace DNI.Core.Tests
             {
                 Id = default,
                 Sid = default,
+                CustomerId = 392392,
                 EmailAddress = "john.doe@website.net",
                 FirstName = "John",
                 MiddleName = "Middleton",
@@ -106,6 +107,18 @@ namespace DNI.Core.Tests
             };
 
             Assert.IsTrue(userChangeTracker.HasChanges(originalUser, destinationUser, out var propertyChanges));
+
+            var propertyChangesDictionary = propertyChanges.ToDictionary(a => a.Property.Name, a => a);
+
+            Assert.False(propertyChangesDictionary["Id"].HasChanges);
+            Assert.True(propertyChangesDictionary["Sid"].HasChanges);
+            Assert.False(propertyChangesDictionary["EmailAddress"].HasChanges);
+            Assert.True(propertyChangesDictionary["CustomerId"].HasChanges);
+            Assert.True(propertyChangesDictionary["FirstName"].HasChanges);
+            Assert.False(propertyChangesDictionary["MiddleName"].HasChanges);
+            Assert.True(propertyChangesDictionary["LastName"].HasChanges);
+            Assert.False(propertyChangesDictionary["DateOfBirth"].HasChanges);
+
 
             Assert.IsTrue(propertyChanges.Any(pc => pc.HasChanges));
         }
