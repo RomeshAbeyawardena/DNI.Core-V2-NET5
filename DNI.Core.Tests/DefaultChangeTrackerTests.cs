@@ -42,6 +42,16 @@ namespace DNI.Core.Tests
 
             Assert.IsTrue(userChangeTracker.HasChanges(originalUser, destinationUser, out var propertyChanges));
 
+            var propertyChangesDictionary = propertyChanges.ToDictionary(a => a.Property.Name, a => a);
+
+            Assert.False(propertyChangesDictionary["Id"].HasChanges);
+            Assert.False(propertyChangesDictionary["EmailAddress"].HasChanges);
+            Assert.True(propertyChangesDictionary["CustomerId"].HasChanges);
+            Assert.False(propertyChangesDictionary["FirstName"].HasChanges);
+            Assert.False(propertyChangesDictionary["MiddleName"].HasChanges);
+            Assert.False(propertyChangesDictionary["LastName"].HasChanges);
+            Assert.True(propertyChangesDictionary["DateOfBirth"].HasChanges);
+
             userChangeTracker.MergeChanges(originalUser, destinationUser, propertyChanges);
             
             Assert.IsFalse(userChangeTracker.HasChanges(originalUser, destinationUser, out propertyChanges));
@@ -67,6 +77,7 @@ namespace DNI.Core.Tests
             };
 
             Assert.IsFalse(userChangeTracker.HasChanges(originalUser, destinationUser, out propertyChanges));
+            Assert.True(propertyChanges.All(a => !a.HasChanges));
         }
 
         [Test]

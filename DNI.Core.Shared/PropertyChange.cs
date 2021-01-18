@@ -24,13 +24,18 @@ namespace DNI.Core.Shared
 
                 var keyAttribute = Property.GetCustomAttribute<KeyAttribute>();
 
-                if(OldValue == null && NewValue != null
-                    || OldValue != null && NewValue == null)
-                    return true;
+                if(OldValue == null && NewValue == null)
+                {
+                    return false;
+                }
 
-                if(OldValue.IsDefault() && !NewValue.IsDefault()
-                    || keyAttribute == null && !OldValue.IsDefault() && NewValue.IsDefault()
-                    || OldValue != NewValue)
+                if(OldValue == null && NewValue != null)
+                {
+                    return true;
+                }
+
+                if(keyAttribute == null 
+                    && !OldValue.Equals(NewValue))
                     return true;
 
                 return false;
