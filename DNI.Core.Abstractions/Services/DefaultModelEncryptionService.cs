@@ -38,9 +38,10 @@ namespace DNI.Core.Abstractions.Services
         private object ProcessConventions(object model)
         {
             var result = model;
+
             foreach (var convention in conventionBuilder.Conventions)
             {
-                result = convention.Apply(model);
+                result = convention.Apply(result);
             }
 
             return result;
