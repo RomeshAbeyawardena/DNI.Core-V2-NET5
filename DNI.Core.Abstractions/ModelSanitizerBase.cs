@@ -27,6 +27,11 @@ namespace DNI.Core.Abstractions
             {
                 var propertyType = property.PropertyType;
 
+                if(propertyType.IsInterface)
+                {
+                    continue;
+                }
+
                 var propertyValue = property.GetValue(model);
                 if (propertyValue == null)
                 {
