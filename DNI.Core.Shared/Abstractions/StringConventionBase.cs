@@ -5,7 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace DNI.Core.Shared.Conventions
+namespace DNI.Core.Shared.Abstractions
 {
     public abstract class StringConventionBase : IConvention
     {

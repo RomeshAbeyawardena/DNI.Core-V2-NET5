@@ -1,4 +1,5 @@
-﻿using DNI.Core.Shared.Contracts;
+﻿using DNI.Core.Shared.Abstractions;
+using DNI.Core.Shared.Contracts;
 using DNI.Core.Shared.Enumerations;
 using System;
 using System.Collections.Generic;
