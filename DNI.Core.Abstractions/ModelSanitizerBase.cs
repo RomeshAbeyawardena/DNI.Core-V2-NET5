@@ -14,14 +14,14 @@ namespace DNI.Core.Abstractions
     {
         public void SanitizeModel(Type modelType, object model)
         {
-            CheckModelType(modelType, model);
+            //CheckModelType(modelType, model);
             var modelProperties = modelType.GetProperties();
             SanitizeModel(modelType, model, modelProperties);
         }
 
         public void SanitizeModel(Type modelType, object model, IEnumerable<PropertyInfo> properties)
         {
-            CheckModelType(modelType, model);
+            //CheckModelType(modelType, model);
 
             foreach (var property in properties)
             {
