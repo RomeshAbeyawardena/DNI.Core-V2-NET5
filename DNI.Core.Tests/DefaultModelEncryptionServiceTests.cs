@@ -57,7 +57,7 @@ namespace DNI.Core.Tests
                     .Configure(person => person.MiddleName, EncryptionClassification.CommonData)
                     .Configure(person => person.LastName, EncryptionClassification.CommonData))
                 .AddConvention(new ApplyCaseConvention(CharacterCase.Upper))
-                .AddConvention(new TrimStringConvention());
+                .AddConvention(new TrimStringConvention(TrimMode.Both));
         }
 
         [Test]

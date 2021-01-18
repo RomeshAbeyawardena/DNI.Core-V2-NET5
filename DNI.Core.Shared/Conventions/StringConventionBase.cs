@@ -16,6 +16,11 @@ namespace DNI.Core.Shared.Conventions
 
         public T Apply<T>(T model)
         {
+            if(model == null)
+            {
+                return model;
+            }
+
             return (T)Apply(model.GetType(), model);
         }
 
