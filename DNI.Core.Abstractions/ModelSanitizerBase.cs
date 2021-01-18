@@ -47,8 +47,7 @@ namespace DNI.Core.Abstractions
 
         public void SanitizeModel<T>(T model)
         {
-            var modelType = typeof(T);
-            SanitizeModel(modelType, model);
+            SanitizeModel(model.GetType(), model);
         }
 
         public virtual string SanitizeString(string propertyValue)
@@ -79,7 +78,7 @@ namespace DNI.Core.Abstractions
         {
             if (model.GetType() != modelType)
             {
-                throw new ArgumentException($"The model parameter is not of type {modelType}", nameof(modelType));
+                throw new ArgumentException($"The model {model.GetType()} parameter is not of type {modelType}", nameof(modelType));
             }
         }
 
