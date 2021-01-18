@@ -8,39 +8,19 @@ using System.Threading.Tasks;
 
 namespace DNI.Core.Shared.Conventions
 {
-    public class ApplyCaseConvention : IConvention
+    public class ApplyCaseConvention : StringConventionBase
     {
         public ApplyCaseConvention(CharacterCase characterCase)
+            : base(s => SetCase(s, characterCase))
         {
             CharacterCase = characterCase;
         }
         
         public CharacterCase CharacterCase { get; }
 
-        public T Apply<T>(T model)
+        private static string SetCase(string value, CharacterCase characterCase)
         {
-            return (T)Apply(model.GetType(), model);
-        }
-
-        private object Apply(Type type, object model)
-        {
-            if(model != null && type == typeof(string))
-            {
-                var modelString = model.ToString();
-                if(string.IsNullOrWhiteSpace(modelString))
-                {
-                    return model;
-                }
-
-                return SetCase(modelString);
-            }
-
-            return model;
-        }
-
-        private string SetCase(string value)
-        {
-            return CharacterCase switch
+            return characterCase switch
             {
                 CharacterCase.None => value,
                 CharacterCase.Lower => value.ToLower(),

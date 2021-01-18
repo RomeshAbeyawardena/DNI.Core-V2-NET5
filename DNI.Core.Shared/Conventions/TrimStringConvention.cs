@@ -1,4 +1,5 @@
 ﻿using DNI.Core.Shared.Contracts;
+using DNI.Core.Shared.Enumerations;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -7,11 +8,29 @@ using System.Threading.Tasks;
 
 namespace DNI.Core.Shared.Conventions
 {
-    public class TrimStringConvention : IConvention
+    public class TrimStringConvention : StringConventionBase
     {
-        public T Apply<T>(T model)
+        public TrimStringConvention(TrimMode trimMode)
+            : base(s => Trim(s, trimMode))
         {
-            throw new NotImplementedException();
+            TrimMode = trimMode;
+        }
+
+        public TrimMode TrimMode { get; }
+
+        private static string Trim(string value, TrimMode trimMode)
+        {
+            switch (trimMode)
+            {
+                case TrimMode.Start:
+                    return value.TrimStart();
+                case TrimMode.End:
+                    return value.TrimEnd();
+                case TrimMode.Both:
+                    return value.Trim();
+                default:
+                    throw new InvalidOperationException();
+            }
         }
     }
 }
