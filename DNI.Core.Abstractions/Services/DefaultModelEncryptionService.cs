@@ -4,6 +4,7 @@ using DNI.Core.Shared.Contracts.Factories;
 using DNI.Core.Shared.Contracts.Services;
 using DNI.Core.Shared.Conventions;
 using DNI.Core.Shared.ExpressionVisitors;
+using DNI.Core.Shared.Extensions;
 using DNI.Core.Shared.Options;
 using System;
 using System.Net.Security;
@@ -104,6 +105,24 @@ namespace DNI.Core.Abstractions.Services
                     property.SetValue(model, encryptionService.Decrypt(value.ToString(), encryptionOptions));
                 }
             });
+        }
+
+        public T DecryptAsClone(T model, params object[] arguments)
+        {
+            var clonedModel = model.Clone(arguments);
+
+            Decrypt(clonedModel);
+
+            return clonedModel;
+        }
+
+        public T EncryptAsClone(T model, params object[] arguments)
+        {
+            var clonedModel = model.Clone(arguments);
+
+            Encrypt(clonedModel);
+
+            return clonedModel;
         }
 
         private readonly IEncryptionFactory encryptionFactory;

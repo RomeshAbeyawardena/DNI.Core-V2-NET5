@@ -88,6 +88,18 @@ namespace DNI.Core.Abstractions.Factories
             Decrypt(propertyValue);
         }
 
+        public T DecryptAsClone<T>(T model, params object[] arguments)
+        {
+            return GetModelEncryptionService<T>()
+                .DecryptAsClone(model, arguments);
+        }
+
+        public T EncryptAsClone<T>(T model, params object[] arguments)
+        {
+            return GetModelEncryptionService<T>()
+                .EncryptAsClone(model, arguments);
+        }
+
         private readonly IServiceProvider serviceProvider;
     }
 }

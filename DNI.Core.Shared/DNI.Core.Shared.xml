@@ -317,6 +317,22 @@
             <param name="model"></param>
             <param name="propertySelector"></param>
         </member>
+        <member name="M:DNI.Core.Shared.Contracts.Factories.IModelEncryptionFactory.DecryptAsClone``1(``0,System.Object[])">
+            <summary>
+            Decrypts a model in a new instance of <typeparamref name="T"/>
+            </summary>
+            <param name="model"></param>
+            <param name="arguments"></param>
+            <returns></returns>
+        </member>
+        <member name="M:DNI.Core.Shared.Contracts.Factories.IModelEncryptionFactory.EncryptAsClone``1(``0,System.Object[])">
+            <summary>
+            Encrypts a model in a new instance of <typeparamref name="T"/>
+            </summary>
+            <param name="model"></param>
+            <param name="arguments"></param>
+            <returns></returns>
+        </member>
         <member name="T:DNI.Core.Shared.Contracts.Factories.ISerializerFactory">
             <summary>
             Represents a factory used for returning a specific <see cref="T:DNI.Core.Shared.Contracts.ISerializer"/> from a dependency container
@@ -922,15 +938,31 @@
         </member>
         <member name="M:DNI.Core.Shared.Contracts.Services.IModelEncryptionService`1.Encrypt(`0)">
             <summary>
-            Encrypts a model
+            Encrypts a model in the <paramref name="model"/> instance
             </summary>
             <param name="model"></param>
         </member>
         <member name="M:DNI.Core.Shared.Contracts.Services.IModelEncryptionService`1.Decrypt(`0)">
             <summary>
-            Decrypts a model
+            Decrypts a model in the <paramref name="model"/> instance
             </summary>
             <param name="model"></param>
+        </member>
+        <member name="M:DNI.Core.Shared.Contracts.Services.IModelEncryptionService`1.DecryptAsClone(`0,System.Object[])">
+            <summary>
+            Decrypts a model in a new instance of <typeparamref name="T"/>
+            </summary>
+            <param name="model"></param>
+            <param name="arguments"></param>
+            <returns></returns>
+        </member>
+        <member name="M:DNI.Core.Shared.Contracts.Services.IModelEncryptionService`1.EncryptAsClone(`0,System.Object[])">
+            <summary>
+            Encrypts a model in a new instance of <typeparamref name="T"/>
+            </summary>
+            <param name="model"></param>
+            <param name="arguments"></param>
+            <returns></returns>
         </member>
         <member name="T:DNI.Core.Shared.Definition`1">
             <inheritdoc cref="T:DNI.Core.Shared.Contracts.IDefinition`1" />

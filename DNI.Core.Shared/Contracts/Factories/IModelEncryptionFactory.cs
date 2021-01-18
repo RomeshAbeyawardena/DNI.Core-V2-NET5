@@ -100,5 +100,21 @@ namespace DNI.Core.Shared.Contracts.Factories
         /// <param name="model"></param>
         /// <param name="propertySelector"></param>
         void Decrypt<T, TSelector>(T model, Func<T, ICollection<TSelector>> propertySelector);
+        
+        /// <summary>
+        /// Decrypts a model in a new instance of <typeparamref name="T"/>
+        /// </summary>
+        /// <param name="model"></param>
+        /// <param name="arguments"></param>
+        /// <returns></returns>
+        T DecryptAsClone<T>(T model, params object[] arguments);
+
+        /// <summary>
+        /// Encrypts a model in a new instance of <typeparamref name="T"/>
+        /// </summary>
+        /// <param name="model"></param>
+        /// <param name="arguments"></param>
+        /// <returns></returns>
+        T EncryptAsClone<T>(T model, params object[] arguments);
     }
 }
