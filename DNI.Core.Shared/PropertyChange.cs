@@ -30,7 +30,7 @@ namespace DNI.Core.Shared
 
                 if(OldValue.IsDefault() && !NewValue.IsDefault()
                     || keyAttribute == null && !OldValue.IsDefault() && NewValue.IsDefault()
-                    )
+                    || OldValue != NewValue)
                     return true;
 
                 return false;
