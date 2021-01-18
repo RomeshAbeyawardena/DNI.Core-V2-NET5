@@ -27,7 +27,10 @@ namespace DNI.Core.Abstractions.Services
 
         public void Encrypt(T model)
         {
-            ProcessOptions(fluentEncryptionConfiguration, model, true, (encryptionOptions, encryptionService, property, value) => {
+            ProcessOptions(fluentEncryptionConfiguration, model, 
+                true, 
+                true, 
+                (encryptionOptions, encryptionService, property, value) => {
                 if(value != null)
                 { 
                     property.SetValue(model, encryptionService.Encrypt(value.ToString(), encryptionOptions));
@@ -49,7 +52,7 @@ namespace DNI.Core.Abstractions.Services
 
         private void ProcessOptions(
             IFluentEncryptionConfiguration<T> configuration, 
-            T model, bool getPropertyString,
+            T model, bool getPropertyString, bool encrypt,
             Action<EncryptionOptions, IEncryptionService, PropertyInfo, object> processAction)
         {
             var modelType = typeof(T);
@@ -70,20 +73,32 @@ namespace DNI.Core.Abstractions.Services
 
                 var value = property.GetValue(model);
 
-                value = ProcessConventions(value);
+                if(encrypt)
+                { 
+                    value = ProcessConventions(value);
 
-                var val = getPropertyString 
-                    ? option.GetPropertyString?.Invoke(model) 
-                    : string.Empty;
+                    var val = getPropertyString 
+                        ? option.GetPropertyString?.Invoke(model) 
+                        : string.Empty;
 
-                processAction(encryptionOptions, encryptionService, property, string.IsNullOrEmpty(val) ? value : val);
+                    if(!string.IsNullOrEmpty(val))
+                    {
+                        value = val;
+                    }
+                }
+
+                processAction(encryptionOptions, encryptionService, property, value);
             }
             
         }
 
         public void Decrypt(T model)
         {
-            ProcessOptions(fluentEncryptionConfiguration, model, false, (encryptionOptions, encryptionService, property, value) => {
+            ProcessOptions(fluentEncryptionConfiguration, 
+                model, 
+                false, 
+                false, 
+                (encryptionOptions, encryptionService, property, value) => {
                 if(value != null)
                 { 
                     property.SetValue(model, encryptionService.Decrypt(value.ToString(), encryptionOptions));
