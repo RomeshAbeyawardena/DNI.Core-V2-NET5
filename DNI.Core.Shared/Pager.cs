@@ -3,6 +3,7 @@ using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Linq.Expressions;
 using System.Threading;
 using System.Threading.Tasks;
 
@@ -17,10 +18,21 @@ namespace DNI.Core.Shared
             return GetPagedItems(pageIndex, totalItemsPerPage, Query.Count()).ToArray();
         }
 
-        public async Task<IEnumerable<T>> GetPagedItemsAsync(int pageIndex, int totalItemsPerPage, CancellationToken cancellationToken)
+        public async Task<IEnumerable<T>> GetPagedItemsAsync(int pageIndex, int totalItemsPerPage, 
+            CancellationToken cancellationToken,
+            Expression<Func<T, bool>> whereExpression = default)
         {
-            return await GetPagedItems(pageIndex, totalItemsPerPage,
-                await Query.CountAsync(cancellationToken))
+            var pagerQuery = GetPagedItems(pageIndex, totalItemsPerPage,
+                await Query.CountAsync(cancellationToken));
+
+            if(whereExpression == null)
+            {
+                return await pagerQuery
+                    .ToArrayAsync(cancellationToken);
+            }
+
+            return await pagerQuery
+                .Where(whereExpression)
                 .ToArrayAsync(cancellationToken);
         }
 
