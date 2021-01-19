@@ -11,7 +11,7 @@ namespace DNI.Core.Shared.Extensions
     public static class PagerExtensions
     {
         public static Task<IEnumerable<T>> GetPagedItemsAsync<T>(
-            IPager<T> pager, 
+            this IPager<T> pager, 
             ISearchCriteria<T> searchCriteria, 
             CancellationToken cancellationToken)
         {
