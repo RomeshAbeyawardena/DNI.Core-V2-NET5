@@ -13,6 +13,11 @@ namespace DNI.Core.Shared.Contracts.Services
     public interface IDataService<TEntity>
         where TEntity : class
     {
+        void Encrypt(TEntity model);
+        void Decrypt(TEntity model);
+
+        TEntity Encrypt(TEntity model, params object[] args);
+        TEntity Decrypt(TEntity model, params object[] args);
         /// <summary>
         /// Retrieves an array based off <paramref name="expression"/>
         /// </summary>

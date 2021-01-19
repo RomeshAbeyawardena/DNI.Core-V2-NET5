@@ -49,12 +49,36 @@ namespace DNI.Core.Abstractions
             return pager.GetPagedItemsAsync(pagingCriteria.PageIndex, pagingCriteria.TotalItemsPerPage, cancellationToken);
         }
 
-        protected DataServiceBase(IAsyncRepository<TEntity> entityRepository)
+        public void Encrypt(TEntity model)
         {
-            Repository = entityRepository;
+            ModelEncryptionService.Encrypt(model);
         }
 
+        public void Decrypt(TEntity model)
+        {
+            ModelEncryptionService.Decrypt(model);
+        }
+
+        public TEntity Encrypt(TEntity model, params object[] args)
+        {
+            return ModelEncryptionService.EncryptAsClone(model, args);
+        }
+
+        public TEntity Decrypt(TEntity model, params object[] args)
+        {
+            return ModelEncryptionService.DecryptAsClone(model, args);
+        }
+
+        protected DataServiceBase(IAsyncRepository<TEntity> entityRepository,
+            IModelEncryptionService<TEntity> modelEncryptionService)
+        {
+            Repository = entityRepository;
+            ModelEncryptionService = modelEncryptionService;
+        }
+
+        
         protected IQueryable<TEntity> NoTrackingQuery => Repository.EnableTracking(Repository.Query);
         protected IAsyncRepository<TEntity> Repository { get; }
+        protected IModelEncryptionService<TEntity> ModelEncryptionService { get; }
     }
 }
