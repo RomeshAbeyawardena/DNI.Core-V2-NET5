@@ -59,7 +59,7 @@ namespace DNI.Core.Shared.Extensions
                     var hasValueExpression = Expression.Property(propertyOrFieldExpression, "HasValue");
                     var valueExpression = Expression.Property(propertyOrFieldExpression, "Value");
 
-                    var conditionalExpression = Expression.IsFalse(hasValueExpression);
+                    var conditionalExpression = Expression.Equal(hasValueExpression, Expression.Constant(false));
 
                     var optionalExpression = Expression.Equal(valueExpression, constantExpression);
 
