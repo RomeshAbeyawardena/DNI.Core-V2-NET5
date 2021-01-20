@@ -20,6 +20,8 @@ namespace DNI.Core.Tests
                 .Returns<string, Encoding>((v, v1) => Convert.ToBase64String(v1.GetBytes(v)));
             eTagService = new ETagService(hashServiceMock.Object);
 
+            const string separator = "::";
+
             var student = new Student
             {
                 Created = new DateTime(2021, 01, 20),
@@ -38,11 +40,24 @@ namespace DNI.Core.Tests
                 Type = new StudentType { Name = "Senior" }
             };
 
-            var eTag = eTagService.Generate(student, "::", Encoding.ASCII);
+            var student3 = new Student
+            {
+                Created = new DateTime(2020, 01, 20),
+                Gender = new Gender { Name = "Female" },
+                Id = default,
+                Name = "Chloe",
+                Type = new StudentType { Name = "Senior" }
+            };
 
-            var eTag2 = eTagService.Generate(student2, "::", Encoding.ASCII);
+            var eTag = eTagService.Generate(student, separator, Encoding.ASCII);
+
+            var eTag2 = eTagService.Generate(student2, separator, Encoding.ASCII);
+
+            var eTag3 = eTagService.Generate(student3, separator, Encoding.ASCII);
 
             Assert.AreNotEqual(eTag, eTag2);
+
+            Assert.AreNotEqual(eTag3, eTag2);
         }
 
         private Mock<IHashService> hashServiceMock;
