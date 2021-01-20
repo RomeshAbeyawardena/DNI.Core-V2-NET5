@@ -1,4 +1,5 @@
 ﻿using DNI.Core.Abstractions.Services;
+using DNI.Core.Shared.Contracts.Factories;
 using DNI.Core.Shared.Contracts.Services;
 using DNI.Core.Tests.Assets;
 using Moq;
@@ -6,6 +7,7 @@ using NUnit.Framework;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Security.Cryptography;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -15,10 +17,16 @@ namespace DNI.Core.Tests
     {
         [Test] public void ETagService()
         {
+            
             hashServiceMock = new Mock<IHashService>();
             hashServiceMock.Setup(h => h.HashString(It.IsAny<string>(), Encoding.ASCII))
                 .Returns<string, Encoding>((v, v1) => Convert.ToBase64String(v1.GetBytes(v)));
-            eTagService = new ETagService(hashServiceMock.Object);
+
+            hashServiceFactoryMock = new Mock<IHashServiceFactory>();
+            hashServiceFactoryMock.Setup(f => f.GetHashService(HashAlgorithmName.SHA512))
+                .Returns(hashServiceMock.Object);
+
+            eTagService = new ETagService(hashServiceFactoryMock.Object);
 
             const string separator = "::";
 
@@ -59,7 +67,7 @@ namespace DNI.Core.Tests
 
             Assert.AreNotEqual(eTag3, eTag2);
         }
-
+        private Mock<IHashServiceFactory> hashServiceFactoryMock;
         private Mock<IHashService> hashServiceMock;
         private ETagService eTagService;
     }
