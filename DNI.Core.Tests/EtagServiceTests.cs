@@ -20,11 +20,13 @@ namespace DNI.Core.Tests
             
             hashServiceMock = new Mock<IHashService>();
             hashServiceMock.Setup(h => h.HashString(It.IsAny<string>(), Encoding.ASCII))
-                .Returns<string, Encoding>((v, v1) => Convert.ToBase64String(v1.GetBytes(v)));
+                .Returns<string, Encoding>((v, v1) => Convert.ToBase64String(v1.GetBytes(v)))
+                .Verifiable();
 
             hashServiceFactoryMock = new Mock<IHashServiceFactory>();
             hashServiceFactoryMock.Setup(f => f.GetHashService(HashAlgorithmName.SHA512))
-                .Returns(hashServiceMock.Object);
+                .Returns(hashServiceMock.Object)
+                .Verifiable();
 
             eTagService = new ETagService(hashServiceFactoryMock.Object);
 
@@ -63,6 +65,8 @@ namespace DNI.Core.Tests
 
             var eTag3 = eTagService.Generate(student3, separator, Encoding.ASCII);
 
+            hashServiceFactoryMock.Verify();
+            hashServiceMock.Verify();
             Assert.AreNotEqual(eTag, eTag2);
 
             Assert.AreNotEqual(eTag3, eTag2);
