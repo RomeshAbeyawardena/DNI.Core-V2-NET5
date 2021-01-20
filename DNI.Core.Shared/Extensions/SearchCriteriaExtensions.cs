@@ -1,6 +1,7 @@
 ﻿using DNI.Core.Shared.Contracts;
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq.Expressions;
 using System.Reflection;
 
@@ -18,7 +19,7 @@ namespace DNI.Core.Shared.Extensions
             foreach (var property in properties)
             {
                 var value = property.GetValue(searchCriteria.Parameters);
-                if(value.IsDefault())
+                if (value.IsDefault())
                 {
                     continue;
                 }
@@ -29,28 +30,47 @@ namespace DNI.Core.Shared.Extensions
             return parameters.ToArray();
         }
 
-        public static Expression<Func<T, bool>> GetExpression<T>(this ISearchCriteria<T> searchCriteria, 
+        public static Expression<Func<T, bool>> GetExpression<T>(this ISearchCriteria<T> searchCriteria,
             IEnumerable<Tuple<PropertyInfo, object>> searchParameters = default)
         {
             var entityType = typeof(T);
 
             var parameters = searchParameters ?? GetSearchParameters(searchCriteria);
-            
+
             var parameterExpression = Expression.Parameter(entityType, entityType.Name.ToLower());
             Expression expression = default;
             foreach (var parameter in parameters)
             {
+
                 var propertyInfo = parameter.Item1;
                 var value = parameter.Item2;
-                
+
                 var constantExpression = Expression.Constant(value);
                 var propertyOrFieldExpression = Expression.PropertyOrField(parameterExpression, propertyInfo.Name);
+                var type = propertyOrFieldExpression.Type;
+                Debug.WriteLine(type);
 
-                var equalexpression = Expression.Equal(propertyOrFieldExpression, constantExpression);
+                Debug.WriteLine(type.BaseType);
+
+                Expression equalExpression = default;
+
+                if (type.IsGenericType && type.GetGenericTypeDefinition() == typeof(Nullable<>))
+                {
+                    var hasValueExpression = Expression.Property(propertyOrFieldExpression, "HasValue");
+                    var valueExpression = Expression.Property(propertyOrFieldExpression, "Value");
+
+                    var conditionalExpression = Expression.IsFalse(hasValueExpression);
+
+                    var optionalExpression = Expression.Equal(valueExpression, constantExpression);
+
+                    equalExpression = Expression.OrElse(conditionalExpression, optionalExpression);
+                }
+                else
+                    equalExpression = Expression.Equal(propertyOrFieldExpression, constantExpression);
 
                 expression = (expression == default)
-                    ? equalexpression
-                    : Expression.Or(expression, equalexpression);
+                    ? equalExpression
+                    : Expression.Or(expression, equalExpression);
             }
 
             return Expression.Lambda<Func<T, bool>>(expression, parameterExpression);

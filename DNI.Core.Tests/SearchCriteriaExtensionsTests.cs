@@ -25,8 +25,9 @@ namespace DNI.Core.Tests
         {
             var students = new List<Student>
             {
-                new Student { Id = 1, Name = "John" },
-                new Student { Id = 2, Name = "Harris" }
+                new Student { Id = 1, Name = "John", Score = 120 },
+                new Student { Id = 2, Name = "Harris" },
+                new Student { Id = 3, Name = "Jane", Score = 90 }
             };
 
             var expression = new StudentViewModel { Parameters = new Student { Name = "John" } }.GetExpression();
@@ -50,17 +51,18 @@ namespace DNI.Core.Tests
             Assert.Contains(students[0], foundStudents.ToArray());
             Assert.Contains(students[1], foundStudents.ToArray());
 
-            expression = new StudentViewModel { Parameters = new Student { Id = 3,  Name = "Harrison" } }.GetExpression();
+            expression = new StudentViewModel { Parameters = new Student { Id = 3,  Name = "Harrison", Score = 90 } }.GetExpression();
 
             foundStudents = students.Where(expression.Compile());
             
-            Assert.AreEqual(0, foundStudents.Count());
+            Assert.AreEqual(2, foundStudents.Count());
         }
 
         private class Student
         {
             public int Id { get; set; }
             public string Name { get; set; }
+            public int? Score { get; set; }
         }
 
         private class StudentViewModel : ISearchCriteria<Student>
