@@ -17,5 +17,6 @@ namespace DNI.Core.Shared.Contracts.Services
         string Generate<T>(T model, string separator, Encoding encoding); 
         bool Validate<T>(T sourcemodel, T model, ETagServiceOptions options)
             where T : IETag;
+        bool Validate<T>(T sourcemodel, string eTag) where T : IETag;
     }
 }

@@ -77,7 +77,12 @@ namespace DNI.Core.Abstractions.Services
         {
             var modelETag = Generate(model, options);
 
-            return sourcemodel.ETag == modelETag;
+            return Validate(sourcemodel, modelETag);
+        }
+
+        public bool Validate<T>(T sourcemodel, string eTag) where T : IETag
+        {
+            return sourcemodel.ETag == eTag;
         }
 
         private readonly IHashServiceFactory hashServiceFactory;
