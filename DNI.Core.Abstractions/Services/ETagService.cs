@@ -11,7 +11,7 @@ using System.Threading.Tasks;
 
 namespace DNI.Core.Abstractions.Services
 {
-    public class ETagService : IETagService
+    internal class ETagService : IETagService
     {
         public ETagService(IHashServiceFactory hashServiceFactory)
         {
