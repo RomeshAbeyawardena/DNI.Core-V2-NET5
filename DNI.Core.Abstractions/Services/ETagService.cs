@@ -1,5 +1,7 @@
 ﻿using DNI.Core.Shared.Contracts.Factories;
+using DNI.Core.Shared.Contracts.Meta;
 using DNI.Core.Shared.Contracts.Services;
+using DNI.Core.Shared.Options;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -18,7 +20,11 @@ namespace DNI.Core.Abstractions.Services
 
         public string Generate(object model, string separator, Encoding encoding)
         {
-            return Generate(model, separator, HashAlgorithmName.SHA512, encoding);
+            return Generate(model, new ETagServiceOptions { 
+                Separator = separator, 
+                HashAlgorithmName = HashAlgorithmName.SHA512, 
+                Encoding = encoding 
+            });
         }
 
         public string Generate<T>(T model, string separator, Encoding encoding)
@@ -26,8 +32,12 @@ namespace DNI.Core.Abstractions.Services
             return Generate((object)model, separator, encoding);
         }
 
-        public string Generate(object model, string separator, HashAlgorithmName hashAlgorithmName, Encoding encoding)
+        public string Generate(object model, ETagServiceOptions options)
         {
+            var separator = options.Separator;
+            var hashAlgorithmName = options.HashAlgorithmName;
+            var encoding = options.Encoding;
+
             var modelType = model.GetType();
             var stringBuilder = new StringBuilder();
             foreach (var property in modelType.GetProperties())
@@ -58,9 +68,16 @@ namespace DNI.Core.Abstractions.Services
                 .HashString(stringBuilder.ToString().TrimEnd(separator.ToCharArray()), encoding);
         }
 
-        public string Generate<T>(T model, string separator, HashAlgorithmName hashAlgorithmName, Encoding encoding)
+        public string Generate<T>(T model, ETagServiceOptions options)
         {
-            return Generate((object)model, separator, hashAlgorithmName, encoding);
+            return Generate((object)model, options);
+        }
+
+        public bool Validate<T>(T sourcemodel, T model, ETagServiceOptions options) where T : IETag
+        {
+            var modelETag = Generate(model, options);
+
+            return sourcemodel.ETag == modelETag;
         }
 
         private readonly IHashServiceFactory hashServiceFactory;
