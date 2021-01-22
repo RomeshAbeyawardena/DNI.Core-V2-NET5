@@ -69,6 +69,18 @@ namespace DNI.Core.Abstractions
             return ModelEncryptionService.DecryptAsClone(model, args);
         }
 
+        public TEntity Add(TEntity entity)
+        {
+            Repository.Add(entity);
+            return entity;
+        }
+
+        public TEntity Update(TEntity entity)
+        {
+            Repository.Update(entity);
+            return entity;
+        }
+
         protected DataServiceBase(IAsyncRepository<TEntity> entityRepository,
             IModelEncryptionService<TEntity> modelEncryptionService)
         {

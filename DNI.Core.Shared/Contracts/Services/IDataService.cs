@@ -39,5 +39,7 @@ namespace DNI.Core.Shared.Contracts.Services
         Task<IEnumerable<TEntity>> ToArrayAsync(Expression<Func<TEntity, bool>> expression, CancellationToken cancellationToken);
         Task<int> SaveChangesAsync(CancellationToken cancellationToken);
         Task<int> SaveAsync(TEntity entity, CancellationToken cancellationToken);
+        TEntity Add(TEntity entity);
+        TEntity Update(TEntity entity);
     }
 }
