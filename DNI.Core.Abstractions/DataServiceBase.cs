@@ -89,7 +89,7 @@ namespace DNI.Core.Abstractions
         }
 
         protected IQueryable<TEntity> Query => Repository.Query;
-        protected IQueryable<TEntity> NoTrackingQuery => Repository.EnableTracking(Query, false);
+        protected IQueryable<TEntity> NoTrackingQuery => Repository.EnableTracking(Query, false, false);
         protected IAsyncRepository<TEntity> Repository { get; }
         protected IModelEncryptionService<TEntity> ModelEncryptionService { get; }
     }
