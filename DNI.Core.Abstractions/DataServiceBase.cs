@@ -17,27 +17,27 @@ namespace DNI.Core.Abstractions
         public abstract Task<int> SaveAsync(TEntity entity, CancellationToken cancellationToken);
         public abstract Task<bool> ExistsAsync(TEntity entity, CancellationToken cancellationToken);
 
-        Task<int> IDataService<TEntity>.SaveChangesAsync(CancellationToken cancellationToken)
+        public Task<int> SaveChangesAsync(CancellationToken cancellationToken)
         {
             return Repository.SaveChangesAsync(cancellationToken);
         }
 
-        Task<bool> IDataService<TEntity>.AnyAsync(Expression<Func<TEntity, bool>> expression, CancellationToken cancellationToken)
+        public Task<bool> AnyAsync(Expression<Func<TEntity, bool>> expression, CancellationToken cancellationToken)
         {
             return Repository.AnyAsync(NoTrackingQuery, expression, cancellationToken);
         }
 
-        Task<TEntity> IDataService<TEntity>.FirstOrDefaultAsync(Expression<Func<TEntity, bool>> expression, CancellationToken cancellationToken)
+        public Task<TEntity> FirstOrDefaultAsync(Expression<Func<TEntity, bool>> expression, CancellationToken cancellationToken)
         {
             return Repository.FirstOrDefaultAsync(NoTrackingQuery, expression, cancellationToken);
         }
 
-        Task<IEnumerable<TEntity>> IDataService<TEntity>.ToArrayAsync(Expression<Func<TEntity, bool>> expression, CancellationToken cancellationToken)
+        public Task<IEnumerable<TEntity>> ToArrayAsync(Expression<Func<TEntity, bool>> expression, CancellationToken cancellationToken)
         {
             return Repository.ToArrayAsync(NoTrackingQuery, expression, cancellationToken);
         }
 
-        Task<IEnumerable<TEntity>> IDataService<TEntity>.ToArrayAsync(CancellationToken cancellationToken)
+        public Task<IEnumerable<TEntity>> ToArrayAsync(CancellationToken cancellationToken)
         {
             return Repository.ToArrayAsync(NoTrackingQuery, cancellationToken: cancellationToken);
         }
@@ -88,8 +88,8 @@ namespace DNI.Core.Abstractions
             ModelEncryptionService = modelEncryptionService;
         }
 
-        
-        protected IQueryable<TEntity> NoTrackingQuery => Repository.EnableTracking(Repository.Query);
+        protected IQueryable<TEntity> Query => Repository.Query;
+        protected IQueryable<TEntity> NoTrackingQuery => Repository.EnableTracking(Query, false);
         protected IAsyncRepository<TEntity> Repository { get; }
         protected IModelEncryptionService<TEntity> ModelEncryptionService { get; }
     }
