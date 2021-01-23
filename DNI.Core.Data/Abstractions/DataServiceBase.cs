@@ -36,6 +36,8 @@ namespace DNI.Core.Data.Abstractions
             IdentityKey = GetKeyMemberExpression();
         }
 
+        protected Func<TEntity, object> IdentityKey { get; }
+
         private Func<TEntity, object> GetKeyMemberExpression()
         {
             var entityType = typeof(TEntity);
@@ -55,7 +57,5 @@ namespace DNI.Core.Data.Abstractions
             var conversionExpression = Expression.Convert(propertyOrFieldExpression, typeof(object));
             return Expression.Lambda<Func<TEntity, object>>(conversionExpression, parameterExpression).Compile();
         }
-
-        protected Func<TEntity, object> IdentityKey { get; }
     }
 }
