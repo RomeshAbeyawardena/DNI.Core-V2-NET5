@@ -18,7 +18,7 @@ namespace DNI.Core.Data.Abstractions
     {
         public override Task<int> SaveAsync(TEntity entity, CancellationToken cancellationToken)
         {
-            return Repository.AddOrUpdate(identityKey, entity, cancellationToken);
+            return Repository.AddOrUpdate(IdentityKey, entity, cancellationToken);
         }
 
         protected DataServiceBase(IAsyncRepository<TEntity> repository,
@@ -26,14 +26,14 @@ namespace DNI.Core.Data.Abstractions
             Func<TEntity, object> identityKey)
             : base(repository, modelEncryptionService)
         {
-            this.identityKey = identityKey;
+            IdentityKey = identityKey;
         }
 
         protected DataServiceBase(IAsyncRepository<TEntity> repository,
             IModelEncryptionService<TEntity> modelEncryptionService)
             : base(repository, modelEncryptionService)
         {
-            this.identityKey = GetKeyMemberExpression();
+            IdentityKey = GetKeyMemberExpression();
         }
 
         private Func<TEntity, object> GetKeyMemberExpression()
@@ -52,9 +52,10 @@ namespace DNI.Core.Data.Abstractions
 
             var parameterExpression = Expression.Parameter(entityType, entityType.Name.ToLower());
             var propertyOrFieldExpression = Expression.PropertyOrField(parameterExpression, propertyInfo.Name);
-            return Expression.Lambda<Func<TEntity, object>>(propertyOrFieldExpression, parameterExpression).Compile();
+            var conversionExpression = Expression.Convert(propertyOrFieldExpression, typeof(object));
+            return Expression.Lambda<Func<TEntity, object>>(conversionExpression, parameterExpression).Compile();
         }
 
-        private readonly Func<TEntity, object> identityKey;
+        protected Func<TEntity, object> IdentityKey { get; }
     }
 }

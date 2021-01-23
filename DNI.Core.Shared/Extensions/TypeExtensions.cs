@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Reflection;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -17,6 +18,14 @@ namespace DNI.Core.Shared.Extensions
 
             return interfaceType.Assembly
                 .GetTypes().Where(a => a.GetInterfaces().Any(a => a == interfaceType));
+        }
+
+        public static IEnumerable<PropertyInfo> GetPropertiesWithAttribute<TAttribute>(this Type type)
+            where TAttribute : Attribute
+        {
+            return type.GetProperties()
+                .Where(property => property
+                    .GetCustomAttribute<TAttribute>() != null);
         }
     }
 }
