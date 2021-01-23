@@ -18,7 +18,7 @@ namespace DNI.Core.Abstractions
         : ActionRequestHandlerBaseWithExceptionResourceFactory<TRequest, TResponse>
         where TRequest : IActionRequest<TResponse>
     {
-        protected ActionRequestHandlerBaseWithServicesBase(ICacheServiceFactory cacheServiceFactory,
+        protected ActionRequestHandlerWithServicesBase(ICacheServiceFactory cacheServiceFactory,
             IValidatorFactory validatorFactory,
             IExceptionResourceFactory exceptionResourceFactory,
             IETagService eTagService, IOptions<ETagServiceOptions> options)
