@@ -23,7 +23,6 @@ namespace DNI.Core.Abstractions.Services
             this.conventionBuilder = conventionBuilder;
             this.fluentEncryptionConfiguration = fluentEncryptionConfiguration;
             this.encryptionClassificationFactory = encryptionClassificationFactory;
-            modelExpressionVisitor = new ModelExpressionVisitor();
         }
 
         public void Encrypt(T model)
@@ -68,9 +67,9 @@ namespace DNI.Core.Abstractions.Services
 
                 var encryptionService = encryptionFactory.GetEncryptionService(encryptionOptions.AlgorithmName);
 
-                var memberName = modelExpressionVisitor.GetLastVisitedMember(option.PropertyExpression.Body);
+                var memberName = option.PropertyExpression.GetMember();
 
-                var property = modelType.GetProperty(memberName);
+                var property = modelType.GetProperty(memberName.Name);
 
                 var value = property.GetValue(model);
 
@@ -127,7 +126,6 @@ namespace DNI.Core.Abstractions.Services
 
         private readonly IEncryptionFactory encryptionFactory;
         private readonly IConvectionFactory conventionBuilder;
-        private readonly ModelExpressionVisitor modelExpressionVisitor;
         private readonly IFluentEncryptionConfiguration<T> fluentEncryptionConfiguration;
         private readonly IEncryptionClassificationFactory encryptionClassificationFactory;
     }

@@ -1,4 +1,5 @@
-﻿using DNI.Core.Shared.Contracts;
+﻿using DNI.Core.Abstractions.Services;
+using DNI.Core.Shared.Contracts;
 using DNI.Core.Shared.ExpressionVisitors;
 using DNI.Core.Shared.Extensions;
 using Microsoft.Extensions.Configuration;
@@ -23,10 +24,9 @@ namespace DNI.Core.Abstractions.Defaults
             Expression<Func<TSetting, T>> settingExpression, 
             Func<IConfigurationSection, T> sectionValue)
         {
-            var visitor = new ModelExpressionVisitor();
-
-            var member = visitor.GetLastVisitedMember(settingExpression);
-            Values.Add(member, section => sectionValue(section));
+            
+            var member = settingExpression.GetMember();
+            Values.Add(member.Name, section => sectionValue(section));
             return this;
         }
 

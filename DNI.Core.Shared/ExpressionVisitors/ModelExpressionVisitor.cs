@@ -1,22 +1,23 @@
 ﻿using System.Linq.Expressions;
+using System.Reflection;
 
 namespace DNI.Core.Shared.ExpressionVisitors
 {
     internal class ModelExpressionVisitor : ExpressionVisitor
     {
-        public string GetLastVisitedMember(Expression exp)
+        public MemberInfo GetLastVisitedMember(Expression exp)
         {
             Visit(exp);
-            return memberName;
+            return member;
         }
 
         protected override Expression VisitMember(MemberExpression node)
         {
-            memberName = node.Member.Name;
+            member = node.Member;
             return base.VisitMember(node);
         }
 
-        private string memberName;
+        private MemberInfo member;
     }
 
 }
