@@ -26,9 +26,11 @@ namespace DNI.Core.Abstractions
 
             property.SetValue(instance, value);
 
-            modelEncryptionFactory.Decrypt(instance);
+            modelEncryptionFactory.Encrypt(instance);
 
-            var val = getProperty.Compile().Invoke(instance);
+            var val = getProperty
+                .Compile()
+                .Invoke(instance);
 
             return getResult(val);
         }
