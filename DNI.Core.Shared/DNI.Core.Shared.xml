@@ -140,7 +140,7 @@
         </member>
         <member name="T:DNI.Core.Shared.Contracts.Factories.IChangeTrackerFactory">
             <summary>
-            Represents a change tracker factory to resolve <see cref="!:IChangeTracker&lt;T&gt; instances" /> 
+            Represents a change tracker factory to resolve <see cref="T:DNI.Core.Shared.Contracts.Factories.IChangeTrackerFactory" /> instances" /> 
             </summary>
         </member>
         <member name="M:DNI.Core.Shared.Contracts.Factories.IChangeTrackerFactory.GetChangeTracker``1">
@@ -680,6 +680,20 @@
             Marks entity to be removed from the data source change tracker
             </summary>
             <param name="result"></param>
+        </member>
+        <member name="M:DNI.Core.Shared.Contracts.IRepository`1.Attach(`0)">
+            <summary>
+            
+            </summary>
+            <param name="entity"></param>
+            <returns></returns>
+        </member>
+        <member name="M:DNI.Core.Shared.Contracts.IRepository`1.AttachRange(System.Collections.Generic.IEnumerable{`0})">
+            <summary>
+            
+            </summary>
+            <param name="entities"></param>
+            <returns></returns>
         </member>
         <member name="T:DNI.Core.Shared.Contracts.ISerializer">
             <summary>
