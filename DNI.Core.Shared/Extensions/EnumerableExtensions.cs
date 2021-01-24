@@ -12,5 +12,17 @@ namespace DNI.Core.Shared.Extensions
                 itemAction(item);
             }
         }
+
+        public static IEnumerable<T> ForEach<T>(this IEnumerable<T> items, Func<T, T> itemAction)
+        {
+            var itemList = new List<T>();
+            foreach (var item in items)
+            {
+                itemList.Add(
+                    itemAction(item));
+            }
+
+            return itemList.ToArray();
+        }
     }
 }

@@ -16,8 +16,14 @@ namespace DNI.Core.Shared.Contracts.Services
         void Encrypt(TEntity model);
         void Decrypt(TEntity model);
 
+        void Encrypt(IEnumerable<TEntity> model);
+        void Decrypt(IEnumerable<TEntity> model);
+
         TEntity Encrypt(TEntity model, params object[] args);
         TEntity Decrypt(TEntity model, params object[] args);
+
+        IEnumerable<TEntity> Encrypt(IEnumerable<TEntity> model, params object[] args);
+        IEnumerable<TEntity> Decrypt(IEnumerable<TEntity> model, params object[] args);
         /// <summary>
         /// Retrieves an array based off <paramref name="expression"/>
         /// </summary>

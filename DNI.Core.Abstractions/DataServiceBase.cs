@@ -1,6 +1,7 @@
 ﻿using DNI.Core.Shared;
 using DNI.Core.Shared.Contracts;
 using DNI.Core.Shared.Contracts.Services;
+using DNI.Core.Shared.Extensions;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -79,6 +80,28 @@ namespace DNI.Core.Abstractions
         {
             Repository.Update(entity);
             return entity;
+        }
+
+        public void Encrypt(IEnumerable<TEntity> models)
+        {
+           models.ForEach(model => ModelEncryptionService.Encrypt(model));
+        }
+
+        public void Decrypt(IEnumerable<TEntity> models)
+        {
+            models.ForEach(model => ModelEncryptionService.Decrypt(model));
+        }
+
+        public IEnumerable<TEntity> Encrypt(IEnumerable<TEntity> models, params object[] args)
+        {
+            return models.ForEach(model => ModelEncryptionService
+                .EncryptAsClone(model, args));
+        }
+
+        public IEnumerable<TEntity> Decrypt(IEnumerable<TEntity> models, params object[] args)
+        {
+            return models.ForEach(model => ModelEncryptionService
+                .DecryptAsClone(model, args));
         }
 
         protected DataServiceBase(IAsyncRepository<TEntity> entityRepository,
