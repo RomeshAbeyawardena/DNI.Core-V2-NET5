@@ -3,7 +3,7 @@
 namespace DNI.Core.Shared.Contracts.Factories
 {
     /// <summary>
-    /// Represents a change tracker factory to resolve <see cref="IChangeTracker{T} instances" /> 
+    /// Represents a change tracker factory to resolve <see cref="IChangeTrackerFactory" /> instances" /> 
     /// </summary>
     public interface IChangeTrackerFactory
     {

@@ -992,6 +992,24 @@
             Level 1: Requires encryption to protect shared data that would not lead to direct identification to an entity, but should be protected securely
             </summary>
         </member>
+        <member name="M:DNI.Core.Shared.Extensions.ExpressionExtensions.GetProperty``2(System.Linq.Expressions.Expression{System.Func{``0,``1}})">
+            <summary>
+            Gets <see cref="T:System.Reflection.PropertyInfo"/> for the specified expression
+            </summary>
+            <typeparam name="T"></typeparam>
+            <typeparam name="TKey"></typeparam>
+            <param name="expression"></param>
+            <returns></returns>
+        </member>
+        <member name="M:DNI.Core.Shared.Extensions.ExpressionExtensions.GetMember``2(System.Linq.Expressions.Expression{System.Func{``0,``1}})">
+            <summary>
+            Gets <see cref="T:System.Reflection.MemberInfo"/> for the specified expression
+            </summary>
+            <typeparam name="T"></typeparam>
+            <typeparam name="TKey"></typeparam>
+            <param name="expression"></param>
+            <returns></returns>
+        </member>
         <member name="T:DNI.Core.Shared.Handlers.DefaultHandler">
             <inheritdoc cref="T:DNI.Core.Shared.Contracts.Handlers.IHandler" />
         </member>

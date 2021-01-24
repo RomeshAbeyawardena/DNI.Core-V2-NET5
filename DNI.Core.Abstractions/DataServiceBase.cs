@@ -2,6 +2,7 @@
 using DNI.Core.Shared.Contracts;
 using DNI.Core.Shared.Contracts.Services;
 using DNI.Core.Shared.Extensions;
+using Microsoft.EntityFrameworkCore.ChangeTracking;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -102,6 +103,16 @@ namespace DNI.Core.Abstractions
         {
             return models.ForEach(model => ModelEncryptionService
                 .DecryptAsClone(model, args));
+        }
+
+        public EntityEntry<TEntity> Attach(TEntity entity)
+        {
+            return Repository.Attach(entity);
+        }
+
+        public void AttachRange(IEnumerable<TEntity> entities)
+        {
+            Repository.AttachRange(entities);
         }
 
         protected DataServiceBase(IAsyncRepository<TEntity> entityRepository,

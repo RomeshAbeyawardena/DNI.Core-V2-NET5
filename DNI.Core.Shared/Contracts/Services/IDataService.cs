@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Microsoft.EntityFrameworkCore.ChangeTracking;
+using System;
 using System.Collections.Generic;
 using System.Linq.Expressions;
 using System.Threading;
@@ -47,5 +48,7 @@ namespace DNI.Core.Shared.Contracts.Services
         Task<int> SaveAsync(TEntity entity, CancellationToken cancellationToken);
         TEntity Add(TEntity entity);
         TEntity Update(TEntity entity);
+        EntityEntry<TEntity> Attach(TEntity entity); 
+        void AttachRange(IEnumerable<TEntity> entities);
     }
 }

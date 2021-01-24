@@ -1,4 +1,6 @@
-﻿using System;
+﻿using Microsoft.EntityFrameworkCore.ChangeTracking;
+using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Linq.Expressions;
 
@@ -63,5 +65,17 @@ namespace DNI.Core.Shared.Contracts
         /// </summary>
         /// <param name="result"></param>
         void Remove(T result);
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="entity"></param>
+        /// <returns></returns>
+        EntityEntry<T> Attach(T entity);
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="entities"></param>
+        /// <returns></returns>
+        void AttachRange(IEnumerable<T> entities);
     }
 }

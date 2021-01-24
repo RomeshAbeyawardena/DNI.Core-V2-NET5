@@ -6,6 +6,7 @@ using System.Linq.Expressions;
 using System.Threading;
 using System.Threading.Tasks;
 using DNI.Core.Shared.Contracts;
+using Microsoft.EntityFrameworkCore.ChangeTracking;
 
 namespace DNI.Core.Data
 {
@@ -131,5 +132,15 @@ namespace DNI.Core.Data
         }
 
         private static IIncludeableQuery<T> IncludeableQuery(IQueryable<T> query) => IncludeableQuery<T>.Create(query);
+
+        public EntityEntry<T> Attach(T entity)
+        {
+            return DbSet.Attach(entity);
+        }
+
+        public void AttachRange(IEnumerable<T> entities)
+        {
+            DbSet.AttachRange(entities);
+        }
     }
 }
