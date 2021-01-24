@@ -6,7 +6,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace DNI.Core.Abstractions
+namespace DNI.Core.Data.Abstractions
 {
     public abstract class DbContextBase : DbContext
     {
@@ -24,7 +24,7 @@ namespace DNI.Core.Abstractions
             {
                 foreach(var entity in modelBuilder.Model.GetEntityTypes())
                 {
-                    entity.SetTableName(entity.Name.Singularize());
+                    entity.SetTableName(entity.GetTableName().Singularize());
                 }
             }
 
