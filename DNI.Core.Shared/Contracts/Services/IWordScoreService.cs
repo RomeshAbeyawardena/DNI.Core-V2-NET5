@@ -8,8 +8,8 @@ namespace DNI.Core.Shared.Contracts.Services
 {
     public interface IWordScoreService
     {
-        string GetCharactersFromScore(int score);
+        IEnumerable<char> GetCharactersFromScore(int score);
         int GetWordScore(string word);
-        IEnumerable<char> GetDistinctCharacters(string word);
+        IEnumerable<char> GetDistinctUpperCaseCharacters(string word);
     }
 }

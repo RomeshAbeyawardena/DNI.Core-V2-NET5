@@ -19,11 +19,11 @@ namespace DNI.Core.Tests
             sut = new WordScoreService();
         }
 
-        [Test]
-        public void DetermineWordScore()
+        [TestCase("and", 8201)]
+        [TestCase("banana", 8195)]
+        [TestCase("romesh", 413840)]
+        public void DetermineWordScore(string word, int expectedScore)
         {
-            var word = "and";
-            var expectedScore = 8201;
             var score = sut.GetWordScore(word);
 
             Assert.AreEqual(expectedScore, score);
@@ -41,6 +41,23 @@ namespace DNI.Core.Tests
             var characters = sut.GetCharactersFromScore(wordScore);
 
             Assert.AreEqual(expectedCharacters, characters);
+        }
+
+        [Test]
+        public void GetMatches()
+        {
+            var wordList = new List<string>()
+            {
+                "Ban",
+                "Banana",
+                "Bat",
+                "Band",
+                "Bar"
+            };
+
+            var wordScoreDictionary = wordList.ToDictionary(a => a, a => sut.GetWordScore(a));
+
+            var words = wordScoreDictionary.Where(a => a.Value >= sut.GetWordScore("Ban"));
         }
 
         private IWordScoreService sut;

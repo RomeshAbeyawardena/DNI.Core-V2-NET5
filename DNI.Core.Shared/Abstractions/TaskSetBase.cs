@@ -8,25 +8,26 @@ using System.Threading.Tasks;
 
 namespace DNI.Core.Shared.Abstractions
 {
-    public class TaskSetBase<TResult> : ITaskSet<TResult>
+    public abstract class TaskSetBase<TParameter, TResult> : ITaskSet<TParameter, TResult>
     {
+        
         protected TaskSetBase (
-            Func<IEnumerable<object>, TResult> retrieve,
-            IEnumerable<Action<IEnumerable<object>>> prepare,
+            Func<TParameter, TResult> retrieve,
+            IEnumerable<Action<TParameter>> prepare,
             IEnumerable<Action<TResult>> configure)
         {
             retrieveAction = retrieve;
-            preparationActions = new ConcurrentBag<Action<IEnumerable<object>>>(prepare);
+            preparationActions = new ConcurrentBag<Action<TParameter>>(prepare);
             configurationActions = new ConcurrentBag<Action<TResult>>(configure);
         }
 
-        public Action<IEnumerable<object>> Prepare => (args) => Iterate(ref preparationActions, args);
+        public Action<TParameter> Prepare => (args) => Iterate(ref preparationActions, args);
 
         public Action<TResult> Configure => (result) => Iterate(ref configurationActions, result);
 
-        public Func<IEnumerable<object>, TResult> Retrieve => retrieveAction;
+        public Func<TParameter, TResult> Retrieve => retrieveAction;
 
-        public TResult Invoke(IEnumerable<object> args)
+        public TResult Invoke(TParameter args)
         {
             Prepare(args);
             var result = Retrieve(args);
@@ -34,9 +35,9 @@ namespace DNI.Core.Shared.Abstractions
             return result;
         }
 
-        private void Iterate<TParameter>(ref ConcurrentBag<Action<TParameter>> bag, TParameter parameter)
+        private void Iterate<TParam>(ref ConcurrentBag<Action<TParam>> bag, TParam parameter)
         {
-            var newBag = new ConcurrentBag<Action<TParameter>>();
+            var newBag = new ConcurrentBag<Action<TParam>>();
             while(bag.TryTake(out var item))
             { 
                 item(parameter); 
@@ -47,8 +48,19 @@ namespace DNI.Core.Shared.Abstractions
         }
 
 
-        private ConcurrentBag<Action<IEnumerable<object>>> preparationActions;
+        private ConcurrentBag<Action<TParameter>> preparationActions;
         private ConcurrentBag<Action<TResult>> configurationActions;
-        private readonly Func<IEnumerable<object>, TResult> retrieveAction;
+        private readonly Func<TParameter, TResult> retrieveAction;
+    }
+
+    public abstract class TaskSetBase<TResult> : TaskSetBase<IEnumerable<object>, TResult>
+    {
+        protected TaskSetBase(
+            Func<IEnumerable<object>, TResult> retrieve, 
+            IEnumerable<Action<IEnumerable<object>>> prepare, 
+            IEnumerable<Action<TResult>> configure) : base(retrieve, prepare, configure)
+        {
+
+        }
     }
 }

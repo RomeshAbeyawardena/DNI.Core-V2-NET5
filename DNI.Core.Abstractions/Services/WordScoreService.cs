@@ -11,9 +11,9 @@ namespace DNI.Core.Abstractions.Services
 {
     internal class WordScoreService : IWordScoreService
     {
-        public string GetCharactersFromScore(int score)
+        public IEnumerable<char> GetCharactersFromScore(int score)
         {
-            var queue = new ConcurrentQueue<KeyValuePair<char, int>>(ASec.Lookup);
+            var queue = new ConcurrentQueue<KeyValuePair<char, int>>(Characters.Lookup);
             var characterList = new List<char>();
             while(score != 0 || !queue.IsEmpty)
             {
@@ -25,17 +25,17 @@ namespace DNI.Core.Abstractions.Services
                         {
                             score -= result.Value;
                             characterList.Add(result.Key);
-                            queue = new ConcurrentQueue<KeyValuePair<char, int>>(ASec.Lookup);
+                            queue = new ConcurrentQueue<KeyValuePair<char, int>>(Characters.Lookup);
                             continue;
                         }
                     }
                 }
             }
 
-            return new string(characterList.OrderBy(a => a).ToArray());
+            return characterList.OrderBy(a => a).ToArray();
         }
 
-        public IEnumerable<char> GetDistinctCharacters(string word)
+        public IEnumerable<char> GetDistinctUpperCaseCharacters(string word)
         {
             return word.ToUpper().Distinct();
         }
@@ -43,9 +43,9 @@ namespace DNI.Core.Abstractions.Services
         public int GetWordScore(string word)
         {
             var score = 0;
-            foreach(var c in GetDistinctCharacters(word))
+            foreach(var c in GetDistinctUpperCaseCharacters(word))
             {
-                if(ASec.Lookup.TryGetValue(c, out var letterScore))
+                if(Characters.Lookup.TryGetValue(c, out var letterScore))
                 { 
                     score += letterScore;
                 }

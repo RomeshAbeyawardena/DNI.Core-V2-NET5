@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace DNI.Core.Shared.Constants
 {
-    public static class ASec
+    public static class Characters
     {
         public const int A = 1;
         public const int B = 2;
