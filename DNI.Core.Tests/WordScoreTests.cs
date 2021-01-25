@@ -34,6 +34,7 @@ namespace DNI.Core.Tests
         [TestCase("krish", "HIKRS")]
         [TestCase("mia", "AIM")]
         [TestCase("Pneumonoultramicroscopicsilicovolcanoconiosis", "ACEILMNOPRSTUV")]
+        [TestCase("romesh.abeyawardena@dotnetinsights.net", "ABDEGHIMNORSTWY")]
         public void DetermineWordFromScore(string expectedWord, string expectedCharacters)
         {
             var wordScore = sut.GetWordScore(expectedWord);
