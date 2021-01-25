@@ -763,6 +763,24 @@
             Represents the current date and time, may be overridden in a test instance
             </summary>
         </member>
+        <member name="P:DNI.Core.Shared.Contracts.ITaskSet`1.Prepare">
+            <summary>
+            Prepares the data used by <see cref="P:DNI.Core.Shared.Contracts.ITaskSet`1.Retrieve"/>
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="P:DNI.Core.Shared.Contracts.ITaskSet`1.Retrieve">
+            <summary>
+            Retrieves the data using parameters supplied in <see cref="P:DNI.Core.Shared.Contracts.ITaskSet`1.Prepare"/>
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="P:DNI.Core.Shared.Contracts.ITaskSet`1.Configure">
+            <summary>
+            Configures the data returned by <see cref="P:DNI.Core.Shared.Contracts.ITaskSet`1.Configure"/>
+            </summary>
+            <returns></returns>
+        </member>
         <member name="T:DNI.Core.Shared.Contracts.ITriggerEventHandler`1">
             <summary>
             
