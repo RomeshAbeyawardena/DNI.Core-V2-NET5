@@ -43,7 +43,7 @@ namespace DNI.Core.Shared.Extensions
             return (string)property.GetValue(instance);
         }
 
-        public static T CreateInstance<TKey, T>(
+        internal static T CreateInstance<TKey, T>(
             TKey value,
             Expression<Func<T, TKey>> modelKeySelector,
             out PropertyInfo property,

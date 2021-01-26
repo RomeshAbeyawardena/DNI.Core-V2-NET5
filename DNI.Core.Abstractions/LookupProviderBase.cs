@@ -22,7 +22,7 @@ namespace DNI.Core.Abstractions
             Func<TKey, T> getResult, params object[] args)
         {
             var instance = ModelEncryptionServiceExtensions.CreateInstance<TKey, T>(value,
-                k => getProperty.Compile()(k), 
+                getProperty, 
                 out var property,
                 args);
 
