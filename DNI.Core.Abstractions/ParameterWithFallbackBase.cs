@@ -4,12 +4,15 @@ using System.Threading.Tasks;
 
 namespace DNI.Core.Abstractions
 {
-    public abstract class ParameterWithFallbackBase<TParameter, TFallbackParameter> : IParameterWithFallback<TParameter, TFallbackParameter>
+    public abstract class ParameterWithFallbackBase<TParameter, TFallbackParameter> 
+        : IParameterWithFallback<TParameter, TFallbackParameter>
         where TParameter : struct
     {
         public TParameter? Parameter { get; }
 
         public TFallbackParameter FallbackParameter { get; }
+
+        public bool HasValue => Parameter.HasValue || FallbackParameter != null;
 
         public void Invoke(Action<TParameter> defaultAction, Action<TFallbackParameter> fallbackAction)
         {

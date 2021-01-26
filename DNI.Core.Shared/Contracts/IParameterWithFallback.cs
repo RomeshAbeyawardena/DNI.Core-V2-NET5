@@ -9,6 +9,8 @@ namespace DNI.Core.Shared.Contracts
         TParameter? Parameter { get;}
         TFallbackParameter FallbackParameter { get; }
 
+        bool HasValue { get; }
+
         void Invoke(
             Action<TParameter> defaultAction, 
             Action<TFallbackParameter> fallbackAction);
