@@ -21,17 +21,13 @@ namespace DNI.Core.Abstractions
             Expression<Func<T, TKey>> getProperty,
             Func<TKey, T> getResult, params object[] args)
         {
-            var property = getProperty.GetProperty();
-
-            var instance = (T)Activator.CreateInstance(typeof(T), args);
-
-            property.SetValue(instance, value);
+            var instance = ModelEncryptionServiceExtensions.CreateInstance<TKey, T>(value,
+                k => getProperty.Compile()(k), 
+                out var property,
+                args);
 
             modelEncryptionFactory.Encrypt(instance);
-
-            var val = getProperty
-                .Compile()
-                .Invoke(instance);
+            var val = (TKey)property.GetValue(instance);
 
             return getResult(val);
         }

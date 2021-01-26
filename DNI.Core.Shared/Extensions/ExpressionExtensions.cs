@@ -32,7 +32,7 @@ namespace DNI.Core.Shared.Extensions
         /// <typeparam name="TKey"></typeparam>
         /// <param name="expression"></param>
         /// <returns></returns>
-        public static MemberInfo GetMember<T, TKey>(this Expression<Func<T, TKey>> expression)
+        internal static MemberInfo GetMember<T, TKey>(this Expression<Func<T, TKey>> expression)
         {
             var visitor = new ModelExpressionVisitor();
             return visitor.GetLastVisitedMember(expression);
