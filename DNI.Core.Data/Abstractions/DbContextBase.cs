@@ -1,5 +1,4 @@
-﻿using Humanizer;
-using Microsoft.EntityFrameworkCore;
+﻿using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -24,7 +23,7 @@ namespace DNI.Core.Data.Abstractions
             {
                 foreach(var entity in modelBuilder.Model.GetEntityTypes())
                 {
-                    entity.SetTableName(entity.GetTableName().Singularize());
+                    entity.SetTableName(entity.ClrType.Name);
                 }
             }
 
