@@ -13,6 +13,15 @@ namespace DNI.Core.Web.Abstractions
         protected ApiControllerBase(IMediator mediator, IMapper mapper) : base(mediator, mapper)
         {
         }
+
+        protected async Task<IActionResult> Process<TRequest, TResponse, TResult>(TRequest request, CancellationToken cancellationToken)
+            where TRequest : IRequest<TResponse>
+            where TResponse : IAttemptedResponse<TResult>
+        {
+            var response = await Mediator.Send(request, cancellationToken);
+
+            return ValidateAttemptedResponse(response);
+        }
     }
 
     public class ApiControllerBase<TRequest, TResponse, TResult> : ApiControllerBase
@@ -23,11 +32,9 @@ namespace DNI.Core.Web.Abstractions
         {
         }
 
-        protected async Task<IActionResult> Process(TRequest request, CancellationToken cancellationToken)
+        protected Task<IActionResult> Process(TRequest request, CancellationToken cancellationToken)
         {
-            var response = await Mediator.Send(request, cancellationToken);
-
-            return ValidateAttemptedResponse(response);
+            return Process<TRequest, TResponse, TResult>(request, cancellationToken);
         }
     }
 }
