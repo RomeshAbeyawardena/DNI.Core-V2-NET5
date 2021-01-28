@@ -30,6 +30,13 @@ namespace DNI.Core.Shared.Contracts
         /// <summary>
         /// An include expression to join data from other tables or data objects
         /// </summary>
+        /// <param name="query"></param>
+        /// <returns></returns>
+        IIncludeableQuery<T> Include(IQueryable<T> query);
+
+        /// <summary>
+        /// An include expression to join data from other tables or data objects
+        /// </summary>
         /// <typeparam name="TSelector"></typeparam>
         /// <param name="query"></param>
         /// <param name="includeExpression"></param>
