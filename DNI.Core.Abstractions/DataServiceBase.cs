@@ -29,24 +29,39 @@ namespace DNI.Core.Abstractions
             return Repository.AnyAsync(NoTrackingQuery, expression, cancellationToken);
         }
 
-        public Task<TEntity> FirstOrDefaultAsync(Expression<Func<TEntity, bool>> expression, CancellationToken cancellationToken)
+        public Task<TEntity> FirstOrDefaultAsync(
+            Expression<Func<TEntity, bool>> expression, 
+            CancellationToken cancellationToken,
+            Action<IIncludeableQuery<TEntity>> includeInResults = default)
         {
-            return Repository.FirstOrDefaultAsync(NoTrackingQuery, expression, cancellationToken);
+            var query = RegisterIncludes(includeInResults);
+            return Repository.FirstOrDefaultAsync(query, expression, cancellationToken);
         }
 
-        public Task<IEnumerable<TEntity>> ToArrayAsync(Expression<Func<TEntity, bool>> expression, CancellationToken cancellationToken)
+        public Task<IEnumerable<TEntity>> ToArrayAsync(
+            Expression<Func<TEntity, bool>> expression, 
+            CancellationToken cancellationToken,
+            Action<IIncludeableQuery<TEntity>> includeInResults = default)
         {
-            return Repository.ToArrayAsync(NoTrackingQuery, expression, cancellationToken);
+            var query = RegisterIncludes(includeInResults);
+            return Repository.ToArrayAsync(query, expression, cancellationToken);
         }
 
-        public Task<IEnumerable<TEntity>> ToArrayAsync(CancellationToken cancellationToken)
+        public Task<IEnumerable<TEntity>> ToArrayAsync(
+            CancellationToken cancellationToken,
+            Action<IIncludeableQuery<TEntity>> includeInResults = default)
         {
-            return Repository.ToArrayAsync(NoTrackingQuery, cancellationToken: cancellationToken);
+            var query = RegisterIncludes(includeInResults);
+            return Repository.ToArrayAsync(query, cancellationToken: cancellationToken);
         }
 
-        public Task<IEnumerable<TEntity>> ToArrayAsync(Expression<Func<TEntity, bool>> expression, IPagingCriteria pagingCriteria, CancellationToken cancellationToken)
+        public Task<IEnumerable<TEntity>> ToArrayAsync(
+            Expression<Func<TEntity, bool>> expression, IPagingCriteria pagingCriteria, 
+            CancellationToken cancellationToken,
+            Action<IIncludeableQuery<TEntity>> includeInResults = default)
         {
-            var pager = new Pager<TEntity>(NoTrackingQuery.Where(expression));
+            var query = RegisterIncludes(includeInResults);
+            var pager = new Pager<TEntity>(query.Where(expression));
 
             return pager.GetPagedItemsAsync(pagingCriteria.PageIndex, pagingCriteria.TotalItemsPerPage, cancellationToken);
         }
@@ -126,5 +141,19 @@ namespace DNI.Core.Abstractions
         protected IQueryable<TEntity> NoTrackingQuery => Repository.EnableTracking(Query, false, false);
         protected IAsyncRepository<TEntity> Repository { get; }
         protected IModelEncryptionService<TEntity> ModelEncryptionService { get; }
+
+        private IQueryable<TEntity> RegisterIncludes(Action<IIncludeableQuery<TEntity>> includeInResults)
+        {
+            if(includeInResults != null)
+            {
+                var includeableQuery = Repository.Include(NoTrackingQuery);
+
+                includeInResults(includeableQuery);
+
+                return includeableQuery;
+            }
+
+            return NoTrackingQuery;
+        }
     }
 }

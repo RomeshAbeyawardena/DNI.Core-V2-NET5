@@ -641,6 +641,13 @@
             <param name="enableIdentityResolution">Sets whether identity resolution should be enabled</param>
             <returns></returns>
         </member>
+        <member name="M:DNI.Core.Shared.Contracts.IRepository`1.Include(System.Linq.IQueryable{`0})">
+            <summary>
+            An include expression to join data from other tables or data objects
+            </summary>
+            <param name="query"></param>
+            <returns></returns>
+        </member>
         <member name="M:DNI.Core.Shared.Contracts.IRepository`1.Include``1(System.Linq.IQueryable{`0},System.Linq.Expressions.Expression{System.Func{`0,``0}})">
             <summary>
             An include expression to join data from other tables or data objects
@@ -865,21 +872,155 @@
             </summary>
             <typeparam name="TEntity"></typeparam>
         </member>
-        <member name="M:DNI.Core.Shared.Contracts.Services.IDataService`1.ToArrayAsync(System.Linq.Expressions.Expression{System.Func{`0,System.Boolean}},DNI.Core.Shared.Contracts.IPagingCriteria,System.Threading.CancellationToken)">
+        <member name="M:DNI.Core.Shared.Contracts.Services.IDataService`1.Encrypt(`0)">
+            <summary>
+            Encrypts <typeparamref name="TEntity"/> using <see cref="T:DNI.Core.Shared.Contracts.Services.IModelEncryptionService`1"/>
+            </summary>
+            <param name="model"></param>
+        </member>
+        <member name="M:DNI.Core.Shared.Contracts.Services.IDataService`1.Decrypt(`0)">
+            <summary>
+            Decrypts <typeparamref name="TEntity"/> using <see cref="T:DNI.Core.Shared.Contracts.Services.IModelEncryptionService`1"/>
+            </summary>
+            <param name="model"></param>
+        </member>
+        <member name="M:DNI.Core.Shared.Contracts.Services.IDataService`1.Encrypt(System.Collections.Generic.IEnumerable{`0})">
+            <summary>
+            Encrypts <paramref name="model"/> using <see cref="T:DNI.Core.Shared.Contracts.Services.IModelEncryptionService`1"/>
+            </summary>
+            <param name="model"></param>
+        </member>
+        <member name="M:DNI.Core.Shared.Contracts.Services.IDataService`1.Decrypt(System.Collections.Generic.IEnumerable{`0})">
+            <summary>
+            Decrypts <paramref name="model"/> using <see cref="T:DNI.Core.Shared.Contracts.Services.IModelEncryptionService`1"/>
+            </summary>
+            <param name="model"></param>
+        </member>
+        <member name="M:DNI.Core.Shared.Contracts.Services.IDataService`1.Encrypt(`0,System.Object[])">
+            <summary>
+            Encrypts <paramref name="model"/> using <see cref="T:DNI.Core.Shared.Contracts.Services.IModelEncryptionService`1"/> as a new instance of <typeparamref name="TEntity"/>
+            </summary>
+            <param name="model"></param>
+            <param name="args"></param>
+            <returns></returns>
+        </member>
+        <member name="M:DNI.Core.Shared.Contracts.Services.IDataService`1.Decrypt(`0,System.Object[])">
+            <summary>
+            Decrypts <paramref name="model"/> using <see cref="T:DNI.Core.Shared.Contracts.Services.IModelEncryptionService`1"/> as a new instance of <typeparamref name="TEntity"/>
+            </summary>
+            <param name="model"></param>
+            <param name="args"></param>
+            <returns></returns>
+        </member>
+        <member name="M:DNI.Core.Shared.Contracts.Services.IDataService`1.Encrypt(System.Collections.Generic.IEnumerable{`0},System.Object[])">
+            <summary>
+            Encrypts <paramref name="model"/> using <see cref="T:DNI.Core.Shared.Contracts.Services.IModelEncryptionService`1"/> as a new instance of <typeparamref name="TEntity"/>
+            </summary>
+            <param name="model"></param>
+            <param name="args"></param>
+            <returns></returns>
+        </member>
+        <member name="M:DNI.Core.Shared.Contracts.Services.IDataService`1.Decrypt(System.Collections.Generic.IEnumerable{`0},System.Object[])">
+            <summary>
+            Decrypts <paramref name="model"/> using <see cref="T:DNI.Core.Shared.Contracts.Services.IModelEncryptionService`1"/> as a new instance of <typeparamref name="TEntity"/>
+            </summary>
+            <param name="model"></param>
+            <param name="args"></param>
+            <returns></returns>
+        </member>
+        <member name="M:DNI.Core.Shared.Contracts.Services.IDataService`1.ToArrayAsync(System.Linq.Expressions.Expression{System.Func{`0,System.Boolean}},DNI.Core.Shared.Contracts.IPagingCriteria,System.Threading.CancellationToken,System.Action{DNI.Core.Shared.Contracts.IIncludeableQuery{`0}})">
             <summary>
             Retrieves an array based off <paramref name="expression"/>
             </summary>
             <param name="expression"></param>
             <param name="pagingCriteria"></param>
             <param name="cancellationToken"></param>
+            <param name="includeInResults"></param>
             <returns>A page list in the form of <see cref="T:System.Collections.Generic.IEnumerable`1"/></returns>
         </member>
-        <member name="M:DNI.Core.Shared.Contracts.Services.IDataService`1.ToArrayAsync(System.Threading.CancellationToken)">
+        <member name="M:DNI.Core.Shared.Contracts.Services.IDataService`1.ToArrayAsync(System.Threading.CancellationToken,System.Action{DNI.Core.Shared.Contracts.IIncludeableQuery{`0}})">
+            <summary>
+            
+            </summary>
+            <param name="cancellationToken"></param>
+            <param name="includeInResults"></param>
+            <returns></returns>
+        </member>
+        <member name="M:DNI.Core.Shared.Contracts.Services.IDataService`1.FirstOrDefaultAsync(System.Linq.Expressions.Expression{System.Func{`0,System.Boolean}},System.Threading.CancellationToken,System.Action{DNI.Core.Shared.Contracts.IIncludeableQuery{`0}})">
+            <summary>
+            
+            </summary>
+            <param name="expression"></param>
+            <param name="cancellationToken"></param>
+            <param name="includeInResults"></param>
+            <returns></returns>
+        </member>
+        <member name="M:DNI.Core.Shared.Contracts.Services.IDataService`1.AnyAsync(System.Linq.Expressions.Expression{System.Func{`0,System.Boolean}},System.Threading.CancellationToken)">
+            <summary>
+            
+            </summary>
+            <param name="expression"></param>
+            <param name="cancellationToken"></param>
+            <returns></returns>
+        </member>
+        <member name="M:DNI.Core.Shared.Contracts.Services.IDataService`1.ExistsAsync(`0,System.Threading.CancellationToken)">
+            <summary>
+            
+            </summary>
+            <param name="entity"></param>
+            <param name="cancellationToken"></param>
+            <returns></returns>
+        </member>
+        <member name="M:DNI.Core.Shared.Contracts.Services.IDataService`1.ToArrayAsync(System.Linq.Expressions.Expression{System.Func{`0,System.Boolean}},System.Threading.CancellationToken,System.Action{DNI.Core.Shared.Contracts.IIncludeableQuery{`0}})">
+            <summary>
+            
+            </summary>
+            <param name="expression"></param>
+            <param name="cancellationToken"></param>
+            <param name="includeInResults"></param>
+            <returns></returns>
+        </member>
+        <member name="M:DNI.Core.Shared.Contracts.Services.IDataService`1.SaveChangesAsync(System.Threading.CancellationToken)">
             <summary>
             
             </summary>
             <param name="cancellationToken"></param>
             <returns></returns>
+        </member>
+        <member name="M:DNI.Core.Shared.Contracts.Services.IDataService`1.SaveAsync(`0,System.Threading.CancellationToken)">
+            <summary>
+            
+            </summary>
+            <param name="entity"></param>
+            <param name="cancellationToken"></param>
+            <returns></returns>
+        </member>
+        <member name="M:DNI.Core.Shared.Contracts.Services.IDataService`1.Add(`0)">
+            <summary>
+            
+            </summary>
+            <param name="entity"></param>
+            <returns></returns>
+        </member>
+        <member name="M:DNI.Core.Shared.Contracts.Services.IDataService`1.Update(`0)">
+            <summary>
+            
+            </summary>
+            <param name="entity"></param>
+            <returns></returns>
+        </member>
+        <member name="M:DNI.Core.Shared.Contracts.Services.IDataService`1.Attach(`0)">
+            <summary>
+            
+            </summary>
+            <param name="entity"></param>
+            <returns></returns>
+        </member>
+        <member name="M:DNI.Core.Shared.Contracts.Services.IDataService`1.AttachRange(System.Collections.Generic.IEnumerable{`0})">
+            <summary>
+            
+            </summary>
+            <param name="entities"></param>
         </member>
         <member name="P:DNI.Core.Shared.Contracts.Services.IEncryptionService.EncryptionMethod">
             <summary>
