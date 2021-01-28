@@ -109,13 +109,23 @@ namespace DNI.Core.Data
             return DbSet.FindAsync(keys, cancellationToken.Value).AsTask();
         }
 
-        public IIncludeableQuery<T> Include<TSelector>(IQueryable<T> query, Expression<Func<T, TSelector>> includeExpression)
+        public IIncludeableQuery<T> Include(IQueryable<T> query)
         {
             return TransformQuery(query, 
-                (query, whereExpression, ct) => IncludeableQuery(query).Includes(includeExpression));
+                (query, whereExpression, ct) => IncludeableQuery(query));
         }
 
-        private TResult TransformQuery<TResult>(IQueryable<T> query, 
+        public IIncludeableQuery<T> Include<TSelector>(
+            IQueryable<T> query, 
+            Expression<Func<T, TSelector>> includeExpression)
+        {
+            return TransformQuery(query, 
+                (query, whereExpression, ct) => Include(query)
+                    .Includes(includeExpression));
+        }
+
+        private TResult TransformQuery<TResult>(
+            IQueryable<T> query, 
             Func<IIncludeableQuery<T>, Expression<Func<T,bool>>, CancellationToken?, TResult> action, 
             Expression<Func<T,bool>> whereExpression = default,
             CancellationToken? cancellationToken = default)
