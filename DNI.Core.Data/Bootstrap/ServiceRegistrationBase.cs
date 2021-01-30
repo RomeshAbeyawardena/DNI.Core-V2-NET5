@@ -15,50 +15,40 @@ using System.Reflection;
 
 namespace DNI.Core.Data.Bootstrap
 {
-    public abstract class ServiceRegistration<TDbContext> : ServiceRegistrationBase
+    public abstract class ServiceRegistrationBase<TDbContext> 
+        : Core.Abstractions.Bootstrap.ServiceRegistrationBase
         where TDbContext : DbContext
     {
         public DbContextMethod DbContextMethod { get; }
-        public ServiceLifetime ServiceLifetime { get; }
         
-        public abstract IEnumerable<Assembly> ServiceAssemblies { get; }
-        public abstract IEnumerable<Assembly> DomainAssemblies { get; }
-        public abstract IEnumerable<string> ScannedTypes { get; }
+        public override IEnumerable<Assembly> ServiceAssemblies { get; }
+        public override IEnumerable<Assembly> DomainAssemblies { get; }
+        public override IEnumerable<string> ScannedTypes { get; }
 
-        public override IServiceCollection RegisterServices(IServiceCollection services)
+        public override void ConfigureServices(IServiceCollection services)
         {
-            ConfigureServices(services);
+            Configure(services);
 
-            return services
-                .AddMediatR(ServiceAssemblies.ToArray())
-                .AddAutoMapper(DomainAssemblies.ToArray())
+            services
                 .RegisterDbContextWithRepositories<TDbContext>(DbContextMethod, 
                     dbContextOptionsServiceInjectionAction: Builder, 
-                    serviceLifetime: ServiceLifetime)
-                .ScanForTypes(scanDefinition => scanDefinition
-                    .AddRange(ScannedTypes), 
-                ServiceAssemblies.ToArray());
+                    serviceLifetime: ServiceLifetime);
         }
 
-        public abstract void ConfigureServices(IServiceCollection services);
+        public abstract void Configure(IServiceCollection services);
 
         public abstract void Builder(IServiceProvider serviceProvider, DbContextOptionsBuilder builder);
 
-        protected IApplicationSettingsEncryptionClassificationSetter<TApplicationSettings> GetSettingsEncryptionClassificationSetter<TApplicationSettings>()
-        {
-            return ApplicationSettingsEncryptionClassificationSetter.Create<TApplicationSettings>();
-        }
-
-        protected ServiceRegistration(DbContextMethod dbContextMethod = DbContextMethod.DbContextPool, 
+        protected ServiceRegistrationBase(DbContextMethod dbContextMethod = DbContextMethod.DbContextPool, 
             ServiceLifetime serviceLifetime = ServiceLifetime.Transient)
+            : base(serviceLifetime)
         {
             DbContextMethod = dbContextMethod;
-            ServiceLifetime = serviceLifetime;
         }
 
     }
 
-    public abstract class ServiceRegistration<TApplicationSettings, TDbContext> : ServiceRegistration<TDbContext>
+    public abstract class ServiceRegistration<TApplicationSettings, TDbContext> : ServiceRegistrationBase<TDbContext>
         where TDbContext : DbContext
     {
         protected ServiceRegistration(DbContextMethod dbContextMethod = DbContextMethod.DbContextPool, 

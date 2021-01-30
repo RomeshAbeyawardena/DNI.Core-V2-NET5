@@ -56,7 +56,8 @@ namespace DNI.Core.Abstractions
         }
 
         public Task<IEnumerable<TEntity>> ToArrayAsync(
-            Expression<Func<TEntity, bool>> expression, IPagingCriteria pagingCriteria, 
+            Expression<Func<TEntity, bool>> expression, 
+            IPagingCriteria pagingCriteria, 
             CancellationToken cancellationToken,
             Action<IIncludeableQuery<TEntity>> includeInResults = default)
         {
