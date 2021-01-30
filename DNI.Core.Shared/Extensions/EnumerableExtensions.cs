@@ -1,5 +1,7 @@
-﻿using System;
+﻿using DNI.Core.Shared.Contracts;
+using System;
 using System.Collections.Generic;
+using System.Linq;
 
 namespace DNI.Core.Shared.Extensions
 {
@@ -23,6 +25,14 @@ namespace DNI.Core.Shared.Extensions
             }
 
             return itemList.ToArray();
+        }
+
+        public static IListBuilder<T> ToBuilder<T>(this IEnumerable<T> items)
+        {
+            return new ListBuilder<T>(build => { 
+                if(items.Any()) 
+                    build.AddRange(items); 
+                });
         }
     }
 }

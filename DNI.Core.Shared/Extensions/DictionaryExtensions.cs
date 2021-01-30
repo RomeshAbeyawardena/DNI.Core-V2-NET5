@@ -1,4 +1,6 @@
-﻿using System.Collections.Generic;
+﻿using DNI.Core.Shared.Contracts.Builders;
+using System.Collections.Generic;
+using System.Linq;
 
 namespace DNI.Core.Shared.Extensions
 {
@@ -12,8 +14,15 @@ namespace DNI.Core.Shared.Extensions
                 return true;
             }
             
-            return dictionary.TryAdd(key, value);
-            
+            return dictionary.TryAdd(key, value);   
+        }
+
+        public static IDictionaryBuilder<TKey, TValue> ToBuilder<TKey, TValue>(this IDictionary<TKey, TValue> dictionary)
+        {
+            return new DictionaryBuilder<TKey, TValue>(build => { 
+                if(dictionary.Keys.Any())
+                    build.AddRange(dictionary);
+            });
         }
     }
 }

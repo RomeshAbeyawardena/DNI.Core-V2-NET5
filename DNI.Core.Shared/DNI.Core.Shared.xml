@@ -126,6 +126,13 @@
             <param name="buildAction"></param>
             <returns></returns>
         </member>
+        <member name="M:DNI.Core.Shared.Contracts.Builders.IDictionaryBuilder`2.AddRange(System.Collections.Generic.IEnumerable{System.Collections.Generic.KeyValuePair{`0,`1}})">
+            <summary>
+            Adds <paramref name="keyValuePairs"/> to dictionary
+            </summary>
+            <param name="keyValuePairs"></param>
+            <returns></returns>
+        </member>
         <member name="T:DNI.Core.Shared.Contracts.Factories.ICacheServiceFactory">
             <summary>
             Represents a factory used for returning a specific <see cref="T:DNI.Core.Shared.Contracts.Services.ICacheService"/> from a dependency container
