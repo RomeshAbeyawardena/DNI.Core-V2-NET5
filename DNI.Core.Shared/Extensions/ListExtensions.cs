@@ -14,9 +14,12 @@ namespace DNI.Core.Shared.Extensions
         {
             list.Clear();
             list.TrimExcess();
+
+            var generation = GC.GetGeneration(list);
+
             list = null;
             GC.Collect(
-                    GC.GetGeneration(list), 
+                    generation, 
                     GCCollectionMode.Forced, 
                     blocking);
         }
